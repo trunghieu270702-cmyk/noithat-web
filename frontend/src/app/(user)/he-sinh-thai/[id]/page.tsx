@@ -119,7 +119,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
             <span className="w-8 h-1 bg-[#ce9e51] inline-block"></span> Dịch vụ cung cấp
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {unit.services.map((svc, i) => (
+            {unit.services.map((svc: string, i: number) => (
               <div key={i} className="bg-[#1c1c1c] p-4 rounded border border-white/5 flex items-center gap-3">
                 <i className="fa fa-check-circle text-[#ce9e51]"></i>
                 <span>{svc}</span>
@@ -134,7 +134,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
             <span className="w-8 h-1 bg-[#ce9e51] inline-block"></span> Công trình tiêu biểu
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {unit.projects.map((proj, i) => (
+            {unit.projects.map((proj: any, i: number) => (
               <div key={i} className="bg-[#1c1c1c] rounded-lg overflow-hidden border border-white/5">
                 <div className="h-48 bg-white/5"></div>
                 <div className="p-6">
@@ -156,7 +156,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           <div className="bg-[#1c1c1c] p-6 rounded-lg border border-white/5">
             <h3 className="text-lg font-bold mb-4 text-[#ce9e51]">Điểm mạnh</h3>
             <ul className="space-y-3">
-              {unit.advantages.map((adv, i) => (
+              {unit.advantages.map((adv: string, i: number) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
                   <i className="fa fa-star mt-1 text-white/30"></i> {adv}
                 </li>
@@ -174,7 +174,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           <div className="bg-[#1c1c1c] p-6 rounded-lg border border-white/5">
             <h3 className="text-lg font-bold mb-4 text-[#ce9e51]">Quy trình</h3>
             <ul className="space-y-2">
-              {unit.workflow.map((step, i) => (
+              {unit.workflow.map((step: string, i: number) => (
                 <li key={i} className="flex items-center gap-3 text-sm">
                   <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-xs text-white/50">{i + 1}</span> {step}
                 </li>

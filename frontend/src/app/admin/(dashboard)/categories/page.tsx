@@ -112,7 +112,7 @@ export default function CategoriesPage() {
         await apiClient.post('/categories', createData);
       } else {
         const { id, ...updateData } = formData;
-        await apiClient.patch(/categories/, updateData);
+        await apiClient.patch(`/categories/${id}`, updateData);
       }
       setIsDrawerOpen(false);
       fetchCategories();
@@ -124,7 +124,7 @@ export default function CategoriesPage() {
   const handleDelete = async (id: number) => {
     if (!confirm('Bạn có chắc chắn muốn xóa?')) return;
     try {
-      await apiClient.delete(/categories/);
+      await apiClient.delete(`/categories/${id}`);
       fetchCategories();
     } catch (error) {
       console.error(error);
