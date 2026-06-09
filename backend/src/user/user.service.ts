@@ -13,10 +13,13 @@ export class UserService implements OnModuleInit {
   }
 
   async seedAdmin() {
+    console.log('[DEBUG] seedAdmin started');
     const hashedPassword = await bcrypt.hash('123456', 10);
+    console.log('[DEBUG] bcrypt.hash completed');
     const admin = await this.prisma.user.findUnique({
       where: { username: 'admin' },
     });
+    console.log('[DEBUG] prisma.user.findUnique completed');
     if (!admin) {
       await this.prisma.user.create({
         data: {
