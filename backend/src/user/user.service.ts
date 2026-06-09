@@ -9,7 +9,7 @@ export class UserService implements OnModuleInit {
   constructor(private prisma: PrismaService) {}
 
   async onModuleInit() {
-    // await this.seedAdmin();
+    await this.seedAdmin();
   }
 
   async seedAdmin() {
