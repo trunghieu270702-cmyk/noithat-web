@@ -19,7 +19,7 @@ export default function TestimonialsPage() {
     try {
       setIsLoading(true);
       const res = await apiClient.get('/testimonials');
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error('Failed to fetch testimonials:', error);
     } finally {
@@ -254,7 +254,7 @@ export default function TestimonialsPage() {
                 </div>
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.totalItems}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-emerald-100 bg-emerald-50/50">
+              <div className="p-3.5 rounded-lg border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Hiển thị</span>
                 </div>
@@ -266,7 +266,7 @@ export default function TestimonialsPage() {
                 </div>
                 <div className="text-2xl font-medium text-gray-700 dark:text-gray-300">{summary.hiddenCount}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-amber-100 bg-amber-50/50">
+              <div className="p-3.5 rounded-lg border border-amber-100 dark:border-amber-900/30 bg-amber-50/50 dark:bg-amber-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-amber-50 dark:bg-amber-500/100 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Nổi bật</span>
                 </div>

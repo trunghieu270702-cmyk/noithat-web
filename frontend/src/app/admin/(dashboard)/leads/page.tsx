@@ -28,7 +28,7 @@ export default function LeadsPage() {
     try {
       setIsLoading(true);
       const res = await apiClient.get('/leads');
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error('Failed to fetch leads:', error);
     } finally {
@@ -71,12 +71,15 @@ export default function LeadsPage() {
     leadClassification: 'WARM', proposedUnits: '', connectedUnit: '', callNotes: '', chatNotes: '', followUpDate: '',
   });
 
-  const filteredData = data.filter(lead => {
-    const matchesSearch = lead.customerName.toLowerCase().includes(searchQuery.toLowerCase()) || lead.phone.includes(searchQuery);
+  const filteredData = Array.isArray(data) ? data.filter(lead => {
+    const matchesSearch = lead.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          lead.phone?.includes(searchQuery) ||
+                          lead.email?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter.length === 0 || statusFilter.includes(lead.status);
     const matchesClass = classFilter.length === 0 || classFilter.includes(lead.leadClassification);
+    
     return matchesSearch && matchesStatus && matchesClass;
-  });
+  }) : [];
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig) return 0;
@@ -310,13 +313,13 @@ export default function LeadsPage() {
                 </div>
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.newCount}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-purple-100 bg-purple-50/50">
+              <div className="p-3.5 rounded-lg border border-purple-100 dark:border-purple-900/30 bg-purple-50/50 dark:bg-purple-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-purple-500 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Đang tư vấn</span>
                 </div>
                 <div className="text-2xl font-medium text-purple-700">{summary.consultingCount}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-emerald-100 bg-emerald-50/50">
+              <div className="p-3.5 rounded-lg border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Chốt thành công</span>
                 </div>

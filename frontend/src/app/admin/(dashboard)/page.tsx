@@ -83,57 +83,57 @@ export default function DashboardPage() {
   };
 
   const MetricCard = ({ title, value, icon: Icon, trend, isPositive, baseColor }: any) => {
-    const bgClass = baseColor === 'blue' ? 'bg-[#5865f2]/10 text-[#5865f2]' : 
-                    baseColor === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
-                    baseColor === 'rose' ? 'bg-rose-50 text-rose-600' :
-                    'bg-amber-50 text-amber-600';
+    const bgClass = baseColor === 'blue' ? 'bg-[#5865f2]/10 text-[#5865f2] dark:bg-[#5865f2]/20' : 
+                    baseColor === 'emerald' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400' :
+                    baseColor === 'rose' ? 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400' :
+                    'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400';
     
     return (
-      <div className="relative overflow-hidden rounded-[12px] bg-white border border-gray-200 p-5 flex flex-col">
+      <div className="relative overflow-hidden rounded-[12px] bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 p-5 flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <div className={`w-10 h-10 rounded-[12px] flex items-center justify-center ${bgClass}`}>
             <Icon className="w-5 h-5" />
           </div>
-          <div className={`flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium ${isPositive ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+          <div className={`flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-medium ${isPositive ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400' : 'bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400'}`}>
             {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
             {trend}
           </div>
         </div>
         
         <div>
-          <h3 className="text-sm font-normal text-gray-500 mb-1">{title}</h3>
-          <p className="text-2xl font-medium text-gray-900">{isLoading ? '...' : value}</p>
+          <h3 className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-1">{title}</h3>
+          <p className="text-2xl font-medium text-gray-900 dark:text-white">{isLoading ? '...' : value}</p>
         </div>
       </div>
     );
   };
 
   const SubMetricCard = ({ title, icon: Icon, data, baseColor }: any) => {
-    const bgClass = baseColor === 'blue' ? 'bg-[#5865f2]/10 text-[#5865f2]' : 
-                    baseColor === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
-                    'bg-amber-50 text-amber-600';
+    const bgClass = baseColor === 'blue' ? 'bg-[#5865f2]/10 text-[#5865f2] dark:bg-[#5865f2]/20' : 
+                    baseColor === 'emerald' ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400' :
+                    'bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400';
 
     return (
-      <div className="bg-white rounded-[12px] p-5 border border-gray-200 flex flex-col">
+      <div className="bg-white dark:bg-[#1a1b23] rounded-[12px] p-5 border border-gray-200 dark:border-gray-800 flex flex-col">
         <div className="flex items-center gap-3 mb-6">
           <div className={`w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0 ${bgClass}`}>
             <Icon className="w-4 h-4" />
           </div>
-          <h4 className="text-[14px] font-medium text-gray-900">{title}</h4>
+          <h4 className="text-[14px] font-medium text-gray-900 dark:text-white">{title}</h4>
         </div>
         
         <div className="flex-1 flex flex-col gap-4">
           {data.map((item: any, i: number) => {
             const ItemIcon = item.icon;
             return (
-              <div key={i} className="flex justify-between items-center group/item p-1 -mx-1 rounded hover:bg-gray-50">
+              <div key={i} className="flex justify-between items-center group/item p-1 -mx-1 rounded hover:bg-gray-50 dark:hover:bg-gray-800/50">
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded flex items-center justify-center bg-gray-50 border border-gray-100">
+                  <div className="w-6 h-6 rounded flex items-center justify-center bg-gray-50 dark:bg-[#14151a] border border-gray-100 dark:border-gray-800">
                     <ItemIcon className={`w-3.5 h-3.5 ${item.iconColor}`} />
                   </div>
-                  <span className="text-[13px] font-normal text-gray-600">{item.label}</span>
+                  <span className="text-[13px] font-normal text-gray-600 dark:text-gray-400">{item.label}</span>
                 </div>
-                <span className="text-[14px] font-medium text-gray-900">{isLoading ? '-' : item.value}</span>
+                <span className="text-[14px] font-medium text-gray-900 dark:text-white">{isLoading ? '-' : item.value}</span>
               </div>
             );
           })}
@@ -155,37 +155,37 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 min-h-[calc(100vh-64px)] pb-8 bg-gray-50/50">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 min-h-[calc(100vh-64px)] pb-8 bg-gray-50/50 dark:bg-[#0b0c10] transition-colors">
 
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-medium text-gray-900">Tổng quan Hệ sinh thái</h2>
-          <p className="text-sm font-normal text-gray-500 mt-1">Theo dõi các chỉ số quan trọng và hiệu suất hoạt động.</p>
+          <h2 className="text-xl font-medium text-gray-900 dark:text-white">Tổng quan Hệ sinh thái</h2>
+          <p className="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Theo dõi các chỉ số quan trọng và hiệu suất hoạt động.</p>
         </div>
         
         {/* Modern Date Picker */}
         <Popover open={isDatePickerOpen} onOpenChange={setIsDatePickerOpen}>
-          <PopoverTrigger className="flex items-center gap-2 px-3 h-9 bg-white border border-gray-200 rounded-[8px] text-sm font-normal text-gray-700 hover:bg-gray-50 transition-all focus:outline-none focus:ring-[2px] focus:ring-[#5865f2]/20 shadow-sm cursor-pointer">
-            <CalendarDays className="w-4 h-4 text-gray-500" />
+          <PopoverTrigger className="flex items-center gap-2 px-3 h-9 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm font-normal text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] transition-all focus:outline-none shadow-sm cursor-pointer">
+            <CalendarDays className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             <span className="min-w-[120px] text-left">{getDateRangeLabel()}</span>
             {dateRange?.from && (
-              <span className="p-1 hover:bg-gray-100 rounded transition-colors ml-1" onClick={(e) => { e.stopPropagation(); setDateRange(undefined); }}>
+              <span className="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors ml-1" onClick={(e) => { e.stopPropagation(); setDateRange(undefined); }}>
                 <X className="w-3.5 h-3.5 text-gray-400" />
               </span>
             )}
           </PopoverTrigger>
-          <PopoverContent align="end" className="w-auto p-0 bg-white border border-gray-200 shadow-lg rounded-[8px] overflow-hidden">
+          <PopoverContent align="end" className="w-auto p-0 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 shadow-lg rounded-[8px] overflow-hidden">
             <div className="flex">
-              <div className="flex flex-col p-2 border-r border-gray-100 min-w-[140px] bg-gray-50/50">
-                <p className="text-[11px] font-medium text-gray-500 mb-2 px-2 mt-1">Lọc nhanh</p>
+              <div className="flex flex-col p-2 border-r border-gray-100 dark:border-gray-800 min-w-[140px] bg-gray-50/50 dark:bg-[#14151a]">
+                <p className="text-[11px] font-medium text-gray-500 dark:text-gray-400 mb-2 px-2 mt-1">Lọc nhanh</p>
                 {PRESETS.map((preset) => {
                   const isActive = activePreset === preset.label || (preset.label === 'Tất cả' && !dateRange?.from && !activePreset);
                   return (
                     <button
                       key={preset.label}
                       onClick={() => handlePresetClick(preset)}
-                      className={`text-left px-3 py-2 rounded text-sm transition-all cursor-pointer mb-0.5 ${isActive ? 'bg-[#5865f2]/10 text-[#5865f2] font-medium' : 'text-gray-600 hover:bg-gray-100 font-normal'}`}
+                      className={`text-left px-3 py-2 rounded text-sm transition-all cursor-pointer mb-0.5 ${isActive ? 'bg-[#5865f2]/10 text-[#5865f2] font-medium' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 font-normal'}`}
                     >
                       {preset.label}
                     </button>
@@ -237,17 +237,17 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         
         {/* Left Area: Area Chart */}
-        <div className="lg:col-span-2 bg-white rounded-[12px] border border-gray-200 p-5 flex flex-col h-[400px]">
+        <div className="lg:col-span-2 bg-white dark:bg-[#1a1b23] rounded-[12px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col h-[400px]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div>
-              <h3 className="text-base font-medium text-gray-900">Biểu đồ Tăng trưởng</h3>
-              <p className="text-[13px] font-normal text-gray-500 mt-0.5">So sánh lượng Yêu cầu và Giám sát theo thời gian.</p>
+              <h3 className="text-base font-medium text-gray-900 dark:text-white">Biểu đồ Tăng trưởng</h3>
+              <p className="text-[13px] font-normal text-gray-500 dark:text-gray-400 mt-0.5">So sánh lượng Yêu cầu và Giám sát theo thời gian.</p>
             </div>
-            <div className="flex bg-gray-50 p-1 rounded-md border border-gray-100">
-              <button onClick={() => setChartTab('overview')} className={`px-3 py-1 rounded text-xs font-medium transition-all cursor-pointer ${chartTab === 'overview' ? 'bg-white text-gray-900 shadow-sm border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}>
+            <div className="flex bg-gray-50 dark:bg-[#14151a] p-1 rounded-md border border-gray-100 dark:border-gray-800">
+              <button onClick={() => setChartTab('overview')} className={`px-3 py-1 rounded text-xs font-medium transition-all cursor-pointer ${chartTab === 'overview' ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'}`}>
                 Tổng quan
               </button>
-              <button onClick={() => setChartTab('leads')} className={`px-3 py-1 rounded text-xs font-medium transition-all cursor-pointer ${chartTab === 'leads' ? 'bg-white text-gray-900 shadow-sm border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}>
+              <button onClick={() => setChartTab('leads')} className={`px-3 py-1 rounded text-xs font-medium transition-all cursor-pointer ${chartTab === 'leads' ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm border border-gray-200 dark:border-gray-700' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'}`}>
                 Yêu cầu
               </button>
             </div>
@@ -255,11 +255,11 @@ export default function DashboardPage() {
 
           <div className="flex-1 w-full relative min-h-0 min-w-0">
             {!isLoading && (!Array.isArray(chartData) || chartData.length === 0) ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
-                <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-3 border border-gray-100">
-                  <BarChart2 className="w-5 h-5 text-gray-400" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800/50 rounded-full flex items-center justify-center mb-3 border border-gray-100 dark:border-gray-800">
+                  <BarChart2 className="w-5 h-5 text-gray-400 dark:text-gray-500" />
                 </div>
-                <p className="text-sm font-medium text-gray-700">Chưa có dữ liệu biểu đồ</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-400">Chưa có dữ liệu biểu đồ</p>
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
@@ -278,20 +278,20 @@ export default function DashboardPage() {
                   <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 400 }} dy={10} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11, fontWeight: 400 }} width={40} />
                   <RechartsTooltip 
-                    cursor={{ stroke: '#e5e7eb', strokeWidth: 1, strokeDasharray: '4 4' }}
+                    cursor={{ stroke: '#6b7280', strokeWidth: 1, strokeDasharray: '4 4' }}
                     content={({ active, payload, label }) => {
                       if (active && payload && payload.length) {
                         return (
-                          <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-lg min-w-[150px]">
-                            <p className="text-[11px] font-medium text-gray-500 mb-2">{label}</p>
+                          <div className="bg-white dark:bg-[#262930] p-3 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg min-w-[150px]">
+                            <p className="text-[11px] font-medium text-gray-500 dark:text-gray-400 mb-2">{label}</p>
                             <div className="space-y-2">
                               {payload.map((entry: any, index: number) => (
                                 <div key={index} className="flex items-center justify-between gap-3">
                                   <div className="flex items-center gap-1.5">
                                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></span>
-                                    <span className="text-[13px] font-normal text-gray-600">{entry.name === 'leads' ? 'Yêu cầu' : 'Giám sát'}</span>
+                                    <span className="text-[13px] font-normal text-gray-600 dark:text-gray-300">{entry.name === 'leads' ? 'Yêu cầu' : 'Giám sát'}</span>
                                   </div>
-                                  <span className="text-[13px] font-medium text-gray-900">{entry.value}</span>
+                                  <span className="text-[13px] font-medium text-gray-900 dark:text-white">{entry.value}</span>
                                 </div>
                               ))}
                             </div>
@@ -317,8 +317,8 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-5 h-[400px]">
           
           {/* Pie Chart */}
-          <div className="bg-white rounded-[12px] border border-gray-200 p-5 flex flex-col flex-shrink-0 h-[190px]">
-            <h3 className="text-[14px] font-medium text-gray-900 mb-1">Tỷ lệ Trạng thái Yêu cầu</h3>
+          <div className="bg-white dark:bg-[#1a1b23] rounded-[12px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col flex-shrink-0 h-[190px]">
+            <h3 className="text-[14px] font-medium text-gray-900 dark:text-white mb-1">Tỷ lệ Trạng thái Yêu cầu</h3>
             <div className="flex-1 flex items-center min-h-0 relative">
               <div className="w-1/2 h-full relative min-h-0 min-w-0">
                 <ResponsiveContainer width="100%" height="100%">
@@ -341,7 +341,7 @@ export default function DashboardPage() {
                       content={({ active, payload }) => {
                         if (active && payload && payload.length) {
                           return (
-                            <div className="bg-white px-2 py-1.5 rounded border border-gray-200 shadow-md text-xs font-medium text-gray-800 z-50">
+                            <div className="bg-white dark:bg-[#262930] px-2 py-1.5 rounded border border-gray-200 dark:border-gray-700 shadow-md text-xs font-medium text-gray-800 dark:text-gray-200 z-50">
                               {payload[0].name}: {payload[0].value}
                             </div>
                           );
@@ -353,18 +353,18 @@ export default function DashboardPage() {
                 </ResponsiveContainer>
                 {/* Total overlay in center */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <span className="text-lg font-medium text-gray-900">{stats?.totalLeads || 0}</span>
+                  <span className="text-lg font-medium text-gray-900 dark:text-white">{stats?.totalLeads || 0}</span>
                 </div>
               </div>
               
               {/* Custom Legend */}
-              <div className="w-1/2 flex flex-col justify-center gap-2 pl-3 border-l border-gray-100">
+              <div className="w-1/2 flex flex-col justify-center gap-2 pl-3 border-l border-gray-100 dark:border-gray-800">
                 {pieData.map((item, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: item.color }}></span>
                     <div className="flex flex-col">
-                      <span className="text-[11px] font-normal text-gray-500">{item.name}</span>
-                      <span className="text-[12px] font-medium text-gray-900">{item.value}</span>
+                      <span className="text-[11px] font-normal text-gray-500 dark:text-gray-400">{item.name}</span>
+                      <span className="text-[12px] font-medium text-gray-900 dark:text-white">{item.value}</span>
                     </div>
                   </div>
                 ))}
@@ -373,22 +373,22 @@ export default function DashboardPage() {
           </div>
 
           {/* Paginated Recent Leads */}
-          <div className="bg-white rounded-[12px] border border-gray-200 flex flex-col flex-1 min-h-0 overflow-hidden relative">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 shrink-0">
-              <h3 className="text-[14px] font-medium text-gray-900">Yêu cầu mới nhất</h3>
+          <div className="bg-white dark:bg-[#1a1b23] rounded-[12px] border border-gray-200 dark:border-gray-800 flex flex-col flex-1 min-h-0 overflow-hidden relative">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800 shrink-0">
+              <h3 className="text-[14px] font-medium text-gray-900 dark:text-white">Yêu cầu mới nhất</h3>
               <div className="flex items-center gap-1">
                 <button 
                   onClick={() => setLeadPage(p => Math.max(0, p - 1))}
                   disabled={leadPage === 0}
-                  className="w-6 h-6 flex items-center justify-center rounded bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 disabled:opacity-40 transition-colors cursor-pointer border border-gray-100"
+                  className="w-6 h-6 flex items-center justify-center rounded bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-40 transition-colors cursor-pointer border border-gray-100 dark:border-gray-700"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
-                <span className="text-[11px] font-normal text-gray-500 w-6 text-center">{leadPage + 1}/{totalLeadPages}</span>
+                <span className="text-[11px] font-normal text-gray-500 dark:text-gray-400 w-6 text-center">{leadPage + 1}/{totalLeadPages}</span>
                 <button 
                   onClick={() => setLeadPage(p => Math.min(totalLeadPages - 1, p + 1))}
                   disabled={leadPage === totalLeadPages - 1}
-                  className="w-6 h-6 flex items-center justify-center rounded bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 disabled:opacity-40 transition-colors cursor-pointer border border-gray-100"
+                  className="w-6 h-6 flex items-center justify-center rounded bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-white disabled:opacity-40 transition-colors cursor-pointer border border-gray-100 dark:border-gray-700"
                 >
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
@@ -399,41 +399,41 @@ export default function DashboardPage() {
               <div className="flex flex-col gap-0.5">
                 {isLoading ? (
                   [1, 2, 3].map(i => (
-                    <div key={i} className="p-2.5 rounded-lg border border-gray-50 animate-pulse flex gap-3">
-                      <div className="w-8 h-8 bg-gray-100 rounded-full"></div>
+                    <div key={i} className="p-2.5 rounded-lg border border-gray-50 dark:border-gray-800 animate-pulse flex gap-3">
+                      <div className="w-8 h-8 bg-gray-100 dark:bg-gray-800 rounded-full"></div>
                       <div className="flex-1 space-y-2 py-1">
-                        <div className="h-2.5 bg-gray-100 rounded w-1/2"></div>
-                        <div className="h-2 bg-gray-100 rounded w-3/4"></div>
+                        <div className="h-2.5 bg-gray-100 dark:bg-gray-800 rounded w-1/2"></div>
+                        <div className="h-2 bg-gray-100 dark:bg-gray-800 rounded w-3/4"></div>
                       </div>
                     </div>
                   ))
                 ) : currentLeads.length === 0 ? (
-                  <div className="py-8 flex flex-col items-center justify-center text-gray-400">
+                  <div className="py-8 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500">
                     <Clock className="w-8 h-8 mb-2 opacity-30" />
                     <p className="text-[13px] font-normal">Không có yêu cầu nào mới</p>
                   </div>
                 ) : (
                   currentLeads.map((lead) => (
-                    <div key={lead.id} className="p-2.5 rounded-lg hover:bg-gray-50 transition-colors flex gap-2.5 items-center cursor-pointer border border-transparent">
-                      <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-medium text-sm shrink-0 border border-blue-100">
+                    <div key={lead.id} className="p-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-[#262930] transition-colors flex gap-2.5 items-center cursor-pointer border border-transparent">
+                      <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-medium text-sm shrink-0 border border-blue-100 dark:border-blue-900/30">
                         {lead.customerName.charAt(0)}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center mb-0.5">
-                          <h4 className="text-[13px] font-medium text-gray-900 truncate pr-2">{lead.customerName}</h4>
+                          <h4 className="text-[13px] font-medium text-gray-900 dark:text-white truncate pr-2">{lead.customerName}</h4>
                           <span className={`text-[10px] px-1.5 py-0.5 rounded flex-shrink-0 font-medium ${
-                            lead.status === 'PENDING' ? 'bg-amber-50 text-amber-600' :
-                            lead.status === 'PROCESSING' ? 'bg-blue-50 text-blue-600' :
-                            'bg-emerald-50 text-emerald-600'
+                            lead.status === 'PENDING' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400' :
+                            lead.status === 'PROCESSING' ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400' :
+                            'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
                           }`}>
                             {lead.status === 'PENDING' ? 'Chờ xử lý' : lead.status === 'PROCESSING' ? 'Đang tư vấn' : 'Hoàn thành'}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <p className="text-[12px] font-normal text-gray-500 truncate">
+                          <p className="text-[12px] font-normal text-gray-500 dark:text-gray-400 truncate">
                             {lead.projectType} • {lead.location}
                           </p>
-                          <p className="text-[11px] font-normal text-gray-400 whitespace-nowrap ml-2">
+                          <p className="text-[11px] font-normal text-gray-400 dark:text-gray-500 whitespace-nowrap ml-2">
                             {format(new Date(lead.createdAt), 'dd/MM')}
                           </p>
                         </div>

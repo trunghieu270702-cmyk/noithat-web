@@ -20,7 +20,7 @@ export default function CategoriesPage() {
     try {
       setIsLoading(true);
       const res = await apiClient.get('/categories');
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error(error);
     } finally {
@@ -258,13 +258,13 @@ export default function CategoriesPage() {
                 </div>
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.articleCount}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-emerald-100 bg-emerald-50/50">
+              <div className="p-3.5 rounded-lg border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Dự án</span>
                 </div>
                 <div className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">{summary.projectCount}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-purple-100 bg-purple-50/50">
+              <div className="p-3.5 rounded-lg border border-purple-100 dark:border-purple-900/30 bg-purple-50/50 dark:bg-purple-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-purple-500 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Bộ lọc Đơn vị</span>
                 </div>

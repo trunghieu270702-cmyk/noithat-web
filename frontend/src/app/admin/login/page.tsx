@@ -25,7 +25,7 @@ export default function LoginPage() {
   const login = useAuthStore((state) => state.login);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function LoginPage() {
   }, [token, router]);
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
   };
 
   const onSubmit = async (data: LoginFormValues) => {
@@ -75,11 +75,11 @@ export default function LoginPage() {
       <div className="absolute top-6 right-6 z-20">
         <button
           onClick={toggleTheme}
-          title={mounted ? (theme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
+          title={mounted ? (resolvedTheme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
           className="p-2 rounded-full bg-white/50 dark:bg-black/30 border border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-black/50 text-gray-600 dark:text-gray-300 transition-colors backdrop-blur-md cursor-pointer"
         >
           {mounted ? (
-            theme === 'light' ? (
+            resolvedTheme === 'light' ? (
               <Sun className="w-5 h-5 text-amber-500" />
             ) : (
               <Moon className="w-5 h-5 text-blue-300" />

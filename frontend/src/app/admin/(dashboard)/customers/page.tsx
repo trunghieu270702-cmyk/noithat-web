@@ -22,7 +22,7 @@ export default function CustomersPage() {
     try {
       setIsLoading(true);
       const res = await apiClient.get('/customers');
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error('Failed to fetch customers:', error);
     } finally {
@@ -58,11 +58,11 @@ export default function CustomersPage() {
     id: '', fullName: '', phoneNumber: '', email: '', address: 'Hà Nội', totalLeads: 0, images: [] as string[],
   });
 
-  const filteredData = data.filter(customer => {
+  const filteredData = Array.isArray(data) ? data.filter(customer => {
     const matchesSearch = customer.fullName.toLowerCase().includes(searchQuery.toLowerCase()) || customer.phoneNumber.includes(searchQuery);
     const matchesLocation = locationFilter.length === 0 || locationFilter.includes(customer.address);
     return matchesSearch && matchesLocation;
-  });
+  }) : [];
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig) return 0;
@@ -251,7 +251,7 @@ export default function CustomersPage() {
                 </div>
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.totalItems}</div>
               </div>
-              <div className="p-3.5 rounded-lg border border-emerald-100 bg-emerald-50/50">
+              <div className="p-3.5 rounded-lg border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Tổng Yêu cầu</span>
                 </div>

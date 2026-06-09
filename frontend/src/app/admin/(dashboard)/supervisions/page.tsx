@@ -19,7 +19,7 @@ export default function SupervisionsPage() {
     try {
       setIsLoading(true);
       const res = await apiClient.get('/supervisions');
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error('Failed to fetch supervisions:', error);
     } finally {
@@ -257,7 +257,7 @@ export default function SupervisionsPage() {
 
           {!isSummaryCollapsed && (
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="p-3.5 rounded-lg border border-emerald-100 bg-emerald-50/50">
+              <div className="p-3.5 rounded-lg border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-sm"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Hoạt động</span>
                 </div>

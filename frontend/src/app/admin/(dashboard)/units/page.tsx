@@ -29,7 +29,7 @@ export default function UnitsPage() {
     try {
       setIsLoading(true);
       const res = await apiClient.get('/units');
-      setData(res.data);
+      setData(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error('Failed to fetch units:', error);
     } finally {
@@ -87,14 +87,14 @@ export default function UnitsPage() {
   const hasActiveFilter = activeFiltersCount > 0;
 
   // Filter Data
-  const filteredData = data.filter(unit => {
-    const matchesSearch = unit.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          unit.phone.includes(searchQuery) || 
-                          unit.unitId.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredData = Array.isArray(data) ? data.filter(unit => {
+    const matchesSearch = unit.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          unit.phone?.includes(searchQuery) || 
+                          unit.unitId?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesSegment = segmentFilter.length === 0 || segmentFilter.includes(unit.segment);
     const matchesStatus = statusFilter.length === 0 || statusFilter.includes(unit.status);
     return matchesSearch && matchesSegment && matchesStatus;
-  });
+  }) : [];
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig) return 0;

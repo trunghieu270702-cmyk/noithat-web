@@ -31,8 +31,8 @@ export default function ProjectsPage() {
         apiClient.get('/projects'),
         apiClient.get('/units')
       ]);
-      setData(resProj.data);
-      setUnitOptions(resUnits.data.map((u: any) => ({ value: u.id.toString(), label: u.name })));
+      setData(Array.isArray(resProj.data) ? resProj.data : []);
+      setUnitOptions(Array.isArray(resUnits.data) ? resUnits.data.map((u: any) => ({ value: u.id.toString(), label: u.name })) : []);
     } catch (error) {
       console.error('Failed to fetch projects data:', error);
     } finally {
@@ -78,13 +78,13 @@ export default function ProjectsPage() {
     images: [] as string[],
   });
 
-  const filteredData = data.filter(project => {
-    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          project.unitName.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredData = Array.isArray(data) ? data.filter(project => {
+    const matchesSearch = project.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          project.unitName?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus = statusFilter.length === 0 || statusFilter.includes(project.status);
     const matchesType = typeFilter.length === 0 || typeFilter.includes(project.projectType);
     return matchesSearch && matchesStatus && matchesType;
-  });
+  }) : [];
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig) return 0;
@@ -351,7 +351,7 @@ export default function ProjectsPage() {
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.inProgressCount}</div>
               </div>
 
-              <div className="p-3.5 rounded-lg border border-emerald-100 bg-emerald-50/50">
+              <div className="p-3.5 rounded-lg border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-sm"></div>
                   <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Hoàn Thành</span>
