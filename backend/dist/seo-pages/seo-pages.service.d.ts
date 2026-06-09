@@ -1,0 +1,85 @@
+import { PrismaService } from '../prisma/prisma.service';
+export declare class SeoPagesService {
+    private prisma;
+    constructor(prisma: PrismaService);
+    create(createDto: any): import("@prisma/client").Prisma.Prisma__SeoPageClient<{
+        id: number;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        metaTitle: string | null;
+        metaDescription: string | null;
+        keyword: string | null;
+        title: string;
+        slug: string;
+        content: string | null;
+        views: number;
+        lsiKeywords: string | null;
+        schemaType: string | null;
+        conversionRate: string | null;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    findAll(): import("@prisma/client").Prisma.PrismaPromise<{
+        id: number;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        metaTitle: string | null;
+        metaDescription: string | null;
+        keyword: string | null;
+        title: string;
+        slug: string;
+        content: string | null;
+        views: number;
+        lsiKeywords: string | null;
+        schemaType: string | null;
+        conversionRate: string | null;
+    }[]>;
+    findOne(id: number): import("@prisma/client").Prisma.Prisma__SeoPageClient<{
+        id: number;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        metaTitle: string | null;
+        metaDescription: string | null;
+        keyword: string | null;
+        title: string;
+        slug: string;
+        content: string | null;
+        views: number;
+        lsiKeywords: string | null;
+        schemaType: string | null;
+        conversionRate: string | null;
+    } | null, null, import("@prisma/client/runtime/library").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    update(id: number, updateDto: any): import("@prisma/client").Prisma.Prisma__SeoPageClient<{
+        id: number;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        metaTitle: string | null;
+        metaDescription: string | null;
+        keyword: string | null;
+        title: string;
+        slug: string;
+        content: string | null;
+        views: number;
+        lsiKeywords: string | null;
+        schemaType: string | null;
+        conversionRate: string | null;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    remove(id: number): import("@prisma/client").Prisma.Prisma__SeoPageClient<{
+        id: number;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        metaTitle: string | null;
+        metaDescription: string | null;
+        keyword: string | null;
+        title: string;
+        slug: string;
+        content: string | null;
+        views: number;
+        lsiKeywords: string | null;
+        schemaType: string | null;
+        conversionRate: string | null;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+}
