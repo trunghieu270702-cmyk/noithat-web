@@ -13,11 +13,11 @@ export class UserService implements OnModuleInit {
   }
 
   async seedAdmin() {
+    const hashedPassword = await bcrypt.hash('123456', 10);
     const admin = await this.prisma.user.findUnique({
       where: { username: 'admin' },
     });
     if (!admin) {
-      const hashedPassword = await bcrypt.hash('admin', 10);
       await this.prisma.user.create({
         data: {
           username: 'admin',
@@ -25,7 +25,15 @@ export class UserService implements OnModuleInit {
         },
       });
       this.logger.log(
-        'Default admin account (admin/admin) created successfully.',
+        'Default admin account (admin/123456) created successfully.',
+      );
+    } else {
+      await this.prisma.user.update({
+        where: { username: 'admin' },
+        data: { password: hashedPassword },
+      });
+      this.logger.log(
+        'Default admin account (admin) password updated to 123456.',
       );
     }
   }
