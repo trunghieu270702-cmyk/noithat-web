@@ -12,6 +12,9 @@ async function bootstrap() {
     ].filter(Boolean) as string[],
     credentials: true,
   });
-  await app.listen(process.env.PORT ?? 3001, '0.0.0.0');
+  const port = process.env.PORT ?? 3001;
+  console.log(`[DEBUG] Attempting to listen on port ${port}...`);
+  await app.listen(port, '0.0.0.0');
+  console.log(`[DEBUG] Successfully bound to port ${port}`);
 }
 bootstrap();
