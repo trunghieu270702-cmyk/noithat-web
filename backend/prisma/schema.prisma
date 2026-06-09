@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      String   @default("Admin")
+  status    String   @default("ACTIVE")
+  lastLogin DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Unit {
+  id          Int       @id @default(autoincrement())
+  name        String
+  segment     String
+  location    String
+  projectType String
+  style       String
+  experience  Int
+  status      String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Lead {
+  id                    Int       @id @default(autoincrement())
+  customerName          String
+  phone                 String
+  email                 String?
+  location              String
+  source                String?
+  assignee              String?
+  projectType           String?
+  area                  Int?
+  projectLocation       String?
+  currentStatus         String?
+  budget                String?
+  timeline              String?
+  style                 String?
+  priority              String?
+  needs                 String?
+  needSupervision       Boolean   @default(false)
+  needProjectManagement Boolean   @default(false)
+  notes                 String?
+  status                String
+  leadClassification    String?
+  proposedUnits         String? // Stored as comma-separated or JSON string for sqlite
+  connectedUnit         String?
+  callNotes             String?
+  chatNotes             String?
+  followUpDate          String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+}
+
+model Supervision {
+  id                  Int       @id @default(autoincrement())
+  packageName         String
+  packageType         String
+  shortDescription    String?
+  targetAudience      String?
+  scopeOfWork         String?
+  duration            String?
+  feeStructure        String?
+  status              String
+  inspectionItems     String? // Stored as JSON string
+  inspectionFrequency String?
+  reportFrequency     String?
+  reportFormat        String?
+  acceptanceChecklist String?
+  responsibility      String?
+  conditions          String?
+  limitations         String?
+  metaTitle           String?
+  metaDescription     String?
+  keyword             String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+model Article {
+  id              Int       @id @default(autoincrement())
+  title           String
+  slug            String    @unique
+  category        String
+  author          String?
+  summary         String?
+  content         String?
+  thumbnail       String?
+  views           Int       @default(0)
+  status          String
+  metaTitle       String?
+  metaDescription String?
+  keyword         String?
+  faqSchema       Boolean   @default(false)
+  publishedAt     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model SeoPage {
+  id              Int       @id @default(autoincrement())
+  title           String
+  slug            String    @unique
+  keyword         String?
+  lsiKeywords     String?
+  content         String?
+  status          String
+  metaTitle       String?
+  metaDescription String?
+  schemaType      String?
+  views           Int       @default(0)
+  conversionRate  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Testimonial {
+  id            Int       @id @default(autoincrement())
+  customerName  String
+  project       String?
+  avatar        String?
+  rating        Int       @default(5)
+  content       String?
+  status        String
+  featured      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Customer {
+  id          Int       @id @default(autoincrement())
+  fullName    String
+  phoneNumber String
+  email       String?
+  address     String?
+  totalLeads  Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  name        String
+  unitId      Int?
+  unitName    String?
+  projectType String?
+  budget      String?
+  area        Int?
+  status      String
+  startDate   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  type      String
+  status    String   @default("ACTIVE")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String
+  name      String
+  type      String
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  username  String
+  action    String
+  module    String
+  createdAt DateTime @default(now())
+}

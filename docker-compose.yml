@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: pawn_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: pawn_admin
+      POSTGRES_PASSWORD: pawn_password
+      POSTGRES_DB: pawn_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pawn_db_data:/var/lib/postgresql/data
+
+volumes:
+  pawn_db_data:

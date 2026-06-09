@@ -1,0 +1,168 @@
+'use client';
+import React, { useState } from 'react';
+import ScrollReveal from './ScrollReveal';
+import Link from 'next/link';
+
+const TIERS = [
+  {
+    title: 'Phân khúc cơ bản',
+    target: [
+      'Chung cư phổ thông',
+      'Nhà phố ngân sách vừa phải',
+      'Công trình cần tối ưu chi phí',
+      'Khách hàng cần hoàn thiện nhanh, gọn, đủ công năng'
+    ],
+    features: [
+      'Chi phí hợp lý',
+      'Thiết kế thực tế, dễ triển khai',
+      'Tập trung vào công năng sử dụng',
+      'Phù hợp với nhu cầu hoàn thiện nội thất cơ bản',
+      'Dễ kiểm soát ngân sách'
+    ],
+    services: [
+      'Thiết kế mặt bằng công năng',
+      'Thiết kế 3D cơ bản',
+      'Thi công nội thất gỗ công nghiệp',
+      'Hoàn thiện phòng khách, phòng ngủ, bếp, tủ đồ',
+      'Tư vấn vật liệu theo ngân sách'
+    ],
+    highlight: false
+  },
+  {
+    title: 'Phân khúc trung cấp',
+    target: [
+      'Chung cư cao cấp',
+      'Nhà phố cần thiết kế đồng bộ',
+      'Văn phòng, Showroom, Cửa hàng',
+      'Công trình cần cân bằng giữa thẩm mỹ, công năng và chi phí'
+    ],
+    features: [
+      'Thiết kế có phong cách rõ hơn',
+      'Tối ưu công năng, ánh sáng và vật liệu',
+      'Thi công trọn gói chỉn chu',
+      'Có khả năng cá nhân hóa không gian',
+      'Phù hợp với khách hàng muốn không gian đẹp, đồng bộ và thực tế'
+    ],
+    services: [
+      'Thiết kế concept',
+      'Thiết kế 3D chi tiết',
+      'Thi công nội thất trọn gói',
+      'Tư vấn vật liệu hoàn thiện',
+      'Tối ưu ánh sáng, màu sắc và layout',
+      'Bảo hành, bảo trì sau thi công'
+    ],
+    highlight: true
+  },
+  {
+    title: 'Phân khúc cao cấp',
+    target: [
+      'Villa, Biệt thự, Penthouse',
+      'Nhà phố cao cấp',
+      'Công trình nghỉ dưỡng',
+      'Văn phòng điều hành, Showroom cao cấp'
+    ],
+    features: [
+      'Thiết kế cá nhân hóa cao',
+      'Xử lý tốt công trình phức tạp',
+      'Chú trọng vật liệu, ánh sáng, decor và độ hoàn thiện',
+      'Có năng lực quản lý thi công chuyên sâu hơn',
+      'Phù hợp với dự án ngân sách lớn và tiêu chuẩn cao'
+    ],
+    services: [
+      'Thiết kế kiến trúc – nội thất đồng bộ',
+      'Thiết kế concept cao cấp',
+      'Thi công trọn gói theo tiêu chuẩn riêng',
+      'Tư vấn vật liệu, ánh sáng, nội thất rời, thiết bị cao cấp',
+      'Điều phối các hạng mục hoàn thiện',
+      'Bàn giao công trình theo tiêu chuẩn cao'
+    ],
+    highlight: false
+  }
+];
+
+function CheckList({ items, title }: { items: string[], title: string }) {
+  return (
+    <div className="mb-8">
+      <h4 className="text-[#D3AE3E] font-['Montserrat',_sans-serif] font-bold text-[13px] uppercase tracking-wider mb-4 border-b border-white/10 pb-2">
+        {title}
+      </h4>
+      <ul className="flex flex-col gap-3">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-2">
+            <svg className="w-4 h-4 text-white/50 shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+            <span className="text-[#999] font-['Montserrat',_sans-serif] text-[14px] leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Section6Ecosystem() {
+  return (
+    <section id="Ecosystem" className="relative py-32 bg-[#131313] overflow-hidden">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6">
+        
+        {/* Section Header */}
+        <ScrollReveal animation="fade-up" delay={100}>
+          <div className="text-center mb-16">
+            <h6 className="text-[#D3AE3E] text-[13px] font-semibold tracking-[4px] uppercase mb-4 font-['Montserrat',_sans-serif]">
+              Hệ Sinh Thái 30 Đơn Vị
+            </h6>
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 font-['Montserrat',_sans-serif]">
+              Chia Theo <span className="text-[#D3AE3E]">3 Phân Khúc</span> Rõ Ràng
+            </h2>
+            <div className="w-16 h-[2px] bg-[#D3AE3E] mx-auto mb-6" />
+            <p className="text-[#999] font-['Montserrat',_sans-serif] max-w-3xl mx-auto leading-relaxed text-[15px] md:text-[16px]">
+              Mỗi đơn vị trong hệ sinh thái có thế mạnh riêng về phong cách thiết kế, loại công trình, năng lực thi công và mức ngân sách phù hợp. Khách hàng sẽ được tư vấn để kết nối với nhóm đơn vị phù hợp nhất.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Tiers Grid (Pricing Table Style) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {TIERS.map((tier, index) => (
+            <ScrollReveal key={index} animation="fade-up" delay={200 + index * 150} className="h-full">
+              <div className={`relative h-full flex flex-col transition-all duration-500 hover:-translate-y-2 rounded-sm ${tier.highlight ? 'bg-[#1a1a1a] border-2 border-[#D3AE3E] shadow-[0_0_30px_rgba(206,158,81,0.1)]' : 'bg-[#1a1a1a] border border-white/5 hover:border-[#D3AE3E]/50'}`}>
+                
+                {tier.highlight && (
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#D3AE3E] text-white text-[11px] font-bold px-4 py-1.5 uppercase tracking-wider font-['Montserrat',_sans-serif] whitespace-nowrap z-20">
+                    Phổ biến nhất
+                  </div>
+                )}
+
+                {/* Header */}
+                <div className={`p-8 text-center border-b ${tier.highlight ? 'border-[#D3AE3E]/20' : 'border-white/5'} bg-[#131313]`}>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-white font-['Montserrat',_sans-serif]">
+                    {tier.title}
+                  </h3>
+                </div>
+
+                {/* Content */}
+                <div className="p-8 flex flex-col flex-grow">
+                  
+                  <CheckList title="Phù hợp với" items={tier.target} />
+                  <CheckList title="Đặc điểm nổi bật" items={tier.features} />
+                  <CheckList title="Dịch vụ thường có" items={tier.services} />
+
+                  <div className="mt-auto pt-6 border-t border-white/5">
+                    <Link 
+                      href="#Form"
+                      className={`block w-full py-4 text-center font-bold font-['Montserrat',_sans-serif] uppercase tracking-wider text-[13px] transition-colors ${
+                        tier.highlight 
+                          ? 'bg-[#D3AE3E] text-white hover:bg-transparent hover:text-[#D3AE3E] border-2 border-[#D3AE3E]' 
+                          : 'bg-[#131313] text-white border border-white/10 hover:border-[#D3AE3E] hover:text-[#D3AE3E]'
+                      }`}
+                    >
+                      Nhận tư vấn nhóm này
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

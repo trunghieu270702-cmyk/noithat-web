@@ -1,0 +1,75 @@
+name: Build and Release EXE
+
+on:
+  push:
+    tags:
+      - 'v*' 
+
+permissions:
+  contents: write 
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
+      - name: Install dependencies
+        run: pnpm install
+        
+      - name: Build Frontend
+        run: |
+          cd frontend
+          pnpm run build
+          
+      - name: Build Backend & Package
+        run: |
+          cd backend
+          npx prisma generate
+          pnpm run build
+
+      - name: Đóng gói bản cập nhật release-update.zip
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path ./temp-update
+          New-Item -ItemType Directory -Force -Path ./temp-update/bin
+          New-Item -ItemType Directory -Force -Path ./temp-update/prisma
+          
+          Copy-Item -Path backend/dist/* -Destination ./temp-update/bin/ -Recurse -Force -Exclude "ncc"
+          
+          Copy-Item -Path backend/prisma/schema.prisma -Destination ./temp-update/prisma/
+          Copy-Item -Path frontend/dist -Destination ./temp-update/public -Recurse -Force
+          Copy-Item -Path backend/release/start.bat -Destination ./temp-update/ -ErrorAction SilentlyContinue
+          Copy-Item -Path backend/release/update.ps1 -Destination ./temp-update/ -ErrorAction SilentlyContinue
+          Copy-Item -Path backend/release/setup.bat -Destination ./temp-update/ -ErrorAction SilentlyContinue
+          Copy-Item -Path backend/prisma.config.js -Destination ./temp-update/ -ErrorAction SilentlyContinue
+          
+          # Thực thi script NodeJS để xử lý file thay vì gõ inline dễ sinh lỗi BOM
+          node scripts/package-prep.js
+          
+          # Tạm dừng một chút để nhả các file lock (nếu có)
+          Start-Sleep -Seconds 3
+          
+          # Sử dụng 7z (có sẵn trên windows-latest) để nén, ổn định hơn Compress-Archive rất nhiều
+          & "C:\Program Files\7-Zip\7z.exe" a release-update.zip ./temp-update/*
+
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release-update.zip
+          name: Bản cập nhật ${{ github.ref_name }}
+          draft: false
+          prerelease: false  
+          make_latest: true  
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,30 @@
+{
+  "name": "noithat-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter frontend run dev\" \"pnpm --filter backend run start:dev\"",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {
+    "cheerio": "^1.2.0",
+    "concurrently": "^8.2.2",
+    "htmltojsx": "^0.3.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/engines",
+      "bcrypt",
+      "esbuild",
+      "msw",
+      "prisma",
+      "unrs-resolver",
+      "sharp",
+      "@prisma/client"
+    ]
+  },
+  "dependencies": {
+    "lucide-react": "^1.17.0"
+  }
+}
