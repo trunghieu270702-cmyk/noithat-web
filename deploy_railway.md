@@ -41,8 +41,9 @@ Thay vì dùng Database ở nơi khác, bạn nên dùng luôn Database của Ra
    - Tìm mục **Networking** -> Bấm **Generate Domain** để tạo link truy cập cho website (Ví dụ: `https://frontend-production...up.railway.app`).
 3. Chuyển sang tab **Variables** và thêm biến sau:
    - `NEXT_PUBLIC_API_URL`: Dán link Domain của Backend vừa tạo ở bước 2 kèm theo `/api/v1`. 
-     *(Ví dụ: `https://backend-production-e6aa.up.railway.app/api/v1`)*
-https://backend-production-e6aa.up.railway.app/api/v1
+     *(Ví dụ: `https://backend-production-6a66.up.railway.app/api/v1`)*
+   - `NEXT_PUBLIC_API_URL=https://backend-production-6a66.up.railway.app/api/v1`
+
 ---
 
 ## Bước 4: Cập nhật chéo (Cross-Config)
