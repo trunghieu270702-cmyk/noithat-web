@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
+import apiClient from '@/admin-lib/apiClient';
 import { useAuthStore } from '@/admin-features/auth/stores/useAuthStore';
 import { Card, CardContent } from '@/admin-components/ui/card';
 import { Input } from '@/admin-components/ui/input';
@@ -52,7 +52,7 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       setError('');
-      const response = await axios.post(`/api/v1/auth/login`, data);
+      const response = await apiClient.post(`/api/v1/auth/login`, data);
       login(response.data.user, response.data.accessToken);
       router.push('/admin');
     } catch (err: any) {
