@@ -7,7 +7,7 @@ export function ThemeProvider({
   children,
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
-  return <NextThemesProvider attribute="class" {...props}>{children}</NextThemesProvider>
+  return <NextThemesProvider attribute="class" disableTransitionOnChange {...props}>{children}</NextThemesProvider>
 }
 
 export { useTheme } from "next-themes";
