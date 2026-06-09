@@ -52,7 +52,7 @@ const systemNav = [
 
 export default function AppLayout({ children }: { children?: React.ReactNode }) {
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const location = { pathname: usePathname() };
   const { logout, user } = useAuthStore();
 
@@ -63,7 +63,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
   }, []);
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
   const allNav = [...navigation, ...systemNav];
@@ -195,10 +195,10 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
             <button
               onClick={toggleTheme}
               className="w-9 h-9 rounded-full bg-white/50 dark:bg-black/30 border border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-black/50 transition-colors backdrop-blur-md cursor-pointer flex items-center justify-center"
-              title={mounted ? (theme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
+              title={mounted ? (resolvedTheme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng') : 'Chuyển chế độ'}
             >
               {mounted ? (
-                theme === 'light' ? (
+                resolvedTheme === 'light' ? (
                   <Sun className="w-[18px] h-[18px] text-amber-500" />
                 ) : (
                   <Moon className="w-[18px] h-[18px] text-blue-300" />

@@ -11,11 +11,13 @@ type ThemeProviderProps = {
 
 type ThemeProviderState = {
   theme: Theme;
+  resolvedTheme: 'dark' | 'light';
   setTheme: (theme: Theme) => void;
 };
 
 const initialState: ThemeProviderState = {
   theme: 'system',
+  resolvedTheme: 'light',
   setTheme: () => null,
 };
 
@@ -34,6 +36,8 @@ export function ThemeProvider({
     return defaultTheme;
   });
 
+  const [resolvedTheme, setResolvedTheme] = useState<'dark' | 'light'>('light');
+
   const applyThemeToDOM = (themeValue: Theme) => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
@@ -44,17 +48,31 @@ export function ThemeProvider({
         ? 'dark'
         : 'light';
       root.classList.add(systemTheme);
+      setResolvedTheme(systemTheme);
     } else {
       root.classList.add(themeValue);
+      setResolvedTheme(themeValue as 'dark' | 'light');
     }
   };
 
   useEffect(() => {
     applyThemeToDOM(theme);
+    
+    // Listen for system theme changes if theme is 'system'
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      if (theme === 'system') {
+        applyThemeToDOM('system');
+      }
+    };
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme]);
 
   const value = {
     theme,
+    resolvedTheme,
     setTheme: (newTheme: Theme) => {
       localStorage.setItem(storageKey, newTheme);
       
