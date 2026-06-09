@@ -5,6 +5,7 @@ import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
 import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
+import { toast } from 'sonner';
 
 export default function SeoPages() {
   const [pages, setPages] = useState<any[]>([]);
@@ -50,6 +51,7 @@ export default function SeoPages() {
     views: 0,
     conversionRate: '0%',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredPages = pages.filter(p => {
     const matchesSearch = p.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -71,6 +73,7 @@ export default function SeoPages() {
     setModalMode('add');
     resetForm();
     setActiveTab('basic');
+    setErrors({});
     setIsModalOpen(true);
   };
 
@@ -78,6 +81,7 @@ export default function SeoPages() {
     setModalMode('edit');
     setFormData({ ...page });
     setActiveTab('basic');
+    setErrors({});
     setIsModalOpen(true);
   };
 
@@ -87,6 +91,19 @@ export default function SeoPages() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.title?.trim()) newErrors.title = 'Tiêu đề không được để trống';
+    if (!formData.slug?.trim()) newErrors.slug = 'Slug không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
@@ -309,8 +326,9 @@ export default function SeoPages() {
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FileSearch className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                       </div>
-                      <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: Thiết kế nội thất chung cư Hà Nội..." />
+                      <input type="text" value={formData.title} onChange={e => {setFormData({...formData, title: e.target.value}); if (errors.title) setErrors({...errors, title: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.title ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Thiết kế nội thất chung cư Hà Nội..." />
                     </div>
+                    {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
@@ -320,8 +338,9 @@ export default function SeoPages() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.slug} onChange={e => setFormData({...formData, slug: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="thiet-ke-noi-that-chung-cu-ha-noi" />
+                        <input type="text" value={formData.slug} onChange={e => {setFormData({...formData, slug: e.target.value}); if (errors.slug) setErrors({...errors, slug: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.slug ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="thiet-ke-noi-that-chung-cu-ha-noi" />
                       </div>
+                      {errors.slug && <p className="text-red-500 text-xs mt-1">{errors.slug}</p>}
                     </div>
                     <div className="space-y-1.5 relative z-40">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng thái</label>

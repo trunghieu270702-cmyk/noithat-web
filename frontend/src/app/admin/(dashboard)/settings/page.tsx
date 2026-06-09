@@ -10,6 +10,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/admin-components/ui/dialog';
+import { toast } from 'sonner';
 
 export default function SettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
@@ -36,6 +37,7 @@ export default function SettingsPage() {
     googleAnalytics: 'G-XXXXXXX',
     facebookPixel: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [settingId, setSettingId] = useState<number | null>(null);
 
@@ -61,6 +63,20 @@ export default function SettingsPage() {
   const onSubmit = async () => {
     setIsSaving(true);
     setSuccessMessage('');
+    
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.siteName?.trim()) newErrors.siteName = 'Tên website không được để trống';
+    if (!formData.siteUrl?.trim()) newErrors.siteUrl = 'URL trang chủ không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setIsSaving(false);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     try {
       const payload = {
         key: 'GLOBAL_SETTINGS',
@@ -171,18 +187,20 @@ export default function SettingsPage() {
                 
                 <div className="space-y-6 max-w-3xl">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tên Website</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tên Website <span className="text-red-500">*</span></label>
                     <input 
-                      type="text" value={formData.siteName} onChange={e => setFormData({...formData, siteName: e.target.value})}
-                      className="w-full px-3 py-2 bg-white dark:bg-[#1a1b23] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-lg text-sm font-medium focus:outline-none focus:border-[#5865f2]/50 focus:ring-[3px] focus:ring-[#5865f2]/10"
+                      type="text" value={formData.siteName} onChange={e => {setFormData({...formData, siteName: e.target.value}); if (errors.siteName) setErrors({...errors, siteName: ''});}}
+                      className={`w-full px-3 py-2 bg-white dark:bg-[#1a1b23] text-gray-900 dark:text-white border ${errors.siteName ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-800 focus:ring-[#5865f2]/10'} rounded-lg text-sm font-medium focus:outline-none focus:border-[#5865f2]/50 focus:ring-[3px]`}
                     />
+                    {errors.siteName && <p className="text-red-500 text-xs mt-1">{errors.siteName}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">URL Trang chủ</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">URL Trang chủ <span className="text-red-500">*</span></label>
                     <input 
-                      type="text" value={formData.siteUrl} onChange={e => setFormData({...formData, siteUrl: e.target.value})}
-                      className="w-full px-3 py-2 bg-white dark:bg-[#1a1b23] text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 rounded-lg text-sm font-medium focus:outline-none focus:border-[#5865f2]/50 focus:ring-[3px] focus:ring-[#5865f2]/10"
+                      type="text" value={formData.siteUrl} onChange={e => {setFormData({...formData, siteUrl: e.target.value}); if (errors.siteUrl) setErrors({...errors, siteUrl: ''});}}
+                      className={`w-full px-3 py-2 bg-white dark:bg-[#1a1b23] text-gray-900 dark:text-white border ${errors.siteUrl ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-800 focus:ring-[#5865f2]/10'} rounded-lg text-sm font-medium focus:outline-none focus:border-[#5865f2]/50 focus:ring-[3px]`}
                     />
+                    {errors.siteUrl && <p className="text-red-500 text-xs mt-1">{errors.siteUrl}</p>}
                   </div>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-4">

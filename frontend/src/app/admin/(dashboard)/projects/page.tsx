@@ -4,8 +4,9 @@ import {  Search, Plus, Filter, Edit, Trash2, FolderKanban, X, ChevronLeft, Chev
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
-import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { ImageUploader } from '@/admin-components/ui/image-uploader';
+import { toast } from 'sonner';
 
 const STATUS_MAP: Record<string, string> = {
   'IN_PROGRESS': 'Đang thi công',
@@ -77,6 +78,7 @@ export default function ProjectsPage() {
     startDate: new Date().toISOString().split('T')[0],
     images: [] as string[],
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredData = Array.isArray(data) ? data.filter(project => {
     const matchesSearch = project.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -136,6 +138,19 @@ export default function ProjectsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.name?.trim()) newErrors.name = 'Tên dự án không được để trống';
+    if (!formData.unitId) newErrors.unitId = 'Vui lòng chọn đơn vị phụ trách';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     const unitName = unitOptions.find(u => u.value === formData.unitId)?.label || '';
     
     try {
@@ -226,6 +241,7 @@ export default function ProjectsPage() {
                   projectType: 'Chung cư', budget: '', area: 0, status: 'IN_PROGRESS',
                   startDate: new Date().toISOString().split('T')[0], images: [],
                 });
+                setErrors({});
                 setIsDrawerOpen(true); 
               }}
               className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-lg text-sm font-medium transition-colors border-0 cursor-pointer"
@@ -406,7 +422,16 @@ export default function ProjectsPage() {
                         <FolderKanban className="w-8 h-8 text-gray-400" />
                       </div>
                       <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Không tìm thấy dự án</h3>
-                      <button onClick={() => { setModalMode('add'); setIsDrawerOpen(true); }} className="mt-4 px-5 py-2.5 bg-[#5865f2] text-white rounded-lg text-sm font-medium">
+                      <button onClick={() => { 
+                        setModalMode('add'); 
+                        setFormData({
+                          id: '', name: '', unitId: unitOptions.length > 0 ? unitOptions[0].value : '',
+                          projectType: 'Chung cư', budget: '', area: 0, status: 'IN_PROGRESS',
+                          startDate: new Date().toISOString().split('T')[0], images: [],
+                        });
+                        setErrors({});
+                        setIsDrawerOpen(true); 
+                      }} className="mt-4 px-5 py-2.5 bg-[#5865f2] text-white rounded-lg text-sm font-medium">
                         Tạo Dự Án Ngay
                       </button>
                     </div>
@@ -461,6 +486,7 @@ export default function ProjectsPage() {
                                 startDate: new Date(project.startDate).toISOString().split('T')[0],
                                 images: project.images ? JSON.parse(project.images) : [],
                               });
+                              setErrors({});
                               setIsDrawerOpen(true); 
                             } },
                             { label: 'Xóa', icon: Trash2, onClick: () => handleDelete(project.id), variant: 'danger', separatorBefore: true }
@@ -527,13 +553,16 @@ export default function ProjectsPage() {
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FolderKanban className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                       </div>
-                      <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Nhập tên dự án..." />
+                      <input type="text" value={formData.name} onChange={e => {setFormData({...formData, name: e.target.value}); if (errors.name) setErrors({...errors, name: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="Nhập tên dự án..." />
                     </div>
+                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                   </div>
-
                   <div className="space-y-1.5 relative z-40">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Đơn Vị Phụ Trách</label>
-                    <CustomDropdown className="w-full" options={unitOptions} value={formData.unitId} onChange={val => setFormData({...formData, unitId: val})} />
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Đơn Vị Phụ Trách <span className="text-red-500">*</span></label>
+                    <div className={errors.unitId ? 'rounded-lg border border-red-500' : ''}>
+                      <CustomDropdown className="w-full" options={unitOptions} value={formData.unitId} onChange={val => {setFormData({...formData, unitId: val}); if (errors.unitId) setErrors({...errors, unitId: ''});}} />
+                    </div>
+                    {errors.unitId && <p className="text-red-500 text-xs mt-1">{errors.unitId}</p>}
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">

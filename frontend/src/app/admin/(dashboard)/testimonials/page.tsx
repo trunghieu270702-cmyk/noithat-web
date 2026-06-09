@@ -5,6 +5,7 @@ import apiClient from '@/admin-lib/apiClient';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { toast } from 'sonner';
 
 const STATUS_MAP: Record<string, string> = {
   'VISIBLE': 'Hiển thị',
@@ -59,6 +60,7 @@ export default function TestimonialsPage() {
     status: 'VISIBLE',
     featured: false,
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredData = data.filter(t => {
     const matchesSearch = t.customerName.toLowerCase().includes(searchQuery.toLowerCase()) || t.project.toLowerCase().includes(searchQuery.toLowerCase());
@@ -90,10 +92,25 @@ export default function TestimonialsPage() {
     setFormData({
       id: '', customerName: '', project: '', avatar: [], rating: 5, content: '', status: 'VISIBLE', featured: false
     });
+    setErrors({});
   };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.customerName?.trim()) newErrors.customerName = 'Tên khách hàng không được để trống';
+    if (!formData.project?.trim()) newErrors.project = 'Dự án áp dụng không được để trống';
+    if (!formData.content?.trim()) newErrors.content = 'Nội dung đánh giá không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     const dataToSave = {
       ...formData,
       avatar: Array.isArray(formData.avatar) && formData.avatar.length > 0 ? formData.avatar[0] : ''
@@ -373,6 +390,7 @@ export default function TestimonialsPage() {
                             { label: 'Chỉnh sửa', icon: Edit, onClick: () => { 
                               setModalMode('edit'); 
                               setFormData({ ...item, avatar: item.avatar ? (Array.isArray(item.avatar) ? item.avatar : [item.avatar]) : [] });
+                              setErrors({});
                               setIsDrawerOpen(true); 
                             } },
                             { label: 'Xóa', icon: Trash2, onClick: () => handleDelete(item.id), variant: 'danger', separatorBefore: true }
@@ -439,8 +457,9 @@ export default function TestimonialsPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <User className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.customerName} onChange={e => setFormData({...formData, customerName: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Nguyễn Văn A..." />
+                        <input type="text" value={formData.customerName} onChange={e => {setFormData({...formData, customerName: e.target.value}); if (errors.customerName) setErrors({...errors, customerName: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.customerName ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="Nguyễn Văn A..." />
                       </div>
+                      {errors.customerName && <p className="text-red-500 text-xs mt-1">{errors.customerName}</p>}
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Dự án áp dụng <span className="text-red-500">*</span></label>
@@ -448,8 +467,9 @@ export default function TestimonialsPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <FolderKanban className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.project} onChange={e => setFormData({...formData, project: e.target.value})} placeholder="VD: Chung cư Vinhome Smart City..." className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" />
+                        <input type="text" value={formData.project} onChange={e => {setFormData({...formData, project: e.target.value}); if (errors.project) setErrors({...errors, project: ''});}} placeholder="VD: Chung cư Vinhome Smart City..." className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.project ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} />
                       </div>
+                      {errors.project && <p className="text-red-500 text-xs mt-1">{errors.project}</p>}
                     </div>
                   </div>
 
@@ -475,7 +495,8 @@ export default function TestimonialsPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Nội dung đánh giá <span className="text-red-500">*</span></label>
-                    <textarea rows={4} required value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} className="w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-lg text-gray-900 dark:text-white p-3 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 resize-none" placeholder="Nội dung review của khách hàng..." />
+                    <textarea rows={4} value={formData.content} onChange={e => {setFormData({...formData, content: e.target.value}); if (errors.content) setErrors({...errors, content: ''});}} className={`w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.content ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm rounded-lg text-gray-900 dark:text-white p-3 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40 resize-none`} placeholder="Nội dung review của khách hàng..." />
+                    {errors.content && <p className="text-red-500 text-xs mt-1">{errors.content}</p>}
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">

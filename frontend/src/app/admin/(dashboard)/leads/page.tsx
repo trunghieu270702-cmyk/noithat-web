@@ -5,6 +5,7 @@ import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { toast } from 'sonner';
 
 const STATUS_MAP: Record<string, string> = {
   'NEW': 'Mới tạo',
@@ -70,6 +71,7 @@ export default function LeadsPage() {
     needSupervision: false, needProjectManagement: false, notes: '', status: 'NEW',
     leadClassification: 'WARM', proposedUnits: '', connectedUnit: '', callNotes: '', chatNotes: '', followUpDate: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredData = Array.isArray(data) ? data.filter(lead => {
     const matchesSearch = lead.customerName?.toLowerCase().includes(searchQuery.toLowerCase()) || 
@@ -125,6 +127,19 @@ export default function LeadsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.customerName?.trim()) newErrors.customerName = 'Họ tên không được để trống';
+    if (!formData.phone?.trim()) newErrors.phone = 'Số điện thoại không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     const dataToSave = {
       ...formData,
       proposedUnits: typeof formData.proposedUnits === 'string' ? formData.proposedUnits.split(',').map((u: string) => u.trim()).filter(Boolean) : formData.proposedUnits
@@ -198,6 +213,7 @@ export default function LeadsPage() {
                   needSupervision: false, needProjectManagement: false, notes: '', status: 'NEW',
                   leadClassification: 'WARM', proposedUnits: '', connectedUnit: '', callNotes: '', chatNotes: '', followUpDate: '',
                 });
+                setErrors({});
                 setIsDrawerOpen(true); 
               }}
               className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-lg text-sm font-medium transition-colors border-0 cursor-pointer"
@@ -439,6 +455,7 @@ export default function LeadsPage() {
                             { label: 'Chi tiết / Chỉnh sửa', icon: Edit, onClick: () => { 
                               setModalMode('edit'); 
                               setFormData({...lead, proposedUnits: Array.isArray(lead.proposedUnits) ? lead.proposedUnits.join(', ') : (lead.proposedUnits || '')});
+                              setErrors({});
                               setIsDrawerOpen(true); 
                             } },
                             { label: 'Xóa', icon: Trash2, onClick: () => handleDelete(lead.id), variant: 'danger', separatorBefore: true }
@@ -503,8 +520,9 @@ export default function LeadsPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <User className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.customerName} onChange={e => setFormData({...formData, customerName: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Nguyễn Văn A..." />
+                        <input type="text" value={formData.customerName} onChange={e => {setFormData({...formData, customerName: e.target.value}); if (errors.customerName) setErrors({...errors, customerName: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.customerName ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="Nguyễn Văn A..." />
                       </div>
+                      {errors.customerName && <p className="text-red-500 text-xs mt-1">{errors.customerName}</p>}
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Số điện thoại <span className="text-red-500">*</span></label>
@@ -512,8 +530,9 @@ export default function LeadsPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Phone className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="0901..." />
+                        <input type="text" value={formData.phone} onChange={e => {setFormData({...formData, phone: e.target.value}); if (errors.phone) setErrors({...errors, phone: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.phone ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="0901..." />
                       </div>
+                      {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                     </div>
                   </div>
                 </div>

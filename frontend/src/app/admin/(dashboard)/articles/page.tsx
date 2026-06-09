@@ -7,6 +7,7 @@ import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { toast } from 'sonner';
 
 const STATUS_MAP: Record<string, string> = {
   'PUBLISHED': 'Đã xuất bản',
@@ -67,6 +68,7 @@ export default function ArticlesPage() {
     summary: '', content: '', thumbnail: [], views: 0, status: 'DRAFT',
     metaTitle: '', metaDescription: '', keyword: '', faqSchema: false, publishedAt: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredData = data.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -117,6 +119,20 @@ export default function ArticlesPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.title?.trim()) newErrors.title = 'Tiêu đề bài viết không được để trống';
+    const contentText = formData.content?.replace(/<[^>]*>?/gm, '').trim();
+    if (!contentText) newErrors.content = 'Nội dung bài viết không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     const dataToSave = {
       ...formData,
       thumbnail: Array.isArray(formData.thumbnail) && formData.thumbnail.length > 0 ? formData.thumbnail[0] : ''
@@ -204,6 +220,7 @@ export default function ArticlesPage() {
                   summary: '', content: '', thumbnail: [], views: 0, status: 'DRAFT',
                   metaTitle: '', metaDescription: '', keyword: '', faqSchema: false, publishedAt: ''
                 });
+                setErrors({});
                 setActiveTab('basic');
                 setIsDrawerOpen(true); 
               }}
@@ -403,6 +420,7 @@ export default function ArticlesPage() {
                             { label: 'Chỉnh sửa', icon: Edit, onClick: () => { 
                               setModalMode('edit'); 
                               setFormData({ ...article, thumbnail: article.thumbnail ? (Array.isArray(article.thumbnail) ? article.thumbnail : [article.thumbnail]) : [] });
+                              setErrors({});
                               setActiveTab('basic');
                               setIsDrawerOpen(true); 
                             } },
@@ -470,8 +488,9 @@ export default function ArticlesPage() {
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <FileText className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                       </div>
-                      <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Nhập tiêu đề bài viết..." />
+                      <input type="text" value={formData.title} onChange={e => {setFormData({...formData, title: e.target.value}); if (errors.title) setErrors({...errors, title: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.title ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="Nhập tiêu đề bài viết..." />
                     </div>
+                    {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title}</p>}
                   </div>
 
                   <div className="space-y-1.5">
@@ -481,9 +500,10 @@ export default function ArticlesPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Nội dung chi tiết <span className="text-red-500">*</span></label>
-                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-[#14151a]">
-                      <TiptapEditor value={formData.content} onChange={(content) => setFormData({...formData, content})} />
+                    <div className={`border ${errors.content ? 'border-red-500' : 'border-gray-200 dark:border-gray-700'} rounded-lg overflow-hidden bg-white dark:bg-[#14151a]`}>
+                      <TiptapEditor value={formData.content} onChange={(content) => {setFormData({...formData, content}); if (errors.content) setErrors({...errors, content: ''});}} />
                     </div>
+                    {errors.content && <p className="text-red-500 text-xs mt-1">{errors.content}</p>}
                   </div>
                 </div>
 

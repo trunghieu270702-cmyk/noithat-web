@@ -6,6 +6,7 @@ import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { toast } from 'sonner';
 
 import apiClient from '@/admin-lib/apiClient';
 const SEGMENT_MAP: Record<string, string> = {
@@ -82,6 +83,7 @@ export default function UnitsPage() {
     isVisible: true,
     isPinned: false
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const activeFiltersCount = (statusFilter.length > 0 ? 1 : 0) + (segmentFilter.length > 0 ? 1 : 0);
   const hasActiveFilter = activeFiltersCount > 0;
@@ -144,6 +146,18 @@ export default function UnitsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = 'Tên đơn vị không được để trống';
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
@@ -221,6 +235,7 @@ export default function UnitsPage() {
                 setFormData({
                   id: 0, unitId: '', name: '', slug: '', segment: 'trung-cap', location: '', projectType: '', style: '', experience: 0, status: 'ACTIVE', phone: '', email: '', shortDescription: '', description: '', avatar: [], isVisible: true, isPinned: false
                 });
+                setErrors({});
                 setActiveTab('basic');
                 setIsDrawerOpen(true); 
               }}
@@ -480,6 +495,7 @@ export default function UnitsPage() {
                           setFormData({
                             id: 0, unitId: '', name: '', slug: '', segment: 'trung-cap', location: '', projectType: '', style: '', experience: 0, status: 'ACTIVE', phone: '', email: '', shortDescription: '', description: '', avatar: [], isVisible: true, isPinned: false
                           });
+                          setErrors({});
                           setActiveTab('basic');
                           setIsDrawerOpen(true); 
                         }}
@@ -554,6 +570,7 @@ export default function UnitsPage() {
                                 avatar: (unit as any).avatar ? (Array.isArray((unit as any).avatar) ? (unit as any).avatar : [(unit as any).avatar]) : [],
                                 description: (unit as any).description || ''
                               });
+                              setErrors({});
                               setActiveTab('basic');
                               setIsDrawerOpen(true); 
                             } },
@@ -635,8 +652,9 @@ export default function UnitsPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Building2 className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: Công ty Kiến trúc Xanh..." />
+                        <input type="text" value={formData.name} onChange={e => {setFormData({...formData, name: e.target.value}); if (errors.name) setErrors({...errors, name: ''})}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Công ty Kiến trúc Xanh..." />
                       </div>
+                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Đường dẫn thân thiện (Slug)</label>

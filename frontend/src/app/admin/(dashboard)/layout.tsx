@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AppLayout from "@/admin-components/layout/AppLayout";
 import { useAuthStore } from "@/admin-features/auth/stores/useAuthStore";
+import { Toaster } from 'sonner';
 import { Loader2 } from "lucide-react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -41,5 +42,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     );
   }
 
-  return <AppLayout>{children}</AppLayout>;
+  return (
+    <>
+      <Toaster position="bottom-left" richColors closeButton />
+      <AppLayout>{children}</AppLayout>
+    </>
+  );
 }

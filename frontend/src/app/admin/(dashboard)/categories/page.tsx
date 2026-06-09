@@ -4,6 +4,7 @@ import {  Search, Filter, Tags, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight
 import apiClient from '@/admin-lib/apiClient';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { toast } from 'sonner';
 
 const TYPES = ['Bài viết', 'Dự án', 'Bộ lọc Đơn vị'];
 
@@ -56,6 +57,7 @@ export default function CategoriesPage() {
   const [formData, setFormData] = useState<any>({
     id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE'
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredData = data.filter(c => {
     const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -106,6 +108,19 @@ export default function CategoriesPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.name?.trim()) newErrors.name = 'Tên danh mục không được để trống';
+    if (!formData.slug?.trim()) newErrors.slug = 'Slug không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
@@ -168,6 +183,7 @@ export default function CategoriesPage() {
               onClick={() => { 
                 setModalMode('add'); 
                 setFormData({ id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE' });
+                setErrors({});
                 setIsDrawerOpen(true); 
               }}
               className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-lg text-sm font-medium transition-colors border-0 cursor-pointer"
@@ -353,6 +369,7 @@ export default function CategoriesPage() {
                             { label: 'Chỉnh sửa', icon: Edit, onClick: () => { 
                               setModalMode('edit'); 
                               setFormData({ ...item });
+                              setErrors({});
                               setIsDrawerOpen(true); 
                             } },
                             { label: 'Xóa', icon: Trash2, onClick: () => handleDelete(item.id), variant: 'danger', separatorBefore: true }
@@ -417,8 +434,9 @@ export default function CategoriesPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Type className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: Thiết kế nội thất..." />
+                        <input type="text" value={formData.name} onChange={e => {setFormData({...formData, name: e.target.value}); if (errors.name) setErrors({...errors, name: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Thiết kế nội thất..." />
                       </div>
+                      {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
                     
                     <div className="space-y-1.5">
@@ -427,8 +445,9 @@ export default function CategoriesPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Link className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.slug} onChange={e => setFormData({...formData, slug: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="thiet-ke-noi-that" />
+                        <input type="text" value={formData.slug} onChange={e => {setFormData({...formData, slug: e.target.value}); if (errors.slug) setErrors({...errors, slug: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.slug ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="thiet-ke-noi-that" />
                       </div>
+                      {errors.slug && <p className="text-red-500 text-xs mt-1">{errors.slug}</p>}
                     </div>
                   </div>
                 </div>
