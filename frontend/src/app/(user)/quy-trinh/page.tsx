@@ -51,28 +51,32 @@ export default function QuyTrinhPage() {
         </div>
 
         {/* Timeline */}
-        <div className="relative">
+        <div className="relative mt-12">
           {/* Vertical Line */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/10 -translate-x-1/2"></div>
+          <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#ce9e51]/50 via-[#ce9e51]/20 to-transparent md:-translate-x-1/2"></div>
           
-          <div className="space-y-12 relative z-10">
+          <div className="relative z-10 space-y-8 md:space-y-12">
             {steps.map((step, index) => {
               const isEven = index % 2 === 1;
               return (
-                <div key={index} className={`flex flex-col md:flex-row items-center gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                <div key={index} className={`flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                  
                   {/* Content Box */}
-                  <div className={`w-full md:w-1/2 ${isEven ? 'md:pl-12' : 'md:pr-12 text-left md:text-right'}`}>
-                    <div className="bg-[#1c1c1c] p-8 rounded-2xl border border-white/5 hover:border-[#ce9e51]/50 transition-colors shadow-lg relative group">
+                  <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pl-12' : 'md:pr-12 text-left md:text-right'} pt-2 md:pt-0`}>
+                    <div className="bg-[#1c1c1c] p-6 md:p-8 rounded-2xl border border-white/5 hover:border-[#ce9e51]/50 transition-colors shadow-lg relative group">
                       <div className={`absolute top-1/2 -translate-y-1/2 ${isEven ? '-left-3' : '-right-3'} w-6 h-6 rotate-45 bg-[#1c1c1c] border border-white/5 group-hover:border-[#ce9e51]/50 hidden md:block border-t-0 border-l-0 ${isEven ? 'border-b-0 border-r-0 border-l border-t' : ''}`}></div>
-                      <h3 className="text-2xl font-bold font-['Montserrat',_sans-serif] mb-3 text-[#ce9e51]">{step.title}</h3>
+                      <h3 className="text-xl md:text-2xl font-bold font-['Montserrat',_sans-serif] mb-3 text-[#ce9e51]">{step.title}</h3>
                       <p className="text-white/70 leading-relaxed text-sm md:text-base">{step.desc}</p>
                     </div>
                   </div>
                   
                   {/* Number Circle */}
-                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-14 h-14 bg-[#131313] border-2 border-[#ce9e51] rounded-full items-center justify-center font-bold text-[#ce9e51] text-lg">
+                  <div className="absolute left-[24px] md:left-1/2 top-6 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 w-10 h-10 md:w-14 md:h-14 bg-[#131313] border-2 border-[#ce9e51] rounded-full flex items-center justify-center font-bold text-[#ce9e51] text-sm md:text-lg shadow-[0_0_20px_rgba(206,158,81,0.3)]">
                     {step.number}
                   </div>
+
+                  {/* Empty space for opposite side */}
+                  <div className="hidden md:block w-1/2" />
                 </div>
               );
             })}
