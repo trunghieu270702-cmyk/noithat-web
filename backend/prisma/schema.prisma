@@ -19,16 +19,25 @@ model User {
 }
 
 model Unit {
-  id          Int       @id @default(autoincrement())
-  name        String
-  segment     String
-  location    String
-  projectType String
-  style       String
-  experience  Int
-  status      String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id               Int       @id @default(autoincrement())
+  unitId           String?
+  name             String
+  slug             String?   @unique
+  segment          String
+  location         String
+  projectType      String
+  style            String
+  experience       Int
+  status           String
+  phone            String?
+  email            String?
+  shortDescription String?
+  description      String?
+  avatar           Json?
+  isVisible        Boolean   @default(true)
+  isPinned         Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model Lead {
@@ -53,7 +62,7 @@ model Lead {
   notes                 String?
   status                String
   leadClassification    String?
-  proposedUnits         String? // Stored as comma-separated or JSON string for sqlite
+  proposedUnits         Json?
   connectedUnit         String?
   callNotes             String?
   chatNotes             String?
@@ -144,6 +153,7 @@ model Customer {
   email       String?
   address     String?
   totalLeads  Int       @default(0)
+  images      Json?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -159,13 +169,20 @@ model Setting {
 model Project {
   id          Int       @id @default(autoincrement())
   name        String
-  unitId      Int?
+  unitId      String?
   unitName    String?
   projectType String?
   budget      String?
   area        Int?
   status      String
   startDate   String?
+  summary     String?
+  scopeOfWork String?
+  duration    String?
+  location    String?
+  mainImage   Json?
+  gallery     Json?
+  tags        String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
