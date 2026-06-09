@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"pnpm --filter frontend run dev\" \"pnpm --filter backend run start:dev\"",
+    "build": "pnpm --filter backend build && pnpm --filter frontend build",
     "install:all": "pnpm install"
   },
   "devDependencies": {
