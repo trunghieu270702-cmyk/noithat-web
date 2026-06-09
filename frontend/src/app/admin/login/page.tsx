@@ -52,7 +52,7 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       setError('');
-      const response = await apiClient.post(`/api/v1/auth/login`, data);
+      const response = await apiClient.post(`/auth/login`, data);
       login(response.data.user, response.data.accessToken);
       router.push('/admin');
     } catch (err: any) {
