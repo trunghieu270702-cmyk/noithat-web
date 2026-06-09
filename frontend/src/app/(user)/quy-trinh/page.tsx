@@ -59,7 +59,7 @@ export default function QuyTrinhPage() {
             {steps.map((step, index) => {
               const isEven = index % 2 === 1;
               return (
-                <div key={index} className={`flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                <div key={index} className={`relative flex flex-col md:flex-row items-start md:items-center gap-0 md:gap-8 ${isEven ? 'md:flex-row-reverse' : ''}`}>
                   
                   {/* Content Box */}
                   <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pl-12' : 'md:pr-12 text-left md:text-right'} pt-2 md:pt-0`}>
