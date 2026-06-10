@@ -123,7 +123,7 @@ export default function SupervisionsPage() {
 
     const dataToSave = {
       ...formData,
-      inspectionItems: typeof formData.inspectionItems === 'string' ? formData.inspectionItems.split('\n').filter(Boolean) : formData.inspectionItems
+      inspectionItems: JSON.stringify(typeof formData.inspectionItems === 'string' ? formData.inspectionItems.split('\n').filter(Boolean) : formData.inspectionItems)
     };
 
     try {
@@ -370,7 +370,9 @@ export default function SupervisionsPage() {
                           items={[
                             { label: 'Chỉnh sửa', icon: Edit, onClick: () => { 
                               setModalMode('edit'); 
-                              setFormData({...sup, inspectionItems: Array.isArray(sup.inspectionItems) ? sup.inspectionItems.join('\n') : (sup.inspectionItems || '')});
+                              let parsedItems = [];
+                              try { parsedItems = JSON.parse(sup.inspectionItems); } catch(e) {}
+                              setFormData({...sup, inspectionItems: Array.isArray(parsedItems) ? parsedItems.join('\n') : ''});
                               setErrors({});
                               setIsDrawerOpen(true); 
                             } },

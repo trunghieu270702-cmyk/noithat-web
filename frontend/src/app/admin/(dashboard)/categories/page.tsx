@@ -124,9 +124,11 @@ export default function CategoriesPage() {
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
+        if (!createData.slug) createData.slug = createData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.post('/categories', createData);
       } else {
         const { id, ...updateData } = formData;
+        if (!updateData.slug) updateData.slug = updateData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.patch(`/categories/${id}`, updateData);
       }
       setIsDrawerOpen(false);

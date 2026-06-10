@@ -31,12 +31,7 @@ apiClient.interceptors.response.use(
     const errorMessage = error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại sau!';
     
     // Display error toast
-    toast.error(
-      typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage),
-      {
-        style: { border: '1px solid #ef4444' }
-      }
-    );
+    toast.error(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
 
     return Promise.reject(error);
   }

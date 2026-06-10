@@ -44,7 +44,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Toaster position="bottom-left" richColors closeButton />
+      <Toaster position="bottom-left" />
       <AppLayout>{children}</AppLayout>
     </>
   );

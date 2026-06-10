@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import { toast } from 'sonner';
 
 const LOCATION_MAP: Record<string, string> = {
   'Hà Nội': 'Hà Nội',
@@ -57,6 +58,7 @@ export default function CustomersPage() {
   const [formData, setFormData] = useState({
     id: '', fullName: '', phoneNumber: '', email: '', address: 'Hà Nội', totalLeads: 0, images: [] as string[],
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const filteredData = Array.isArray(data) ? data.filter(customer => {
     const matchesSearch = customer.fullName.toLowerCase().includes(searchQuery.toLowerCase()) || customer.phoneNumber.includes(searchQuery);
@@ -105,6 +107,17 @@ export default function CustomersPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors: Record<string, string> = {};
+    if (!formData.fullName.trim()) newErrors.fullName = 'Họ và tên không được để trống';
+    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = 'Số điện thoại không được để trống';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+      return;
+    }
+    setErrors({});
+
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
@@ -167,6 +180,7 @@ export default function CustomersPage() {
               onClick={() => { 
                 setModalMode('add'); 
                 setFormData({ id: '', fullName: '', phoneNumber: '', email: '', address: 'Hà Nội', totalLeads: 0, images: [] });
+                setErrors({});
                 setIsDrawerOpen(true); 
               }}
               className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-lg text-sm font-medium transition-colors border-0 cursor-pointer"
@@ -349,6 +363,7 @@ export default function CustomersPage() {
                             { label: 'Chỉnh sửa', icon: Edit, onClick: () => { 
                               setModalMode('edit'); 
                               setFormData({ ...customer, images: customer.images || [] });
+                              setErrors({});
                               setIsDrawerOpen(true); 
                             } },
                             { label: 'Xóa', icon: Trash2, onClick: () => handleDelete(customer.id), variant: 'danger', separatorBefore: true }
@@ -415,8 +430,9 @@ export default function CustomersPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <User className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.fullName} onChange={e => setFormData({...formData, fullName: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: Nguyễn Văn A..." />
+                        <input type="text" required value={formData.fullName} onChange={e => {setFormData({...formData, fullName: e.target.value}); if (errors.fullName) setErrors({...errors, fullName: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.fullName ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Nguyễn Văn A..." />
                       </div>
+                      {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Số điện thoại <span className="text-red-500">*</span></label>
@@ -424,8 +440,9 @@ export default function CustomersPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Phone className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" required value={formData.phoneNumber} onChange={e => setFormData({...formData, phoneNumber: e.target.value})} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="0901..." />
+                        <input type="text" required value={formData.phoneNumber} onChange={e => {setFormData({...formData, phoneNumber: e.target.value}); if (errors.phoneNumber) setErrors({...errors, phoneNumber: ''});}} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.phoneNumber ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-lg text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="0901..." />
                       </div>
+                      {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>}
                     </div>
                   </div>
 

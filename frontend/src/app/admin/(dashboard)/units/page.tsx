@@ -162,9 +162,11 @@ export default function UnitsPage() {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
         if (!createData.unitId) createData.unitId = `UN${Math.floor(Math.random() * 1000)}`;
+        if (!createData.slug) createData.slug = createData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.post('/units', createData);
       } else {
         const { id, ...updateData } = formData;
+        if (!updateData.slug) updateData.slug = updateData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.patch(`/units/${id}`, updateData);
       }
       setIsDrawerOpen(false);

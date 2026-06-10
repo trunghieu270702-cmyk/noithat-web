@@ -155,17 +155,19 @@ export default function ProjectsPage() {
     
     try {
       if (modalMode === 'add') {
-        const { id, ...createData } = formData;
+        const { id, images, ...createData } = formData;
         await apiClient.post('/projects', {
           ...createData,
-          unitId: parseInt(formData.unitId || '0'),
+          unitId: formData.unitId,
+          gallery: images,
           unitName
         });
       } else {
-        const { id, ...updateData } = formData;
+        const { id, images, ...updateData } = formData;
         await apiClient.patch(`/projects/${id}`, {
           ...updateData,
-          unitId: parseInt(formData.unitId),
+          unitId: formData.unitId,
+          gallery: images,
           unitName
         });
       }
@@ -484,7 +486,7 @@ export default function ProjectsPage() {
                                 ...project,
                                 unitId: project.unitId.toString(),
                                 startDate: new Date(project.startDate).toISOString().split('T')[0],
-                                images: project.images ? JSON.parse(project.images) : [],
+                                images: Array.isArray(project.gallery) ? project.gallery : (typeof project.gallery === 'string' ? JSON.parse(project.gallery) : []),
                               });
                               setErrors({});
                               setIsDrawerOpen(true); 

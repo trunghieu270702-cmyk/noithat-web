@@ -141,9 +141,11 @@ export default function ArticlesPage() {
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = dataToSave;
+        if (!createData.slug) createData.slug = createData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.post('/articles', createData);
       } else {
         const { id, ...updateData } = dataToSave;
+        if (!updateData.slug) updateData.slug = updateData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.patch(`/articles/${id}`, updateData);
       }
       setIsDrawerOpen(false);
