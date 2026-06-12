@@ -9,7 +9,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchUnit = async () => {
       try {
-        const res = await fetch('/api/units');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/units`);
         const data = await res.json();
         if (Array.isArray(data)) {
           const found = data.find((u: any) => u.id.toString() === params.id.toString());

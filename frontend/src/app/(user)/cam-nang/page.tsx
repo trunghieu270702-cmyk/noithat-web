@@ -10,7 +10,7 @@ export default function CamNangPage() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const res = await fetch('/api/articles');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/articles`);
         if (!res.ok) throw new Error('API error');
         const text = await res.text();
         if (!text || text.startsWith('<')) throw new Error('Invalid JSON response');

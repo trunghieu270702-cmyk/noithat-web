@@ -63,7 +63,7 @@ export default function DonViThietKePage() {
   useEffect(() => {
     const fetchUnits = async () => {
       try {
-        const res = await fetch('/api/units');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/units`);
         const data = await res.json();
         if (Array.isArray(data)) {
           // Map API data to the fields required by the UI
