@@ -95,7 +95,7 @@ export default function CamNangPage() {
               />
             </div>
             <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-              <span className="inline-block bg-[#ce9e51]/20 text-[#ce9e51] text-xs font-bold px-3 py-1 rounded-[8px] uppercase tracking-wider mb-4 w-max">
+              <span className="inline-block bg-[#ce9e51]/20 text-[#ce9e51] text-xs font-bold px-3 py-1 rounded-[4px] uppercase tracking-wider mb-4 w-max text-[#131313]">
                 Bài viết nổi bật
               </span>
               <h3 className="font-heading text-3xl font-bold mb-4">{featuredPost.title}</h3>

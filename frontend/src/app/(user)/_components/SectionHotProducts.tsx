@@ -29,7 +29,7 @@ export default function SectionHotProducts() {
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[8px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 text-[#131313]">
               <span className="w-2 h-2 rounded-full bg-[#C7A25C] animate-pulse"></span>
               Sản phẩm nổi bật
             </div>
@@ -68,7 +68,7 @@ export default function SectionHotProducts() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
                     
                     {/* Badge */}
-                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm text-[#1F1F1F] dark:text-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-[8px]">
+                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm text-[#1F1F1F] dark:text-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-[4px]">
                       {product.category}
                     </div>
 

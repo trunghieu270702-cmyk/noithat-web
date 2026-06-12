@@ -271,7 +271,7 @@ export default function TuVanPage() {
 
             {/* Submit */}
             <div className="text-center pt-6 border-t border-gray-200 dark:border-white/10">
-              <button type="submit" className="w-full md:w-auto bg-[#ce9e51] hover:bg-white hover:text-[#131313] text-gray-900 dark:text-white font-bold py-4 px-12 rounded-[8px] transition-colors uppercase tracking-wider text-sm">
+              <button type="submit" className="w-full md:w-auto bg-[#ce9e51] hover:bg-white hover:text-[#131313] text-gray-900 dark:text-white font-bold py-4 px-12 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
                 Gửi nhu cầu tư vấn
               </button>
               <p className="text-white/40 text-xs mt-4">Thông tin của bạn sẽ được bảo mật và chỉ dùng để tư vấn đơn vị phù hợp.</p>

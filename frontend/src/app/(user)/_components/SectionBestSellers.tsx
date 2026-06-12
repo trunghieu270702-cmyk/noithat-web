@@ -76,7 +76,7 @@ export default function SectionBestSellers() {
                 />
                 <div className="absolute top-4 left-4 flex gap-2">
                   {product.tags.map(tag => (
-                    <span key={tag} className="bg-[#D3AE3E] text-black text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                    <span key={tag} className="bg-[#D3AE3E] text-black text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-[4px] text-[#131313]">
                       {tag}
                     </span>
                   ))}
@@ -103,7 +103,7 @@ export default function SectionBestSellers() {
         </div>
 
         <div className="mt-16 text-center">
-          <Link href="/san-pham?filter=ban-chay" className="inline-flex items-center justify-center border-2 border-[#D3AE3E] text-[#D3AE3E] hover:bg-[#D3AE3E] hover:text-black px-8 py-4 rounded-[8px] font-bold uppercase tracking-widest transition-all text-sm">
+          <Link href="/san-pham?filter=ban-chay" className="inline-flex items-center justify-center border-2 border-[#D3AE3E] text-[#D3AE3E] hover:bg-[#D3AE3E] hover:text-black px-8 py-4 rounded-[4px] font-bold uppercase tracking-widest transition-all text-sm text-[#131313]">
             Khám phá thêm sản phẩm
           </Link>
         </div>

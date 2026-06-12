@@ -115,10 +115,9 @@ export default function Header() {
             
             <ThemeToggle />
 
-            {/* CTA Button */}
             <Link 
               href="/tu-van" 
-              className="font-menu hidden lg:inline-flex items-center gap-2 bg-[#D3AE3E] text-white px-6 py-3 text-[12px] font-semibold uppercase tracking-widest hover:bg-[#b88c45] transition-colors"
+              className="font-menu hidden lg:inline-flex items-center gap-2 bg-[#D3AE3E] text-[#131313] px-6 py-3 text-[12px] font-semibold uppercase tracking-widest hover:bg-[#b88c45] hover:text-white transition-colors rounded-[4px]"
             >
               Gửi nhu cầu tư vấn
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +155,7 @@ export default function Header() {
           <Link href="/he-sinh-thai" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Hệ Sinh Thái</Link>
           <Link href="/giam-sat" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Dịch Vụ</Link>
           <Link href="/cam-nang" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Cẩm Nang</Link>
-          <Link href="/tu-van" onClick={() => setIsMobileMenuOpen(false)} className="font-menu mt-8 bg-[#D3AE3E] text-white px-8 py-3.5 text-sm font-bold uppercase tracking-widest w-full text-center hover:bg-[#b88c45] transition-colors rounded-[8px]">
+          <Link href="/tu-van" onClick={() => setIsMobileMenuOpen(false)} className="font-menu mt-8 bg-[#D3AE3E] text-white px-8 py-3.5 text-sm font-bold uppercase tracking-widest w-full text-center hover:bg-[#b88c45] transition-colors rounded-[4px]">
             Gửi Nhu Cầu Tư Vấn
           </Link>
         </nav>

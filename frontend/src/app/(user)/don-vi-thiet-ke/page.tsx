@@ -93,7 +93,7 @@ export default function DonViThietKePage() {
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 text-[#131313]">
             Đơn vị thiết kế
           </div>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6">Hệ sinh thái 30 đơn vị thiết kế – thi công</h1>
@@ -138,7 +138,7 @@ export default function DonViThietKePage() {
             ]} 
           />
           <div className="flex-1 min-w-[200px]">
-            <button className="w-full bg-[#C7A25C] hover:bg-[#1F1F1F] hover:text-white dark:hover:bg-white dark:hover:text-[#131313] text-white dark:text-white font-bold py-3 px-6 rounded-[8px] transition-colors uppercase tracking-wider text-sm h-[46px] mt-2">
+            <button className="w-full bg-[#C7A25C] hover:bg-[#1F1F1F] hover:text-white dark:hover:bg-white dark:hover:text-[#131313] text-white dark:text-white font-bold py-3 px-6 rounded-[4px] transition-colors uppercase tracking-wider text-sm h-[46px] mt-2">
               Lọc kết quả
             </button>
           </div>
@@ -163,7 +163,7 @@ export default function DonViThietKePage() {
                   className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 luxury-image-filter"
                   style={{ backgroundImage: `url(${unit.image})` }}
                 ></div>
-                <div className="absolute top-4 left-4 bg-[#1F1F1F] dark:bg-[#C7A25C] text-white text-xs font-bold px-3 py-1 rounded-[8px] uppercase tracking-wider">
+                <div className="absolute top-4 left-4 bg-[#1F1F1F] dark:bg-[#C7A25C] text-white text-xs font-bold px-3 py-1 rounded-[4px] uppercase tracking-wider">
                   {unit.category}
                 </div>
               </div>
@@ -187,10 +187,10 @@ export default function DonViThietKePage() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <Link href={`/don-vi-thiet-ke/${unit.id}`} className="text-center block w-full bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-4 rounded-[8px] transition-colors uppercase tracking-wider text-xs">
+                  <Link href={`/don-vi-thiet-ke/${unit.id}`} className="text-center block w-full bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-4 rounded-[4px] transition-colors uppercase tracking-wider text-xs">
                     Xem hồ sơ chi tiết
                   </Link>
-                  <Link href={`/tu-van?unit=${unit.id}`} className="text-center block w-full bg-[#1F1F1F] text-white dark:bg-white/10 dark:hover:bg-[#C7A25C] dark:text-white font-bold py-3 px-4 rounded-[8px] transition-colors uppercase tracking-wider text-xs hover:bg-[#C7A25C]">
+                  <Link href={`/tu-van?unit=${unit.id}`} className="text-center block w-full bg-[#1F1F1F] text-white dark:bg-white/10 dark:hover:bg-[#C7A25C] dark:text-white font-bold py-3 px-4 rounded-[4px] transition-colors uppercase tracking-wider text-xs hover:bg-[#C7A25C]">
                     Nhận tư vấn đơn vị này
                   </Link>
                 </div>

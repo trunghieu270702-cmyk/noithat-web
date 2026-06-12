@@ -76,7 +76,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
               <span className="text-4xl text-[#1F1F1F]/20 dark:text-white/20 font-bold uppercase">{unit.name.substring(0, 2)}</span>
             </div>
             <div className="w-full md:w-2/3">
-              <span className="inline-block bg-[#1F1F1F] dark:bg-[#C7A25C] text-white text-xs font-bold px-3 py-1 rounded-[8px] uppercase tracking-wider mb-4">
+              <span className="inline-block bg-[#1F1F1F] dark:bg-[#C7A25C] text-white text-xs font-bold px-3 py-1 rounded-[4px] uppercase tracking-wider mb-4">
                 Phân khúc {unit.category}
               </span>
               <h1 className="font-heading text-4xl font-bold mb-4">{unit.name}</h1>
@@ -102,10 +102,10 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-[#131313] text-white font-bold py-3 px-8 rounded-[8px] transition-colors uppercase tracking-wider text-sm">
+                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-[#131313] text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
                   Kết nối với đơn vị này
                 </Link>
-                <button className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[8px] transition-colors uppercase tracking-wider text-sm">
+                <button className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
                   Yêu cầu báo giá sơ bộ
                 </button>
               </div>
@@ -188,10 +188,10 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">Bạn muốn được tư vấn xem đơn vị này có phù hợp với công trình của mình không?</h2>
           <p className="text-[#1F1F1F]/70 dark:text-white/70 mb-8">Chúng tôi sẽ giúp bạn đánh giá và so sánh khách quan hoàn toàn miễn phí.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-[#131313] text-white font-bold py-3 px-8 rounded-[8px] transition-colors uppercase tracking-wider text-sm">
+            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-[#131313] text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
               Nhận tư vấn đơn vị này
             </Link>
-            <Link href="/don-vi-thiet-ke" className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[8px] transition-colors uppercase tracking-wider text-sm">
+            <Link href="/don-vi-thiet-ke" className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
               So sánh với đơn vị khác
             </Link>
           </div>

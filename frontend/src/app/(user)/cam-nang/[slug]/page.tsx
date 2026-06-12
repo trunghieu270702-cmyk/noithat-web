@@ -72,7 +72,7 @@ export default function ArticleDetail() {
         <div className="max-w-[1400px] mx-auto px-6 text-center pt-20">
           <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Không tìm thấy bài viết</h1>
           <p className="text-gray-500 mb-8">{error || 'Bài viết có thể đã bị xóa hoặc đường dẫn không hợp lệ.'}</p>
-          <Link href="/cam-nang" className="bg-[#D3AE3E] text-white px-8 py-3 rounded-[8px] font-bold uppercase tracking-wider inline-flex items-center gap-2">
+          <Link href="/cam-nang" className="bg-[#D3AE3E] text-white px-8 py-3 rounded-[4px] font-bold uppercase tracking-wider inline-flex items-center gap-2">
             <ArrowLeft className="w-5 h-5" /> Về Cẩm Nang
           </Link>
         </div>
@@ -99,7 +99,7 @@ export default function ArticleDetail() {
 
         {/* Article Header */}
         <header className="mb-12">
-          <span className="inline-block px-3 py-1 bg-[#D3AE3E]/10 text-[#D3AE3E] text-[12px] font-bold uppercase tracking-wider mb-6 rounded-sm">
+          <span className="inline-block px-3 py-1 bg-[#D3AE3E]/10 text-[#D3AE3E] text-[12px] font-bold uppercase tracking-wider mb-6 rounded-sm text-[#131313]">
             {article.category || 'Tin tức'}
           </span>
 
