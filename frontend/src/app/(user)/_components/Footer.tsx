@@ -141,7 +141,7 @@ export default function Footer() {
                 className="w-full h-auto transition-transform hover:scale-105" 
               />
             </div>
-            <div className="text-[13px] text-gray-500 dark:text-[#888] hover:text-gray-900 dark:text-white transition-colors cursor-pointer text-center md:text-right">
+            <div className="text-[13px] text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer text-center md:text-right">
               Terms of use | Privacy Environmental Policy
             </div>
           </div>

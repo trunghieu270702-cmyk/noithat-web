@@ -156,7 +156,7 @@ export default function Blog() {
 
                   <Link 
                     href={post.link}
-                    className="flex items-center gap-2 text-[13px] font-bold tracking-widest uppercase text-[#D3AE3E] hover:text-gray-900 dark:text-white transition-colors"
+                    className="flex items-center gap-2 text-[13px] font-bold tracking-widest uppercase text-[#D3AE3E] hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
                     Đọc tiếp

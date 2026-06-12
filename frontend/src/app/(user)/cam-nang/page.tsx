@@ -74,7 +74,7 @@ export default function CamNangPage() {
               <ul className="space-y-4">
                 {cat.articles.slice(0, 5).map((article: any, i: number) => (
                   <li key={i}>
-                    <Link href={`/cam-nang/${article.slug || article.id}`} className="group flex items-start gap-3 text-gray-700 dark:text-white/80 hover:text-gray-900 dark:text-white transition-colors">
+                    <Link href={`/cam-nang/${article.slug || article.id}`} className="group flex items-start gap-3 text-gray-700 dark:text-white/80 hover:text-gray-900 dark:hover:text-white transition-colors">
                       <i className="fa fa-chevron-right mt-1.5 text-xs text-gray-300 dark:text-white/30 group-hover:text-[#ce9e51] transition-colors"></i>
                       <span className="leading-relaxed group-hover:underline underline-offset-4 decoration-[#ce9e51]/50">{article.title}</span>
                     </Link>
@@ -102,7 +102,7 @@ export default function CamNangPage() {
               <p className="text-gray-600 dark:text-white/70 mb-8 line-clamp-3">
                 {featuredPost.content ? featuredPost.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : 'Đang cập nhật...'}
               </p>
-              <Link href={`/cam-nang/${featuredPost.slug || featuredPost.id}`} className="inline-flex items-center gap-2 text-[#ce9e51] hover:text-gray-900 dark:text-white font-bold uppercase tracking-wider text-sm transition-colors">
+              <Link href={`/cam-nang/${featuredPost.slug || featuredPost.id}`} className="inline-flex items-center gap-2 text-[#ce9e51] hover:text-gray-900 dark:hover:text-white font-bold uppercase tracking-wider text-sm transition-colors">
                 Đọc tiếp <i className="fa fa-arrow-right"></i>
               </Link>
             </div>

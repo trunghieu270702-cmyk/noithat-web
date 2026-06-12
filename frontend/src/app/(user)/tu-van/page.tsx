@@ -35,7 +35,7 @@ function FormSelect({ label, options, value, onChange }: { label: string, option
             {options.map((opt) => (
               <div 
                 key={opt.value}
-                className={`px-4 py-2.5 text-[15px] cursor-pointer transition-colors ${value === opt.value ? 'bg-[#ce9e51]/20 text-[#ce9e51]' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:bg-white/5 hover:text-gray-900 dark:text-white'}`}
+                className={`px-4 py-2.5 text-[15px] cursor-pointer transition-colors ${value === opt.value ? 'bg-[#ce9e51]/20 text-[#ce9e51]' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white'}`}
                 onClick={() => {
                   onChange(opt.value);
                   setIsOpen(false);

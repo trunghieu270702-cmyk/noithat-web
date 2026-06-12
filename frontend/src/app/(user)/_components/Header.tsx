@@ -145,13 +145,13 @@ export default function Header() {
       >
         <button 
           onClick={() => setIsMobileMenuOpen(false)}
-          className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center border border-gray-200 dark:border-white/20 rounded-full text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#1a1a1a] transition-all"
+          className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center border border-gray-200 dark:border-white/20 rounded-full text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#1a1a1a] dark:hover:bg-white/10 transition-all"
         >
           <X className="w-6 h-6" />
         </button>
 
         <nav className="flex flex-col items-center gap-8 w-full px-6 h-full overflow-y-auto py-20">
-          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-[#D3AE3E] hover:text-gray-900 dark:text-white transition-all">Trang Chủ</Link>
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-[#D3AE3E] hover:text-gray-900 dark:hover:text-white transition-all">Trang Chủ</Link>
           <Link href="/san-pham" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Sản Phẩm</Link>
           <Link href="/he-sinh-thai" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Hệ Sinh Thái</Link>
           <Link href="/giam-sat" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Dịch Vụ</Link>
