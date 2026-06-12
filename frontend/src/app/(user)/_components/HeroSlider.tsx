@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 /* ── Slide data ── */
@@ -83,15 +84,29 @@ export default function HeroSlider() {
           className="absolute inset-0 z-0"
         >
           {/* Light Mode Banner */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center dark:hidden after:absolute after:inset-0 after:bg-white/50" 
-            style={{ backgroundImage: `url(${SLIDES[current].bgLight})` }} 
-          />
+          <div className="absolute inset-0 dark:hidden">
+            <Image 
+              src={SLIDES[current].bgLight} 
+              alt="Banner" 
+              fill
+              priority
+              quality={85}
+              className="object-cover" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/20 to-white/80" />
+          </div>
           {/* Dark Mode Banner */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center hidden dark:block after:absolute after:inset-0 dark:after:bg-gradient-to-b dark:after:from-[#0a0a0a]/90 dark:after:via-black/70 dark:after:to-[#0a0a0a]" 
-            style={{ backgroundImage: `url(${SLIDES[current].bgDark})` }} 
-          />
+          <div className="absolute inset-0 hidden dark:block">
+            <Image 
+              src={SLIDES[current].bgDark} 
+              alt="Banner Dark" 
+              fill
+              priority
+              quality={85}
+              className="object-cover" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/90 via-black/70 to-[#0a0a0a]" />
+          </div>
         </motion.div>
       </AnimatePresence>
 
