@@ -113,17 +113,13 @@ export default function Blog() {
                 }`}
               >
                 {/* Tags */}
-                <ul className="flex flex-wrap gap-2 text-gray-500 dark:text-[#888] text-[13px] mb-4">
-                  <li className="flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                    {post.tags.map((tag: string, i: number) => (
-                      <span key={i}>
-                        <Link href="#" className="hover:text-[#D3AE3E] transition-colors">{tag}</Link>
-                        {i < post.tags.length - 1 && ', '}
-                      </span>
-                    ))}
-                  </li>
-                </ul>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {post.tags.map((tag: string, i: number) => (
+                    <Link key={i} href="#" className="bg-gradient-to-r from-[#D3AE3E] to-[#E5C98A] text-[#131313] px-3 py-1 rounded-[4px] font-bold uppercase tracking-widest text-[10px] shadow-[0_0_10px_rgba(211,174,62,0.3)] luxury-glow hover:-translate-y-0.5 transition-transform">
+                      {tag}
+                    </Link>
+                  ))}
+                </div>
 
                 {/* Title */}
                 <h3 className="font-heading text-2xl lg:text-[28px] font-bold text-gray-900 dark:text-white mb-6 leading-snug">
