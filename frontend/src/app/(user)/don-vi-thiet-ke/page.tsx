@@ -24,7 +24,7 @@ function CustomSelect({ label, options, value, onChange }: { label: string, opti
       <label className="block text-sm text-gray-400 dark:text-white/50 mb-2 font-medium">{label}</label>
       <div className="relative">
         <div 
-          className={`bg-white dark:bg-[#131313] border ${isOpen ? 'border-[#C7A25C]' : 'border-[#ECE7DE] dark:border-white/20'} text-[#1F1F1F] dark:text-white p-3 rounded-[8px] cursor-pointer flex justify-between items-center transition-colors hover:border-[#C7A25C]/50`}
+          className={`bg-white dark:bg-[#131313] border ${isOpen ? 'border-[#C7A25C]' : 'border-[#ECE7DE] dark:border-white/20'} text-[#1F1F1F] dark:text-white p-3 rounded-[4px] cursor-pointer flex justify-between items-center transition-colors hover:border-[#C7A25C]/50`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="text-sm">{selectedLabel}</span>
@@ -32,7 +32,7 @@ function CustomSelect({ label, options, value, onChange }: { label: string, opti
         </div>
         
         {isOpen && (
-          <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#1c1c1c] shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[8px] py-2 animate-fadeInDown">
+          <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#1c1c1c] shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[4px] py-2 animate-fadeInDown">
             {options.map((opt) => (
               <div 
                 key={opt.value}
@@ -56,6 +56,17 @@ export default function DonViThietKePage() {
   const [segment, setSegment] = useState('');
   const [type, setType] = useState('');
   const [style, setStyle] = useState('');
+
+  const getCategoryStyles = (category: string) => {
+    const lower = category?.toLowerCase() || '';
+    if (lower.includes('cao cấp')) {
+      return 'bg-gradient-to-r from-[#D3AE3E] to-[#E5C98A] text-[#131313] shadow-[0_0_15px_rgba(211,174,62,0.4)] luxury-glow';
+    }
+    if (lower.includes('trung cấp')) {
+      return 'bg-[#1F1F1F] dark:bg-white/20 text-white border border-[#ECE7DE] dark:border-white/30 backdrop-blur-sm';
+    }
+    return 'bg-white/90 dark:bg-black/80 backdrop-blur-md text-[#1F1F1F] dark:text-white border border-gray-200 dark:border-white/10';
+  };
 
   const [units, setUnits] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -93,7 +104,7 @@ export default function DonViThietKePage() {
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 text-[#131313]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 text-white">
             Đơn vị thiết kế
           </div>
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6">Hệ sinh thái 30 đơn vị thiết kế – thi công</h1>
@@ -138,7 +149,7 @@ export default function DonViThietKePage() {
             ]} 
           />
           <div className="flex-1 min-w-[200px]">
-            <button className="w-full bg-[#C7A25C] hover:bg-[#1F1F1F] hover:text-white dark:hover:bg-white dark:hover:text-[#131313] text-white dark:text-white font-bold py-3 px-6 rounded-[4px] transition-colors uppercase tracking-wider text-sm h-[46px] mt-2">
+            <button className="w-full bg-[#C7A25C] hover:bg-[#1F1F1F] hover:text-white dark:hover:bg-white dark:hover:text-white text-white dark:text-white font-bold py-3 px-6 rounded-[4px] transition-colors uppercase tracking-wider text-sm h-[46px] mt-2">
               Lọc kết quả
             </button>
           </div>
@@ -157,13 +168,13 @@ export default function DonViThietKePage() {
               <p className="text-gray-500 dark:text-white/60 max-w-md mx-auto text-lg">Hệ thống hiện đang cập nhật danh sách các đơn vị thiết kế và thi công nội thất chuyên nghiệp. Vui lòng quay lại sau!</p>
             </div>
           ) : units.map((unit) => (
-            <div key={unit.id} className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none rounded-[8px] overflow-hidden group border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 hover:-translate-y-1 transition-all">
+            <div key={unit.id} className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none rounded-[8px] overflow-hidden group border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 hover:-translate-y-1 transition-all luxury-glow">
               <div className="h-[240px] relative overflow-hidden">
                 <div 
-                  className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500 luxury-image-filter"
+                  className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
                   style={{ backgroundImage: `url(${unit.image})` }}
                 ></div>
-                <div className="absolute top-4 left-4 bg-[#1F1F1F] dark:bg-[#C7A25C] text-white text-xs font-bold px-3 py-1 rounded-[4px] uppercase tracking-wider">
+                <div className={`absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-[4px] uppercase tracking-widest z-20 ${getCategoryStyles(unit.category)}`}>
                   {unit.category}
                 </div>
               </div>

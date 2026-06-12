@@ -33,7 +33,7 @@ export default function Section10CTA() {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="#Form"
-              className="inline-flex items-center justify-center px-10 py-5 bg-[#D3AE3E] text-[#131313] uppercase tracking-wider text-[14px] font-bold hover:bg-[#b88c45] hover:text-white transition-colors duration-300 rounded-[4px]"
+              className="inline-flex items-center justify-center px-10 py-5 bg-[#D3AE3E] text-white uppercase tracking-wider text-[14px] font-bold hover:bg-[#b88c45] hover:text-white transition-colors duration-300 rounded-[4px]"
             >
               Gửi nhu cầu công trình
             </Link>

@@ -64,6 +64,8 @@ export default function Section7Categories() {
                   className="absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-110 luxury-image-filter"
                   style={{ backgroundImage: `url(${cat.img})` }}
                 />
+                {/* Luxury Inner Border Accent */}
+                <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:inset-4 group-hover:border-[#D3AE3E]/60 rounded-[2px]"></div>
 
                 {/* Luxury Cream Overlay for Light Mode */}
                 <div

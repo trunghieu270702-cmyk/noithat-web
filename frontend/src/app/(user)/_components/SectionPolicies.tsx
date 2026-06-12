@@ -32,7 +32,7 @@ export default function SectionPolicies() {
     <section className="py-24 bg-[#F8F6F2] dark:bg-[#0a0a0a] relative border-t border-[#ECE7DE] dark:border-white/20">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 text-[#131313]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 text-white">
             Cam kết chất lượng
           </div>
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6">
@@ -45,7 +45,7 @@ export default function SectionPolicies() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {POLICIES.map((policy) => (
-            <div key={policy.id} className="card dark:bg-[#1a1a1a] border border-[#ECE7DE] dark:border-white/20 p-8 hover:border-[#C7A25C]/50 hover:-translate-y-2 transition-all duration-300 group">
+            <div key={policy.id} className="card dark:bg-[#1a1a1a] border border-[#ECE7DE] dark:border-white/20 p-8 hover:border-[#C7A25C]/50 hover:-translate-y-2 transition-all duration-300 luxury-glow group">
               <div className="w-16 h-16 bg-[#C7A25C]/10 rounded-[8px] flex items-center justify-center mb-6 text-[#C7A25C] group-hover:bg-[#C7A25C] group-hover:text-white transition-colors rotate-3 group-hover:-rotate-3 duration-300">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={policy.icon} />

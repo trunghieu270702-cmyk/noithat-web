@@ -67,7 +67,7 @@ export default function SectionBestSellers() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {BEST_SELLERS.map((product) => (
-            <div key={product.id} className="group flex flex-col bg-white dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-gray-100 dark:border-white/10 rounded-[8px] overflow-hidden hover:-translate-y-2 transition-all duration-300 shadow-sm shadow-black/20">
+            <div key={product.id} className="group flex flex-col bg-white dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-gray-100 dark:border-white/10 rounded-[8px] overflow-hidden hover:-translate-y-2 transition-all duration-300 luxury-glow shadow-sm shadow-black/20">
               <div className="relative aspect-[4/3] overflow-hidden bg-black/50">
                 <img 
                   src={product.image} 
@@ -76,7 +76,7 @@ export default function SectionBestSellers() {
                 />
                 <div className="absolute top-4 left-4 flex gap-2">
                   {product.tags.map(tag => (
-                    <span key={tag} className="bg-[#D3AE3E] text-black text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-[4px] text-[#131313]">
+                    <span key={tag} className="bg-[#D3AE3E] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-[4px]">
                       {tag}
                     </span>
                   ))}
@@ -103,7 +103,7 @@ export default function SectionBestSellers() {
         </div>
 
         <div className="mt-16 text-center">
-          <Link href="/san-pham?filter=ban-chay" className="inline-flex items-center justify-center border-2 border-[#D3AE3E] text-[#D3AE3E] hover:bg-[#D3AE3E] hover:text-black px-8 py-4 rounded-[4px] font-bold uppercase tracking-widest transition-all text-sm text-[#131313]">
+          <Link href="/san-pham?filter=ban-chay" className="inline-flex items-center justify-center border-2 border-[#D3AE3E] text-[#D3AE3E] hover:bg-[#D3AE3E] hover:text-white px-8 py-4 rounded-[4px] font-bold uppercase tracking-widest transition-all text-sm dark:text-white">
             Khám phá thêm sản phẩm
           </Link>
         </div>

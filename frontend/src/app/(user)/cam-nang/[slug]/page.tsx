@@ -99,7 +99,7 @@ export default function ArticleDetail() {
 
         {/* Article Header */}
         <header className="mb-12">
-          <span className="inline-block px-3 py-1 bg-[#D3AE3E]/10 text-[#D3AE3E] text-[12px] font-bold uppercase tracking-wider mb-6 rounded-sm text-[#131313]">
+          <span className="inline-block px-3 py-1 bg-[#D3AE3E]/10 text-[#D3AE3E] text-[12px] font-bold uppercase tracking-wider mb-6 rounded-sm text-white">
             {article.category || 'Tin tức'}
           </span>
 

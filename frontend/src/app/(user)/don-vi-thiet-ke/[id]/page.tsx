@@ -102,7 +102,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-[#131313] text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
+                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
                   Kết nối với đơn vị này
                 </Link>
                 <button className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
@@ -188,7 +188,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">Bạn muốn được tư vấn xem đơn vị này có phù hợp với công trình của mình không?</h2>
           <p className="text-[#1F1F1F]/70 dark:text-white/70 mb-8">Chúng tôi sẽ giúp bạn đánh giá và so sánh khách quan hoàn toàn miễn phí.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-[#131313] text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
+            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
               Nhận tư vấn đơn vị này
             </Link>
             <Link href="/don-vi-thiet-ke" className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">

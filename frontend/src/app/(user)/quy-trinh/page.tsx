@@ -85,7 +85,7 @@ export default function QuyTrinhPage() {
 
         {/* CTA */}
         <div className="mt-20 text-center">
-          <Link href="/tu-van" className="inline-block bg-[#ce9e51] hover:bg-white hover:text-[#131313] text-gray-900 dark:text-white font-bold py-4 px-10 rounded-[4px] transition-colors uppercase tracking-wider">
+          <Link href="/tu-van" className="inline-block bg-[#ce9e51] hover:bg-white hover:text-white text-gray-900 dark:text-white font-bold py-4 px-10 rounded-[4px] transition-colors uppercase tracking-wider">
             Gửi nhu cầu công trình ngay
           </Link>
         </div>

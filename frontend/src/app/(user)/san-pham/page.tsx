@@ -19,14 +19,22 @@ export default function SanPhamPage() {
         const data = await res.json();
         
         if (Array.isArray(data)) {
-          const fetchedProducts = data.map((p: any, idx: number) => ({
-            id: p.id,
-            title: p.name,
-            img: `/images/main/${(idx % 12) + 1}.jpg`, // Use available placeholder images 1-12
-            categories: [p.projectType || 'Khác'],
-            price: p.budget || 'Liên hệ',
-            link: `/san-pham/${p.id}`
-          }));
+          const availableImages = ['3.jpg', '4.jpg', '6.jpg', '7.jpg', '9.jpg', '10.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
+          const fetchedProducts = data.map((p: any, idx: number) => {
+            let img = `/images/main/${availableImages[idx % availableImages.length]}`;
+            if (p.mainImage) {
+              if (typeof p.mainImage === 'string') img = p.mainImage;
+              else if (Array.isArray(p.mainImage) && p.mainImage.length > 0) img = p.mainImage[0];
+            }
+            return {
+              id: p.id,
+              title: p.name,
+              img,
+              categories: [p.projectType || 'Khác'],
+              price: p.budget || 'Liên hệ',
+              link: `/san-pham/${p.id}`
+            };
+          });
 
           // Generate dynamic filters
           const uniqueTypes = Array.from(new Set(data.map((p: any) => p.projectType || 'Khác'))) as string[];
@@ -99,7 +107,7 @@ export default function SanPhamPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredItems.map((item) => (
-              <Link href={item.link} key={item.id} className="group flex flex-col bg-white dark:bg-[#131313] border border-gray-100 dark:border-white/5 rounded-[8px] overflow-hidden hover:shadow-lg hover:-translate-y-2 transition-all duration-300">
+              <Link href={item.link} key={item.id} className="group flex flex-col bg-white dark:bg-[#131313] border border-gray-100 dark:border-white/5 rounded-[8px] overflow-hidden hover:shadow-lg hover:-translate-y-2 transition-all duration-300 luxury-glow">
                 <div className="aspect-[4/3] bg-gray-100 dark:bg-white/5 relative overflow-hidden">
                   <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute top-4 left-4 bg-[#D3AE3E] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 shadow-sm">Mới nhất</div>

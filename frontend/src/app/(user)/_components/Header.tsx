@@ -117,7 +117,7 @@ export default function Header() {
 
             <Link 
               href="/tu-van" 
-              className="font-menu hidden lg:inline-flex items-center gap-2 bg-[#D3AE3E] text-[#131313] px-6 py-3 text-[12px] font-semibold uppercase tracking-widest hover:bg-[#b88c45] hover:text-white transition-colors rounded-[4px]"
+              className="font-menu hidden lg:inline-flex items-center gap-2 bg-[#D3AE3E] text-white px-6 py-3 text-[12px] font-semibold uppercase tracking-widest hover:bg-[#b88c45] hover:text-white transition-colors rounded-[4px]"
             >
               Gửi nhu cầu tư vấn
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

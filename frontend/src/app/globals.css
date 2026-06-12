@@ -84,6 +84,17 @@
     font-family: var(--font-body);
   }
 
+  .luxury-glow {
+    box-shadow: 0 0 20px rgba(211, 174, 62, 0.15);
+    border: 1px solid rgba(211, 174, 62, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .luxury-glow:hover {
+    box-shadow: 0 0 30px rgba(211, 174, 62, 0.25);
+    border-color: rgba(211, 174, 62, 0.4);
+  }
+
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
   }
@@ -184,7 +195,7 @@
     backdrop-filter: blur(12px);
     border: 1px solid #ece7de;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-    border-radius: 24px;
+    border-radius: 12px;
   }
 
   .dark .card {

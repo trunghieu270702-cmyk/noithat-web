@@ -152,7 +152,7 @@ export default function HeroSlider() {
               <motion.div variants={itemVariants} className="flex flex-wrap justify-center items-center gap-6">
                 <Link 
                   href={SLIDES[current].btn1.href} 
-                  className="relative overflow-hidden group bg-[#D3AE3E] text-[#131313] font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[4px] hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(211,174,62,0.4)]"
+                  className="relative overflow-hidden group bg-[#D3AE3E] text-white font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[4px] hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(211,174,62,0.4)]"
                 >
                   <span className="relative z-10">{SLIDES[current].btn1.label}</span>
                   <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-shimmer" />
@@ -160,7 +160,7 @@ export default function HeroSlider() {
                 
                 <Link 
                   href={SLIDES[current].btn2.href} 
-                  className="relative overflow-hidden group bg-transparent text-gray-900 dark:text-white border border-white/30 font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[4px] hover:bg-white dark:bg-[#131313] hover:text-[#131313] transition-all duration-300"
+                  className="relative overflow-hidden group bg-transparent text-white border border-white/50 font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[4px] hover:bg-white hover:text-[#131313] transition-all duration-300"
                 >
                   <span className="relative z-10">{SLIDES[current].btn2.label}</span>
                 </Link>

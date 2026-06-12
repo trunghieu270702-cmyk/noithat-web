@@ -75,7 +75,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
 
           {/* Product Info (Right Side) */}
           <div className="lg:col-span-5 flex flex-col">
-            <span className="inline-block px-3 py-1 bg-[#D3AE3E]/10 border border-[#D3AE3E]/20 text-[#D3AE3E] text-[11px] font-bold uppercase tracking-wider w-max mb-6 rounded-[4px] text-[#131313]">
+            <span className="inline-block px-3 py-1 bg-[#D3AE3E]/10 border border-[#D3AE3E]/20 text-[#D3AE3E] text-[11px] font-bold uppercase tracking-wider w-max mb-6 rounded-[4px] text-white">
               Best Seller
             </span>
 
@@ -171,7 +171,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[1, 2, 3, 4].map((item) => (
-              <Link href={`/san-pham/${item}`} key={item} className="group flex flex-col bg-white dark:bg-[#131313] border border-gray-100 dark:border-white/5 rounded-[8px] overflow-hidden hover:shadow-sm hover:-translate-y-2 transition-all duration-300">
+              <Link href={`/san-pham/${item}`} key={item} className="group flex flex-col bg-white dark:bg-[#131313] border border-gray-100 dark:border-white/5 rounded-[8px] overflow-hidden hover:shadow-sm hover:-translate-y-2 transition-all duration-300 luxury-glow">
                 <div className="aspect-[4/3] bg-gray-100 dark:bg-white/5 relative overflow-hidden">
                   <img src={`/images/main/${item + 3}.jpg`} alt="Product" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   <div className="absolute top-4 left-4 bg-[#D3AE3E] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 shadow-sm">Best Seller</div>

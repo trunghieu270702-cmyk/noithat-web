@@ -31,7 +31,7 @@ export default function HeSinhThaiPage() {
           </p>
           <Link 
             href="/don-vi-thiet-ke"
-            className="inline-flex items-center gap-2 bg-[#C7A25C] text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#1F1F1F] dark:hover:bg-white dark:hover:text-[#131313] transition-colors rounded-[4px]"
+            className="inline-flex items-center gap-2 bg-[#C7A25C] text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#1F1F1F] dark:hover:bg-white dark:hover:text-white transition-colors rounded-[4px]"
           >
             Xem danh sách đơn vị thiết kế
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
