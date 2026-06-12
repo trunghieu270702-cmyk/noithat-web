@@ -93,7 +93,6 @@ export default function HeroSlider() {
               quality={85}
               className="object-cover" 
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/20 to-white/80" />
           </div>
           {/* Dark Mode Banner */}
           <div className="absolute inset-0 hidden dark:block">
@@ -128,11 +127,11 @@ export default function HeroSlider() {
               </motion.p>
               
               <motion.div variants={itemVariants} className="w-full flex flex-col items-center justify-center mb-8">
-                <h3 className="font-heading text-4xl md:text-5xl lg:text-[72px] leading-[1.25] md:leading-[1.15] tracking-tight">
-                  <span className="font-bold text-gray-900 dark:text-white drop-shadow-sm mr-4">
+                <h3 className="font-heading text-4xl md:text-5xl lg:text-[72px] leading-[1.25] md:leading-[1.15] tracking-tight drop-shadow-md">
+                  <span className="font-bold text-gray-900 dark:text-white mr-4">
                     {SLIDES[current].titleNormal}
                   </span>
-                  <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D3AE3E] via-[#D3AE3E] to-[#AD8517] drop-shadow-sm">
+                  <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D3AE3E] via-[#D3AE3E] to-[#AD8517]">
                     {SLIDES[current].titleBold}
                   </span>
                   <br />
