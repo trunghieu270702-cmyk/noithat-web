@@ -93,6 +93,8 @@ export default function HeroSlider() {
               quality={85}
               className="object-cover" 
             />
+            {/* Cinematic dark overlay to make white text pop without looking milky */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
           </div>
           {/* Dark Mode Banner */}
           <div className="absolute inset-0 hidden dark:block">
@@ -104,7 +106,7 @@ export default function HeroSlider() {
               quality={85}
               className="object-cover" 
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/90 via-black/70 to-[#0a0a0a]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
           </div>
         </motion.div>
       </AnimatePresence>
@@ -122,20 +124,20 @@ export default function HeroSlider() {
               className="max-w-[1400px] mx-auto text-center flex flex-col items-center justify-center"
             >
               
-              <motion.p variants={itemVariants} className="text-[#D3AE3E] text-[12px] md:text-[14px] font-bold tracking-[0.3em] uppercase mb-6">
+              <motion.p variants={itemVariants} className="text-[#D3AE3E] text-[12px] md:text-[14px] font-bold tracking-[0.3em] uppercase mb-6 drop-shadow-md">
                 {SLIDES[current].subtitle}
               </motion.p>
               
               <motion.div variants={itemVariants} className="w-full flex flex-col items-center justify-center mb-8">
-                <h3 className="font-heading text-4xl md:text-5xl lg:text-[72px] leading-[1.25] md:leading-[1.15] tracking-tight drop-shadow-md">
-                  <span className="font-bold text-gray-900 dark:text-white mr-4">
+                <h3 className="font-heading text-4xl md:text-5xl lg:text-[72px] leading-[1.25] md:leading-[1.15] tracking-tight drop-shadow-xl">
+                  <span className="font-bold text-white mr-4">
                     {SLIDES[current].titleNormal}
                   </span>
-                  <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D3AE3E] via-[#D3AE3E] to-[#AD8517]">
+                  <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D3AE3E] via-[#f1be6d] to-[#D3AE3E]">
                     {SLIDES[current].titleBold}
                   </span>
                   <br />
-                  <span className="font-medium text-transparent bg-clip-text bg-gradient-to-b from-gray-700 to-gray-500 dark:from-white dark:to-white/60 mt-3 inline-block">
+                  <span className="font-medium text-white/90 mt-3 inline-block">
                     {SLIDES[current].titleLine2}
                   </span>
                 </h3>
@@ -143,7 +145,7 @@ export default function HeroSlider() {
               
               <motion.div variants={itemVariants} className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#D3AE3E] to-transparent mb-8" />
               
-              <motion.p variants={itemVariants} className="text-gray-600 dark:text-[#ccc] text-[16px] md:text-[18px] leading-[1.8] max-w-3xl mb-12">
+              <motion.p variants={itemVariants} className="text-white/90 text-[16px] md:text-[18px] leading-[1.8] max-w-3xl mb-12 drop-shadow-md">
                 {SLIDES[current].text}
               </motion.p>
               
