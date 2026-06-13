@@ -37,8 +37,8 @@ export function SlideOver({ isOpen, onClose, title, description, children }: Sli
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity" 
+      <div
+        className="absolute inset-0 bg-background/80 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
 
@@ -54,7 +54,7 @@ export function SlideOver({ isOpen, onClose, title, description, children }: Sli
           </div>
           <button
             onClick={onClose}
-            className="rounded-[8px] p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+            className="rounded-[4px] p-2 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
           >
             <X className="w-5 h-5" />
           </button>

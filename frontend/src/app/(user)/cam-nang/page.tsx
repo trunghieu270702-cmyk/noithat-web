@@ -17,7 +17,7 @@ export default function CamNangPage() {
         const data = JSON.parse(text);
         if (Array.isArray(data)) {
           const articles = data;
-          
+
           if (articles.length > 0) {
             setFeaturedPost(articles[0]);
           }
@@ -44,9 +44,9 @@ export default function CamNangPage() {
   }, []);
 
   return (
-    <div className="pt-[120px] pb-20 bg-[#FAF9F8] dark:bg-[#131313] min-h-screen text-gray-900 dark:text-white">
+    <div className="pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white">
       <div className="container mx-auto px-6 max-w-[1400px]">
-        
+
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">Cẩm nang nội thất</h1>
@@ -58,7 +58,7 @@ export default function CamNangPage() {
           {isLoading ? (
             <div className="col-span-2 text-center text-gray-400 dark:text-white/50 py-10">Đang tải chuyên mục...</div>
           ) : categories.length === 0 ? (
-            <div className="col-span-1 md:col-span-2 bg-white dark:bg-[#1c1c1c] shadow-sm dark:shadow-none border border-gray-200 dark:border-white/5 rounded-[8px] p-16 text-center flex flex-col items-center justify-center min-h-[400px]">
+            <div className="col-span-1 md:col-span-2 modern-section shadow-sm dark:shadow-none border border-gray-200 dark:border-white/5 rounded-[4px] p-16 text-center flex flex-col items-center justify-center min-h-[400px]">
               <div className="w-24 h-24 bg-[#ce9e51]/10 text-[#ce9e51] rounded-full flex items-center justify-center text-4xl mb-6 shadow-[0_0_30px_rgba(206,158,81,0.15)]">
                 <i className="fa fa-book-open"></i>
               </div>
@@ -66,7 +66,7 @@ export default function CamNangPage() {
               <p className="text-gray-500 dark:text-white/60 max-w-md mx-auto text-lg">Hệ thống đang chuẩn bị những kiến thức nội thất hữu ích nhất dành cho bạn. Vui lòng quay lại sau!</p>
             </div>
           ) : categories.map((cat, idx) => (
-            <div key={idx} className="bg-white dark:bg-[#1c1c1c] shadow-sm dark:shadow-none p-8 rounded-[8px] border border-gray-200 dark:border-white/5 hover:border-[#ce9e51]/30 transition-colors">
+            <div key={idx} className="modern-section shadow-sm dark:shadow-none p-8 rounded-[4px] border border-gray-200 dark:border-white/5 hover:border-[#ce9e51]/30 transition-colors">
               <h2 className="font-heading text-2xl font-bold mb-6 text-[#ce9e51] flex items-center gap-3">
                 <span className="w-8 h-1 bg-[#ce9e51] inline-block"></span>
                 {cat.title}
@@ -87,15 +87,15 @@ export default function CamNangPage() {
 
         {/* Featured Article Layout */}
         {featuredPost && (
-          <div className="bg-gradient-to-r from-white to-[#FAF9F8] dark:from-[#1c1c1c] dark:to-[#131313] shadow-sm dark:shadow-none rounded-[8px] border border-gray-200 dark:border-white/10 overflow-hidden flex flex-col md:flex-row">
+          <div className="bg-gradient-to-r from-white to-[#FAF9F8] dark:from-[#1c1c1c] dark:to-[#131313] shadow-sm dark:shadow-none rounded-[4px] border border-gray-200 dark:border-white/10 overflow-hidden flex flex-col md:flex-row">
             <div className="w-full md:w-1/2 h-[300px] md:h-auto bg-gray-100 dark:bg-white/5 relative">
-              <div 
+              <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${featuredPost.image || '/images/blog/post-1.jpg'})` }}
               />
             </div>
             <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-              <span className="inline-block bg-gradient-to-r from-[#D3AE3E] to-[#E5C98A] text-[#131313] shadow-[0_0_15px_rgba(211,174,62,0.4)] luxury-glow text-xs font-bold px-4 py-1.5 rounded-[4px] uppercase tracking-wider mb-4 w-max">
+              <span className="inline-block bg-gradient-to-r from-[#D3AE3E] to-[#E5C98A] text-[#131313] shadow-[0_0_15px_rgba(211,174,62,0.4)] luxury-glow text-xs font-bold px-4 py-1.5 rounded-[2px] uppercase tracking-wider mb-4 w-max">
                 Bài viết nổi bật
               </span>
               <h3 className="font-heading text-3xl font-bold mb-4">{featuredPost.title}</h3>

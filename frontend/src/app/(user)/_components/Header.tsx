@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <>
       {/* --- TOP BAR (Hidden on Mobile/Tablet) --- */}
-      <div className="hidden lg:flex border-b border-gray-200 dark:border-white/20 py-3 bg-[#FAF9F8] dark:bg-[#0a0a0a]">
+      <div className="hidden lg:flex border-b border-gray-200 dark:border-white/20 py-3 modern-section">
         <div className="max-w-[1400px] mx-auto px-6 w-full flex items-center justify-start gap-12">
           {/* Email */}
           <div className="flex items-center gap-3">
@@ -43,9 +43,9 @@ export default function Header() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img 
-                src="/images/logo-header.png" 
-                alt="logo" 
+              <img
+                src="/images/logo-header.png"
+                alt="logo"
                 className="h-[55px] w-auto transition-transform hover:scale-105"
               />
             </Link>
@@ -54,7 +54,7 @@ export default function Header() {
           {/* Navigation Menu (Hidden on Mobile) */}
           <div className="hidden lg:flex items-center space-x-8">
             <Link href="/" className="font-menu text-[13px] font-semibold uppercase tracking-widest text-[#D3AE3E] hover:text-[#D3AE3E] transition-colors">Trang chủ</Link>
-            
+
             <div className="relative group cursor-pointer">
               <span className="font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-colors">
                 Sản phẩm
@@ -112,12 +112,12 @@ export default function Header() {
 
           {/* Right Action Buttons */}
           <div className="flex items-center gap-4 lg:gap-6">
-            
+
             <ThemeToggle />
 
-            <Link 
-              href="/tu-van" 
-              className="font-menu hidden lg:inline-flex items-center gap-2 bg-[#D3AE3E] text-white px-6 py-3 text-[12px] font-semibold uppercase tracking-widest hover:bg-[#b88c45] hover:text-white transition-colors rounded-[4px]"
+            <Link
+              href="/tu-van"
+              className="font-menu hidden lg:inline-flex items-center gap-2 bg-[#D3AE3E] text-white px-6 py-3 text-[12px] font-semibold uppercase tracking-widest hover:bg-[#b88c45] hover:text-white transition-colors rounded-[2px]"
             >
               Gửi nhu cầu tư vấn
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,7 +126,7 @@ export default function Header() {
             </Link>
 
             {/* Mobile Hamburger Menu */}
-            <button 
+            <button
               className="lg:hidden text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-colors focus:outline-none"
               onClick={() => setIsMobileMenuOpen(true)}
             >
@@ -137,12 +137,11 @@ export default function Header() {
       </div>
 
       {/* --- MOBILE MENU (Full Screen Glassmorphism) --- */}
-      <div 
-        className={`fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-xl z-[100] transition-all duration-300 flex flex-col justify-center items-center ${
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
+      <div
+        className={`fixed inset-0 bg-white/95 dark:bg-black/95 backdrop-blur-xl z-[100] transition-all duration-300 flex flex-col justify-center items-center ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          }`}
       >
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(false)}
           className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center border border-gray-200 dark:border-white/20 rounded-full text-gray-900 dark:text-white hover:bg-gray-100 dark:bg-[#1a1a1a] dark:hover:bg-white/10 transition-all"
         >
@@ -155,7 +154,7 @@ export default function Header() {
           <Link href="/he-sinh-thai" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Hệ Sinh Thái</Link>
           <Link href="/giam-sat" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Dịch Vụ</Link>
           <Link href="/cam-nang" onClick={() => setIsMobileMenuOpen(false)} className="font-menu text-2xl font-semibold uppercase tracking-widest text-gray-900 dark:text-white hover:text-[#D3AE3E] transition-all">Cẩm Nang</Link>
-          <Link href="/tu-van" onClick={() => setIsMobileMenuOpen(false)} className="font-menu mt-8 bg-[#D3AE3E] text-white px-8 py-3.5 text-sm font-bold uppercase tracking-widest w-full text-center hover:bg-[#b88c45] transition-colors rounded-[4px]">
+          <Link href="/tu-van" onClick={() => setIsMobileMenuOpen(false)} className="font-menu mt-8 bg-[#D3AE3E] text-white px-8 py-3.5 text-sm font-bold uppercase tracking-widest w-full text-center hover:bg-[#b88c45] transition-colors rounded-[2px]">
             Gửi Nhu Cầu Tư Vấn
           </Link>
         </nav>

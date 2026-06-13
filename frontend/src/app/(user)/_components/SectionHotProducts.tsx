@@ -22,28 +22,28 @@ export default function SectionHotProducts() {
   );
 
   return (
-    <section className="py-24 bg-[#F8F6F2] dark:bg-[#0a0a0a] relative overflow-hidden">
+    <section className="py-24 modern-section relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full bg-[#C7A25C]/5 blur-[150px] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#C7A25C]/10 text-[#C7A25C] text-xs font-bold uppercase tracking-wider mb-4 luxury-glow">
-              <span className="w-2 h-2 rounded-[4px] bg-[#C7A25C] animate-pulse"></span>
+          <div className="flex-1 md:mr-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-[2px] bg-gradient-to-r from-[#C7A25C]/20 to-transparent border-l-2 border-[#C7A25C] text-[#A67C00] dark:text-[#FFD700] text-[11px] font-bold uppercase tracking-widest mb-4 luxury-glow">
+              <span className="w-2 h-2 rounded-[2px] bg-[#C7A25C] animate-pulse"></span>
               Sản phẩm nổi bật
             </div>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white leading-tight mb-4">
+            <h2 className="w-full uppercase font-heading text-4xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white leading-tight mb-4">
               Không gian sống{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C7A25C] to-[#E5C98A]">đẳng cấp vượt thời gian</span>
             </h2>
-            <p className="text-[#1F1F1F]/60 dark:text-white/60 text-base md:text-lg">
+            <p className="text-[#1F1F1F]/60 dark:text-white/60 text-base md:text-lg max-w-3xl">
               Tuyển tập những món đồ nội thất mang tính biểu tượng, kiến tạo nên giá trị độc bản cho ngôi nhà của bạn.
             </p>
           </div>
-          
-          <Link href="/san-pham?filter=noi-bat" 
+
+          <Link href="/san-pham?filter=noi-bat"
             className="group hidden md:flex items-center gap-2 text-sm font-semibold text-[#1F1F1F] dark:text-white hover:text-[#C7A25C] uppercase tracking-widest transition-colors"
           >
             Xem toàn bộ bộ sưu tập
@@ -56,23 +56,23 @@ export default function SectionHotProducts() {
           <div className="flex -ml-6">
             {HOT_PRODUCTS.map((product) => (
               <div key={product.id} className="flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-[0_0_28%] xl:flex-[0_0_24%] pl-6">
-                <Link href={`/san-pham/${product.id}`} className="group block relative w-full overflow-hidden rounded-[4px] bg-gray-100 dark:bg-[#131313] luxury-glow">
+                <Link href={`/san-pham/${product.id}`} className="group block relative w-full overflow-hidden rounded-[2px] bg-gray-100 dark:bg-[#131313] luxury-glow">
                   {/* Image */}
                   <div className="relative w-full aspect-[3/4] overflow-hidden">
                     <div className="absolute inset-0 bg-black/5 dark:bg-transparent z-10 group-hover:bg-black/0 transition-colors duration-500"></div>
-                    <img 
-                      src={product.image} 
+                    <img
+                      src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     {/* Luxury Inner Border Accent */}
                     <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:inset-4 group-hover:border-[#D3AE3E]/60 rounded-[2px]"></div>
-                    
+
                     {/* Gradient Overlay for Text Visibility */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-                    
+
                     {/* Category Tag */}
-                    <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md text-[#D3AE3E] px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-[4px] luxury-glow z-20">
+                    <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md text-[#D3AE3E] px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-[2px] luxury-glow z-20">
                       {product.category}
                     </div>
 
@@ -99,8 +99,8 @@ export default function SectionHotProducts() {
 
         {/* Mobile View All */}
         <div className="mt-8 flex justify-center md:hidden">
-          <Link 
-            href="/san-pham?filter=noi-bat" 
+          <Link
+            href="/san-pham?filter=noi-bat"
             className="group flex items-center gap-2 text-sm font-semibold text-[#1F1F1F] dark:text-white hover:text-[#C7A25C] uppercase tracking-widest transition-colors"
           >
             Xem tất cả

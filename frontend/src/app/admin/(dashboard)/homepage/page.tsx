@@ -7,7 +7,7 @@ export default function HomepageManager() {
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState('');
-  
+
   // Accordion state
   const [expandedSection, setExpandedSection] = useState('hero');
 
@@ -54,7 +54,7 @@ export default function HomepageManager() {
       const res = await apiClient.get('/settings');
       const settingsList = Array.isArray(res.data) ? res.data : (res.data?.data || []);
       const homepageSetting = settingsList.find((s: any) => s.key === 'HOMEPAGE_CONFIG');
-      
+
       const payload = {
         key: 'HOMEPAGE_CONFIG',
         value: JSON.stringify(config)
@@ -65,7 +65,7 @@ export default function HomepageManager() {
       } else {
         await apiClient.post('/settings', payload);
       }
-      
+
       setSuccessMessage('Đã lưu cấu hình Trang chủ thành công!');
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
@@ -112,10 +112,10 @@ export default function HomepageManager() {
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Tuỳ chỉnh nội dung hiển thị trên trang chủ (Đồng bộ theo luồng người dùng).</p>
         </div>
-        <button 
+        <button
           onClick={handleSave}
           disabled={isSaving}
-          className="bg-[#5865f2] hover:bg-[#4752c4] text-white px-5 py-2.5 rounded-[8px] text-sm font-medium transition-colors flex items-center gap-2 shadow-sm border-0 disabled:opacity-70 cursor-pointer"
+          className="bg-[#5865f2] hover:bg-[#4752c4] text-white px-5 py-2.5 rounded-[4px] text-sm font-medium transition-colors flex items-center gap-2 shadow-sm border-0 disabled:opacity-70 cursor-pointer"
         >
           <Save className="w-4 h-4" />
           {isSaving ? 'Đang lưu...' : 'Lưu cấu hình'}
@@ -123,7 +123,7 @@ export default function HomepageManager() {
       </div>
 
       {successMessage && (
-        <div className="bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 p-4 rounded-[8px] text-sm font-medium border border-emerald-200 dark:border-emerald-500/20 flex items-center shadow-sm">
+        <div className="bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 p-4 rounded-[4px] text-sm font-medium border border-emerald-200 dark:border-emerald-500/20 flex items-center shadow-sm">
           <CheckCircle2 className="w-5 h-5 mr-3" />
           {successMessage}
         </div>
@@ -131,37 +131,37 @@ export default function HomepageManager() {
 
       <div className="space-y-4">
         {sections.map(sec => (
-          <div key={sec.id} className="bg-white dark:bg-[#14151a] rounded-[8px] border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
-            <div 
+          <div key={sec.id} className="bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 overflow-hidden shadow-sm">
+            <div
               className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#1a1b23] transition-colors"
               onClick={() => setExpandedSection(expandedSection === sec.id ? '' : sec.id)}
             >
               <h3 className="font-heading text-base font-medium text-gray-900 dark:text-white">{sec.label}</h3>
               {expandedSection === sec.id ? <ChevronUp className="w-5 h-5 text-gray-500 dark:text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-500 dark:text-gray-400" />}
             </div>
-            
+
             {expandedSection === sec.id && (
               <div className="p-6 border-t border-gray-200 dark:border-gray-800 space-y-5 bg-gray-50 dark:bg-[#1a1b23]/30 dark:bg-transparent">
                 {sec.id === 'seo' ? (
                   <>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Meta Title</label>
-                      <input type="text" value={config[sec.id]?.metaTitle || ''} onChange={e => updateSection(sec.id, 'metaTitle', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
+                      <input type="text" value={config[sec.id]?.metaTitle || ''} onChange={e => updateSection(sec.id, 'metaTitle', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Meta Description</label>
-                      <textarea rows={2} value={config[sec.id]?.metaDescription || ''} onChange={e => updateSection(sec.id, 'metaDescription', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
+                      <textarea rows={2} value={config[sec.id]?.metaDescription || ''} onChange={e => updateSection(sec.id, 'metaDescription', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
                     </div>
                   </>
                 ) : (
                   <>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tiêu đề chính</label>
-                      <input type="text" value={config[sec.id]?.title || ''} onChange={e => updateSection(sec.id, 'title', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
+                      <input type="text" value={config[sec.id]?.title || ''} onChange={e => updateSection(sec.id, 'title', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Nội dung / Mô tả</label>
-                      <textarea rows={2} value={config[sec.id]?.description || config[sec.id]?.subtitle || ''} onChange={e => updateSection(sec.id, config[sec.id]?.subtitle !== undefined ? 'subtitle' : 'description', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
+                      <textarea rows={2} value={config[sec.id]?.description || config[sec.id]?.subtitle || ''} onChange={e => updateSection(sec.id, config[sec.id]?.subtitle !== undefined ? 'subtitle' : 'description', e.target.value)} className="w-full px-3 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:border-[#5865f2]/50" />
                     </div>
                   </>
                 )}

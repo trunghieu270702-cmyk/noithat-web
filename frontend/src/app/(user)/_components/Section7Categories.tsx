@@ -21,7 +21,7 @@ const CATEGORIES = [
 
 export default function Section7Categories() {
   return (
-    <section id="Categories" className="relative py-32 bg-[#F8F6F2] dark:bg-[#0a0a0a] overflow-hidden border-t border-[#ECE7DE] dark:border-white/20">
+    <section id="Categories" className="relative py-32 modern-section overflow-hidden border-t border-[#ECE7DE] dark:border-white/20">
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -39,7 +39,7 @@ export default function Section7Categories() {
             <h6 className="font-label text-[#C7A25C] text-[13px] font-semibold tracking-[4px] uppercase mb-4">
               Các Loại Công Trình Hỗ Trợ
             </h6>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6 uppercase">
               Phù hợp với <span className="text-[#C7A25C]">nhiều loại công trình</span> khác nhau
             </h2>
             <div className="w-16 h-[2px] bg-[#C7A25C] mx-auto mb-6" />
@@ -58,7 +58,7 @@ export default function Section7Categories() {
               delay={100 + (index % 4) * 100}
               className={`${cat.size} h-full w-full`}
             >
-              <div className="group relative w-full h-full overflow-hidden bg-[#FFFFFF] dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-[#ECE7DE] dark:border-white/10 rounded-[8px] cursor-pointer">
+              <div className="group relative w-full h-full overflow-hidden bg-[#FFFFFF] dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-[#ECE7DE] dark:border-white/10 rounded-[2px] cursor-pointer">
                 {/* Background Image */}
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-110 luxury-image-filter"

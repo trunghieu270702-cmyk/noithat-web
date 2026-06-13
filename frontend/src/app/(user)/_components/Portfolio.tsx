@@ -17,7 +17,7 @@ export default function Portfolio() {
         const text = await res.text();
         if (!text || text.startsWith('<')) throw new Error('Invalid JSON response');
         const data = JSON.parse(text);
-        
+
         if (Array.isArray(data)) {
           const fetchedProjects = data.map((p: any, idx: number) => ({
             id: p.id,
@@ -52,11 +52,11 @@ export default function Portfolio() {
   );
 
   return (
-    <section id="Portfolio" className="relative py-32 bg-[#FAF9F8] dark:bg-[#0a0a0a] overflow-hidden">
+    <section id="Portfolio" className="relative py-32 modern-section overflow-hidden">
       {/* Grid Pattern Background */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-        style={{ 
+      <div
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
           backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)",
           backgroundSize: "30px 30px"
         }}
@@ -70,7 +70,7 @@ export default function Portfolio() {
             <h6 className="font-label text-[#D3AE3E] text-[13px] font-semibold tracking-[4px] uppercase mb-4">
               Recent Work
             </h6>
-            <h3 className="font-heading text-4xl md:text-[40px] font-bold text-gray-900 dark:text-white mb-6 tracking-tight flex justify-center gap-[2px]">
+            <h3 className="uppercase font-heading text-4xl md:text-[40px] font-bold text-gray-900 dark:text-white mb-6 tracking-tight flex justify-center gap-[2px]">
               {'Awesome Portfolio'.split('').map((char, index) => (
                 <span key={index} className={char === ' ' ? 'w-3' : ''}>{char}</span>
               ))}
@@ -90,8 +90,8 @@ export default function Portfolio() {
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id)}
                 className={`text-[13px] font-bold  uppercase tracking-wider transition-colors ${activeFilter === filter.id
-                    ? 'text-[#D3AE3E]'
-                    : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'
+                  ? 'text-[#D3AE3E]'
+                  : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'
                   }`}
               >
                 {filter.label}

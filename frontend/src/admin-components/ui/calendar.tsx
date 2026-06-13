@@ -35,7 +35,7 @@ function Calendar({
         month_grid: "w-full border-collapse space-y-1",
         weekdays: "flex",
         weekday:
-          "text-gray-500 dark:text-gray-400 rounded-[8px] w-8 font-normal text-[0.8rem]",
+          "text-gray-500 dark:text-gray-400 rounded-[4px] w-8 font-normal text-[0.8rem]",
         week: "flex w-full mt-2",
         day: "h-8 w-8 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-100/50 dark:[&:has([aria-selected].day-outside)]:bg-[#14151a]/50 [&:has([aria-selected])]:bg-[#5865f2]/10 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20 text-gray-900 dark:text-gray-100",
         day_button: cn(

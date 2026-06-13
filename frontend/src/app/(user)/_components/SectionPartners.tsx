@@ -11,7 +11,7 @@ const PARTNERS = [
 
 export default function SectionPartners() {
   return (
-    <section className="py-20 bg-[#FAF9F8] dark:bg-[#0a0a0a] border-y border-gray-200 dark:border-white/20 relative overflow-hidden">
+    <section className="py-20 modern-section border-y border-gray-200 dark:border-white/20 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/images/common/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
       
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">

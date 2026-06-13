@@ -24,7 +24,7 @@ export default function GiamSatPage() {
   }, []);
 
   return (
-    <div className="pt-[120px] pb-20 bg-[#FAF9F8] dark:bg-[#131313] min-h-screen text-gray-900 dark:text-white">
+    <div className="pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white">
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Header */}
         <div className="text-center mb-20 max-w-4xl mx-auto">
@@ -37,7 +37,7 @@ export default function GiamSatPage() {
           {isLoading ? (
             <div className="col-span-2 text-center text-gray-400 dark:text-white/50">Đang tải các gói dịch vụ...</div>
           ) : packages.length > 0 ? packages.map((pkg, idx) => (
-            <div key={pkg.id} className={`rounded-[8px] border p-8 flex flex-col relative overflow-hidden transition-colors ${idx % 2 !== 0 ? 'bg-gradient-to-b from-[#ce9e51]/10 to-[#1c1c1c] border-[#ce9e51]/30 hover:border-[#ce9e51]' : 'bg-white dark:bg-[#1c1c1c] shadow-sm dark:shadow-none border-gray-200 dark:border-white/10 hover:border-[#ce9e51]/50'}`}>
+            <div key={pkg.id} className={`rounded-[4px] border p-8 flex flex-col relative overflow-hidden transition-colors ${idx % 2 !== 0 ? 'bg-gradient-to-b from-[#ce9e51]/10 to-[#1c1c1c] border-[#ce9e51]/30 hover:border-[#ce9e51]' : 'modern-section shadow-sm dark:shadow-none border-gray-200 dark:border-white/10 hover:border-[#ce9e51]/50'}`}>
               {idx % 2 !== 0 && (
                 <div className="absolute top-0 right-0 bg-[#ce9e51] text-gray-900 dark:text-white text-xs font-bold px-4 py-1 rounded-bl-lg uppercase tracking-wider">
                   Khuyên dùng
@@ -47,7 +47,7 @@ export default function GiamSatPage() {
                 <h2 className="font-heading text-2xl font-bold mb-3 text-[#ce9e51]">{pkg.packageName}</h2>
                 <p className="text-gray-600 dark:text-white/70 text-sm">{pkg.shortDescription || 'Mô tả ngắn gọn về dịch vụ.'}</p>
               </div>
-              
+
               <div className="mb-8 flex-1">
                 <h3 className="font-heading font-bold mb-4">Phù hợp với:</h3>
                 <ul className="space-y-2 text-sm text-gray-700 dark:text-white/80 mb-8">
@@ -63,8 +63,8 @@ export default function GiamSatPage() {
                   ))}
                 </ul>
               </div>
-              
-              <Link href={`/tu-van?service=${pkg.packageName}`} className={`text-center block w-full font-bold py-4 px-6 rounded-[8px] transition-colors uppercase tracking-wider text-sm ${idx % 2 !== 0 ? 'bg-[#ce9e51] hover:bg-white hover:text-[#131313] text-gray-900 dark:text-white' : 'bg-gray-100 dark:bg-white/10 hover:bg-[#ce9e51] text-gray-900 dark:text-white'}`}>
+
+              <Link href={`/tu-van?service=${pkg.packageName}`} className={`text-center block w-full font-bold py-4 px-6 rounded-[4px] transition-colors uppercase tracking-wider text-sm ${idx % 2 !== 0 ? 'bg-[#ce9e51] hover:bg-white hover:text-[#131313] text-gray-900 dark:text-white' : 'bg-gray-100 dark:bg-white/10 hover:bg-[#ce9e51] text-gray-900 dark:text-white'}`}>
                 Đăng ký tư vấn
               </Link>
             </div>
@@ -72,35 +72,35 @@ export default function GiamSatPage() {
             <div className="col-span-2 text-center text-gray-400 dark:text-white/50">Hiện tại chưa có gói dịch vụ nào.</div>
           )}
         </div>
-          
+
 
         {/* Values */}
-        <div className="bg-white dark:bg-[#1c1c1c] shadow-sm dark:shadow-none rounded-[8px] p-10 border border-gray-200 dark:border-white/5 text-center">
+        <div className="modern-section shadow-sm dark:shadow-none rounded-[4px] p-10 border border-gray-200 dark:border-white/5 text-center">
           <h2 className="font-heading text-2xl font-bold mb-10 text-gray-900 dark:text-white">Giá trị mang lại cho khách hàng</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div>
               <div className="w-16 h-16 rounded-full bg-[#ce9e51]/10 text-[#ce9e51] flex items-center justify-center text-2xl mx-auto mb-4">
                 <i className="fa fa-shield-alt"></i>
               </div>
-              <p className="font-semibold text-sm">Hạn chế lỗi thi công<br/>& rủi ro nghiệm thu</p>
+              <p className="font-semibold text-sm">Hạn chế lỗi thi công<br />& rủi ro nghiệm thu</p>
             </div>
             <div>
               <div className="w-16 h-16 rounded-full bg-[#ce9e51]/10 text-[#ce9e51] flex items-center justify-center text-2xl mx-auto mb-4">
                 <i className="fa fa-heart"></i>
               </div>
-              <p className="font-semibold text-sm">Yên tâm hơn nhờ<br/>bên kiểm tra độc lập</p>
+              <p className="font-semibold text-sm">Yên tâm hơn nhờ<br />bên kiểm tra độc lập</p>
             </div>
             <div>
               <div className="w-16 h-16 rounded-full bg-[#ce9e51]/10 text-[#ce9e51] flex items-center justify-center text-2xl mx-auto mb-4">
                 <i className="fa fa-clock"></i>
               </div>
-              <p className="font-semibold text-sm">Giảm tải việc quản lý<br/>& tối ưu thời gian</p>
+              <p className="font-semibold text-sm">Giảm tải việc quản lý<br />& tối ưu thời gian</p>
             </div>
             <div>
               <div className="w-16 h-16 rounded-full bg-[#ce9e51]/10 text-[#ce9e51] flex items-center justify-center text-2xl mx-auto mb-4">
                 <i className="fa fa-cogs"></i>
               </div>
-              <p className="font-semibold text-sm">Đảm bảo công trình<br/>triển khai đồng bộ</p>
+              <p className="font-semibold text-sm">Đảm bảo công trình<br />triển khai đồng bộ</p>
             </div>
           </div>
         </div>

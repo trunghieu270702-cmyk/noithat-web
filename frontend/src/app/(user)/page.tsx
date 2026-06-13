@@ -11,7 +11,7 @@ import Section10CTA from './_components/Section10CTA';
 
 export default function UserHomePage() {
   return (
-    <div className="w-full relative overflow-hidden bg-[#FAF9F8] dark:bg-[#0a0a0a]">
+    <div className="w-full relative overflow-hidden modern-section">
       {/* Ambient Light Blobs for WOW Effect */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D3AE3E]/15 blur-[120px]" />

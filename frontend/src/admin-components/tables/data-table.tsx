@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[8px] border border-zinc-800">
+      <div className="rounded-[4px] border border-zinc-800">
         <Table>
           <TableHeader className="bg-zinc-900/50">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -62,9 +62,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}
@@ -102,7 +102,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      
+
       {/* Pagination Controls */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-zinc-500">

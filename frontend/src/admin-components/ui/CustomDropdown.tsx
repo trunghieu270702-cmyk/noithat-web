@@ -46,7 +46,7 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-[#0b0c10] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-[#14151a] focus:outline-none focus:ring-2 focus:ring-[#5865f2]/50 transition-all font-medium"
+        className="w-full flex items-center justify-between px-3 py-2 bg-gray-50 dark:bg-[#0b0c10] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-[#14151a] focus:outline-none focus:ring-2 focus:ring-[#5865f2]/50 transition-all font-medium"
       >
         <div className="flex items-center gap-2 truncate">
           {selectedOption?.color && (
@@ -58,7 +58,7 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white dark:bg-[#1a1b23] border border-gray-100 dark:border-gray-800 rounded-[8px] shadow-sm shadow-gray-200/20 dark:shadow-none overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+        <div className="absolute z-50 w-full mt-1 bg-white dark:bg-[#1a1b23] border border-gray-100 dark:border-gray-800 rounded-[4px] shadow-sm shadow-gray-200/20 dark:shadow-none overflow-hidden animate-in fade-in zoom-in-95 duration-100">
           <ul className="max-h-60 overflow-y-auto py-1 custom-scrollbar">
             {options.map((option) => (
               <li key={option.value}>
@@ -68,11 +68,10 @@ export default function CustomDropdown({ options, value, onChange, placeholder =
                     onChange(option.value);
                     setIsOpen(false);
                   }}
-                  className={`w-full text-left flex items-center justify-between px-3 py-2 text-sm transition-colors ${
-                    value === option.value
+                  className={`w-full text-left flex items-center justify-between px-3 py-2 text-sm transition-colors ${value === option.value
                       ? 'bg-[#5865f2]/10 text-[#5865f2] font-medium dark:bg-[#5865f2]/20 dark:text-blue-400'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#14151a]'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2 truncate">
                     {option.color && (

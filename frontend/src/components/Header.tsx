@@ -41,20 +41,19 @@ export default function Header() {
 
       {/* 2. MAIN HEADER (Sticky) */}
       <header
-        className={`w-full z-40 transition-all duration-300 ${
-          isScrolled
+        className={`w-full z-40 transition-all duration-300 ${isScrolled
             ? 'fixed top-0 bg-white/95 backdrop-blur-md shadow-sm py-3'
             : 'absolute top-auto bg-transparent py-5'
-        }`}
+          }`}
       >
         <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between">
-          
+
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <img 
-              src="/images/logo-header.png" 
-              alt="Logo" 
-              className="h-[55px] object-contain transition-all duration-300" 
+            <img
+              src="/images/logo-header.png"
+              alt="Logo"
+              className="h-[55px] object-contain transition-all duration-300"
             />
           </Link>
 
@@ -63,7 +62,7 @@ export default function Header() {
             <Link href="/" className={`font-semibold text-sm uppercase tracking-wide transition-colors ${isScrolled ? 'text-gray-800 hover:text-[#D3AE3E]' : 'text-white hover:text-[#D3AE3E]'}`}>
               Trang Chủ
             </Link>
-            
+
             <div className="relative group">
               <button className={`flex items-center gap-1 font-semibold text-sm uppercase tracking-wide transition-colors ${isScrolled ? 'text-gray-800 hover:text-[#D3AE3E]' : 'text-white hover:text-[#D3AE3E]'}`}>
                 Đơn Vị <ChevronDown className="w-4 h-4" />
@@ -95,15 +94,15 @@ export default function Header() {
             <button className={`transition-colors hover:text-[#D3AE3E] ${isScrolled ? 'text-gray-800' : 'text-white'}`}>
               <Moon className="w-5 h-5" />
             </button>
-            <button 
+            <button
               onClick={() => setIsSidePanelOpen(true)}
               className={`transition-colors hover:text-[#D3AE3E] ${isScrolled ? 'text-gray-800' : 'text-white'}`}
             >
               <Circle className="w-5 h-5" />
             </button>
-            <Link 
-              href="/tu-van" 
-              className="flex items-center gap-2 bg-[#D3AE3E] text-white px-6 py-2.5 rounded-[8px] hover:bg-[#b88c45] transition-colors font-medium text-sm"
+            <Link
+              href="/tu-van"
+              className="flex items-center gap-2 bg-[#D3AE3E] text-white px-6 py-2.5 rounded-[4px] hover:bg-[#b88c45] transition-colors font-medium text-sm"
             >
               <Circle className="w-4 h-4" />
               Liên hệ cho tôi
@@ -111,7 +110,7 @@ export default function Header() {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             className={`lg:hidden p-2 ${isScrolled ? 'text-gray-800' : 'text-white'}`}
             onClick={() => setIsMobileMenuOpen(true)}
           >
@@ -121,12 +120,11 @@ export default function Header() {
       </header>
 
       {/* 3. MOBILE MENU (Full Screen Glassmorphism) */}
-      <div 
-        className={`fixed inset-0 bg-black/80 backdrop-blur-md z-[100] transition-all duration-500 flex flex-col items-center justify-center ${
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
+      <div
+        className={`fixed inset-0 bg-black/80 backdrop-blur-md z-[100] transition-all duration-500 flex flex-col items-center justify-center ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          }`}
       >
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(false)}
           className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center border border-white/20 rounded-full text-white hover:bg-white hover:text-black transition-all"
         >
@@ -143,12 +141,11 @@ export default function Header() {
       </div>
 
       {/* 4. SIDE PANEL (Offcanvas) */}
-      <div className={`fixed inset-y-0 right-0 w-full sm:w-[400px] bg-[#1a1a1a] z-[100] transform transition-transform duration-500 ease-in-out ${
-        isSidePanelOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}>
+      <div className={`fixed inset-y-0 right-0 w-full sm:w-[400px] bg-[#1a1a1a] z-[100] transform transition-transform duration-500 ease-in-out ${isSidePanelOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}>
         <div className="h-full overflow-y-auto p-10 relative">
           {/* Close button */}
-          <button 
+          <button
             onClick={() => setIsSidePanelOpen(false)}
             className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors"
           >
@@ -180,7 +177,7 @@ export default function Header() {
 
       {/* Side Panel Overlay Backdrop */}
       {isSidePanelOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
           onClick={() => setIsSidePanelOpen(false)}
         />

@@ -59,29 +59,29 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (isLoading) {
-    return <div className="pt-[120px] pb-20 bg-[#F8F6F2] dark:bg-[#131313] min-h-screen text-[#1F1F1F] dark:text-white text-center">Đang tải thông tin đơn vị...</div>;
+    return <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white text-center">Đang tải thông tin đơn vị...</div>;
   }
 
   if (!unit) {
-    return <div className="pt-[120px] pb-20 bg-[#F8F6F2] dark:bg-[#131313] min-h-screen text-[#1F1F1F] dark:text-white text-center">Không tìm thấy đơn vị.</div>;
+    return <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white text-center">Không tìm thấy đơn vị.</div>;
   }
 
   return (
-    <div className="pt-[120px] pb-20 bg-[#F8F6F2] dark:bg-[#131313] min-h-screen text-[#1F1F1F] dark:text-white">
+    <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white">
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Section 1: Tổng quan đơn vị */}
         <div className="mb-16 pb-12 border-b border-[#ECE7DE] dark:border-white/10">
           <div className="flex flex-col md:flex-row gap-8 items-start">
-            <div className="w-full md:w-1/3 aspect-square card dark:bg-[#1c1c1c] rounded-[8px] border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center">
+            <div className="w-full md:w-1/3 aspect-square card dark:bg-[#1c1c1c] rounded-[4px] border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center">
               <span className="text-4xl text-[#1F1F1F]/20 dark:text-white/20 font-bold uppercase">{unit.name.substring(0, 2)}</span>
             </div>
             <div className="w-full md:w-2/3">
-              <span className="inline-block bg-[#1F1F1F] dark:bg-[#C7A25C] text-white text-xs font-bold px-3 py-1 rounded-[4px] uppercase tracking-wider mb-4">
+              <span className="inline-block modern-section text-white text-xs font-bold px-3 py-1 rounded-[2px] uppercase tracking-wider mb-4">
                 Phân khúc {unit.category}
               </span>
               <h1 className="font-heading text-4xl font-bold mb-4">{unit.name}</h1>
               <p className="text-[#1F1F1F]/70 dark:text-white/70 text-lg mb-8 leading-relaxed">{unit.description}</p>
-              
+
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div>
                   <p className="text-[#1F1F1F]/50 dark:text-white/50 text-sm mb-1">Khu vực hoạt động</p>
@@ -102,10 +102,10 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
+                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:modern-section dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
                   Kết nối với đơn vị này
                 </Link>
-                <button className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
+                <button className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
                   Yêu cầu báo giá sơ bộ
                 </button>
               </div>
@@ -120,7 +120,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {unit.services.map((svc: string, i: number) => (
-              <div key={i} className="card dark:bg-[#1c1c1c] p-4 rounded-[8px] border border-[#ECE7DE] dark:border-white/5 flex items-center gap-3">
+              <div key={i} className="card dark:bg-[#1c1c1c] p-4 rounded-[4px] border border-[#ECE7DE] dark:border-white/5 flex items-center gap-3">
                 <i className="fa fa-check-circle text-[#C7A25C]"></i>
                 <span>{svc}</span>
               </div>
@@ -135,7 +135,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {unit.projects.map((proj: any, i: number) => (
-              <div key={i} className="card dark:bg-[#1c1c1c] rounded-[8px] overflow-hidden border border-[#ECE7DE] dark:border-white/5">
+              <div key={i} className="card dark:bg-[#1c1c1c] rounded-[4px] overflow-hidden border border-[#ECE7DE] dark:border-white/5">
                 <div className="h-48 bg-gray-200 dark:bg-white/5 luxury-image-filter"></div>
                 <div className="p-6">
                   <h3 className="font-heading text-xl font-bold mb-4">{proj.name}</h3>
@@ -153,7 +153,7 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
 
         {/* Section 4 & 5 & 6 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="card dark:bg-[#1c1c1c] p-6 rounded-[8px] border border-[#ECE7DE] dark:border-white/5">
+          <div className="card dark:bg-[#1c1c1c] p-6 rounded-[4px] border border-[#ECE7DE] dark:border-white/5">
             <h3 className="font-heading text-lg font-bold mb-4 text-[#C7A25C]">Điểm mạnh</h3>
             <ul className="space-y-3">
               {unit.advantages.map((adv: string, i: number) => (
@@ -163,15 +163,15 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
               ))}
             </ul>
           </div>
-          <div className="card dark:bg-[#1c1c1c] p-6 rounded-[8px] border border-[#ECE7DE] dark:border-white/5">
+          <div className="card dark:bg-[#1c1c1c] p-6 rounded-[4px] border border-[#ECE7DE] dark:border-white/5">
             <h3 className="font-heading text-lg font-bold mb-4 text-[#C7A25C]">Mức ngân sách</h3>
             <div className="space-y-3 text-sm">
-              <p><strong>Phù hợp với ngân sách:</strong><br/>{unit.budget.range}</p>
-              <p><strong>Dự án tối thiểu nhận triển khai:</strong><br/>{unit.budget.min}</p>
+              <p><strong>Phù hợp với ngân sách:</strong><br />{unit.budget.range}</p>
+              <p><strong>Dự án tối thiểu nhận triển khai:</strong><br />{unit.budget.min}</p>
               <p className="mt-4 pt-4 border-t border-[#ECE7DE] dark:border-white/10 text-[#1F1F1F]/50 dark:text-white/50 italic">* Điều kiện áp dụng chiết khấu 5% khi kết nối qua hệ sinh thái.</p>
             </div>
           </div>
-          <div className="card dark:bg-[#1c1c1c] p-6 rounded-[8px] border border-[#ECE7DE] dark:border-white/5">
+          <div className="card dark:bg-[#1c1c1c] p-6 rounded-[4px] border border-[#ECE7DE] dark:border-white/5">
             <h3 className="font-heading text-lg font-bold mb-4 text-[#C7A25C]">Quy trình</h3>
             <ul className="space-y-2">
               {unit.workflow.map((step: string, i: number) => (
@@ -184,14 +184,14 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* Section 7: CTA */}
-        <div className="bg-gradient-to-r from-[#C7A25C]/10 to-transparent p-8 md:p-12 rounded-[8px] border border-[#C7A25C]/30 text-center">
+        <div className="bg-gradient-to-r from-[#C7A25C]/10 to-transparent p-8 md:p-12 rounded-[4px] border border-[#C7A25C]/30 text-center">
           <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">Bạn muốn được tư vấn xem đơn vị này có phù hợp với công trình của mình không?</h2>
           <p className="text-[#1F1F1F]/70 dark:text-white/70 mb-8">Chúng tôi sẽ giúp bạn đánh giá và so sánh khách quan hoàn toàn miễn phí.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:bg-[#C7A25C] dark:bg-[#C7A25C] dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
+            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:modern-section dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
               Nhận tư vấn đơn vị này
             </Link>
-            <Link href="/he-sinh-thai" className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[4px] transition-colors uppercase tracking-wider text-sm">
+            <Link href="/he-sinh-thai" className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
               So sánh với đơn vị khác
             </Link>
           </div>

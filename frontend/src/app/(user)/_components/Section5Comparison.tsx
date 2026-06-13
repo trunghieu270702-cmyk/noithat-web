@@ -56,7 +56,7 @@ export default function Section5Comparison() {
             <h6 className="font-label text-[#C7A25C] text-[13px] font-semibold tracking-[4px] uppercase mb-4">
               Tạo Sự Khác Biệt
             </h6>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6 max-w-4xl mx-auto">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6 uppercase max-w-4xl mx-auto">
               Làm qua hệ sinh thái <span className="text-[#C7A25C]">khác gì</span> so với tự thuê ngoài?
             </h2>
             <div className="w-16 h-[2px] bg-[#C7A25C] mx-auto mb-6" />
@@ -71,21 +71,21 @@ export default function Section5Comparison() {
               <SpotlightCard key={index} className="p-5">
                 {/* Decorative glow */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#C7A25C]/5 blur-3xl rounded-full pointer-events-none" />
-                
+
                 <h3 className="font-heading text-[#1F1F1F] dark:text-white font-bold text-[16px] border-b border-[#ECE7DE] dark:border-white/10 pb-3 mb-4 relative z-10">
                   {row.feature}
                 </h3>
-                
+
                 <div className="space-y-5 relative z-10">
-                  <div className="bg-[#FFFFFF] dark:bg-[#0a0a0a]/50 p-4 rounded-[8px] border border-[#ECE7DE] dark:border-white/5">
+                  <div className="bg-[#FFFFFF] dark:bg-[#0a0a0a]/50 p-4 rounded-[4px] border border-[#ECE7DE] dark:border-white/5">
                     <span className="text-gray-500 dark:text-[#888] text-[11px] font-bold uppercase tracking-widest mb-2 block">Tự thuê ngoài</span>
                     <div className="flex items-start gap-2 text-gray-500 dark:text-[#888] text-[14px] leading-relaxed">
                       <svg className="w-4 h-4 text-red-500/70 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                       <span>{row.outside}</span>
                     </div>
                   </div>
-                  
-                  <div className="bg-[#C7A25C]/10 p-4 rounded-[8px] border border-[#C7A25C]/20">
+
+                  <div className="bg-[#C7A25C]/10 p-4 rounded-[4px] border border-[#C7A25C]/20">
                     <span className="text-[#C7A25C] text-[11px] font-bold uppercase tracking-widest mb-2 block">Qua hệ sinh thái</span>
                     <div className="flex items-start gap-2 text-[#1F1F1F] dark:text-white text-[14px] font-medium leading-relaxed">
                       <svg className="w-5 h-5 text-[#C7A25C] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
@@ -99,10 +99,10 @@ export default function Section5Comparison() {
 
           {/* DESKTOP VIEW (Table) */}
           <div className="hidden md:block overflow-hidden pb-6">
-            <table className="w-full border-collapse bg-[#FFFFFF] dark:bg-[#131313] border border-[#ECE7DE] dark:border-white/10 rounded-[8px] overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-none">
+            <table className="w-full border-collapse bg-[#FFFFFF] dark:bg-[#131313] border border-[#ECE7DE] dark:border-white/10 rounded-[4px] overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-none">
               <thead>
                 <tr>
-                  <th className="w-[20%] p-6 text-left text-[#1F1F1F] dark:text-white font-bold text-[16px] border-b border-[#ECE7DE] dark:border-white/10 bg-[#F8F6F2] dark:bg-[#0a0a0a]">
+                  <th className="w-[20%] p-6 text-left text-[#1F1F1F] dark:text-white font-bold text-[16px] border-b border-[#ECE7DE] dark:border-white/10 modern-section">
                     Tiêu chí
                   </th>
                   <th className="w-[40%] p-6 text-center text-gray-500 dark:text-[#888] font-bold text-[16px] border-b border-[#ECE7DE] dark:border-white/10 bg-[#FFFFFF] dark:bg-[#0a0a0a]/50">

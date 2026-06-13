@@ -25,19 +25,19 @@ export default function TiptapEditor({ value, onChange }: { value: string, onCha
   }
 
   return (
-    <div className="border border-gray-200 dark:border-gray-800 rounded-[8px] overflow-hidden flex flex-col transition-all focus-within:ring-2 focus-within:ring-[#5865f2]/50">
+    <div className="border border-gray-200 dark:border-gray-800 rounded-[4px] overflow-hidden flex flex-col transition-all focus-within:ring-2 focus-within:ring-[#5865f2]/50">
       <div className="flex flex-wrap items-center gap-1 p-2 bg-gray-50 dark:bg-[#14151a]">
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('bold') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('bold') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <Bold className="w-4 h-4" />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('italic') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('italic') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <Italic className="w-4 h-4" />
         </button>
@@ -45,14 +45,14 @@ export default function TiptapEditor({ value, onChange }: { value: string, onCha
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('heading', { level: 1 }) ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('heading', { level: 1 }) ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <Heading1 className="w-4 h-4" />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <Heading2 className="w-4 h-4" />
         </button>
@@ -60,21 +60,21 @@ export default function TiptapEditor({ value, onChange }: { value: string, onCha
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('bulletList') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('bulletList') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <List className="w-4 h-4" />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('orderedList') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('orderedList') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <ListOrdered className="w-4 h-4" />
         </button>
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={`p-1.5 rounded-[8px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('blockquote') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
+          className={`p-1.5 rounded-[4px] hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors ${editor.isActive('blockquote') ? 'bg-gray-200 dark:bg-gray-800 text-[#5865f2]' : 'text-gray-600 dark:text-gray-400'}`}
         >
           <Quote className="w-4 h-4" />
         </button>

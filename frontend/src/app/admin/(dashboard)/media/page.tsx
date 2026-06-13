@@ -5,12 +5,12 @@ import { ImageUploader } from '@/admin-components/ui/image-uploader';
 
 export default function MediaLibraryPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  
-  const [mediaFiles, setMediaFiles] = useState<{id: string, url: string, name: string, size: string, date: string}[]>([]);
+
+  const [mediaFiles, setMediaFiles] = useState<{ id: string, url: string, name: string, size: string, date: string }[]>([]);
 
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const filteredMedia = mediaFiles.filter(file => 
+  const filteredMedia = mediaFiles.filter(file =>
     file.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -49,17 +49,17 @@ export default function MediaLibraryPage() {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col min-h-0 bg-white dark:bg-[#14151a] rounded-[8px] border border-gray-200 dark:border-gray-800 overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-0 bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 overflow-hidden">
         <div className="p-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] flex-shrink-0">
           <h3 className="font-heading text-sm font-medium text-gray-900 dark:text-white uppercase tracking-wider mb-4 flex items-center gap-2">
             <UploadCloud className="w-4 h-4 text-[#5865f2]" />
             Upload hình ảnh mới
           </h3>
           <div className="max-w-xl">
-            <ImageUploader 
+            <ImageUploader
               initialImages={[]}
               onUploadSuccess={handleUploadSuccess}
-              onRemoveImage={() => {}}
+              onRemoveImage={() => { }}
               maxFiles={10}
             />
           </div>
@@ -68,12 +68,12 @@ export default function MediaLibraryPage() {
         <div className="p-4 border-b border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-[#1a1b23] flex-shrink-0">
           <div className="relative max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input 
-              type="text" 
-              placeholder="Tìm kiếm theo tên file..." 
+            <input
+              type="text"
+              placeholder="Tìm kiếm theo tên file..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 text-gray-900 dark:text-white transition-all"
+              className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 text-gray-900 dark:text-white transition-all"
             />
           </div>
         </div>
@@ -82,22 +82,22 @@ export default function MediaLibraryPage() {
           {filteredMedia.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {filteredMedia.map((file) => (
-                <div key={file.id} className="group flex flex-col rounded-[8px] overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] hover:border-[#5865f2]/50 transition-all">
+                <div key={file.id} className="group flex flex-col rounded-[4px] overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] hover:border-[#5865f2]/50 transition-all">
                   <div className="aspect-square relative overflow-hidden bg-gray-50 dark:bg-[#1a1b23] border-b border-gray-200 dark:border-gray-800">
-                    <img 
-                      src={file.url} 
-                      alt={file.name} 
+                    <img
+                      src={file.url}
+                      alt={file.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                      <button 
+                      <button
                         onClick={() => handleCopyLink(file.url, file.id)}
                         className="w-8 h-8 rounded-full bg-white dark:bg-[#14151a]/20 hover:bg-[#5865f2] text-white flex items-center justify-center backdrop-blur-sm transition-colors cursor-pointer"
                         title="Copy Link"
                       >
                         {copiedId === file.id ? <CheckCircle2 className="w-4 h-4" /> : <LinkIcon className="w-4 h-4" />}
                       </button>
-                      <button 
+                      <button
                         onClick={() => handleDelete(file.id)}
                         className="w-8 h-8 rounded-full bg-white dark:bg-[#14151a]/20 hover:bg-red-500 text-white flex items-center justify-center backdrop-blur-sm transition-colors cursor-pointer"
                         title="Xóa ảnh"

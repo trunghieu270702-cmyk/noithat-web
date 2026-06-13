@@ -103,14 +103,14 @@ export default function Section6Ecosystem() {
   return (
     <section id="Ecosystem" className="relative py-32 bg-[#F8F6F2] dark:bg-[#131313] overflow-hidden">
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-        
+
         {/* Section Header */}
         <ScrollReveal animation="fade-up" delay={100}>
           <div className="text-center mb-16">
             <h6 className="font-label text-[#C7A25C] text-[13px] font-semibold tracking-[4px] uppercase mb-4">
               Hệ Sinh Thái 30 Đơn Vị
             </h6>
-            <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white mb-6 uppercase">
               Chia Theo <span className="text-[#C7A25C]">3 Phân Khúc</span> Rõ Ràng
             </h2>
             <div className="w-16 h-[2px] bg-[#C7A25C] mx-auto mb-6" />
@@ -124,7 +124,7 @@ export default function Section6Ecosystem() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {TIERS.map((tier, index) => (
             <ScrollReveal key={index} animation="fade-up" delay={200 + index * 150} className="h-full relative mt-4">
-              
+
               {tier.highlight && (
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#C7A25C] text-white text-[11px] font-bold px-4 py-1.5 uppercase tracking-wider whitespace-nowrap z-30 shadow-[0_0_20px_rgba(206,158,81,0.5)]">
                   Phổ biến nhất
@@ -142,19 +142,18 @@ export default function Section6Ecosystem() {
 
                 {/* Content */}
                 <div className="p-8 flex flex-col flex-grow relative z-10">
-                  
+
                   <CheckList title="Phù hợp với" items={tier.target} />
                   <CheckList title="Đặc điểm nổi bật" items={tier.features} />
                   <CheckList title="Dịch vụ thường có" items={tier.services} />
 
                   <div className="mt-auto pt-6 border-t border-[#ECE7DE] dark:border-white/5 relative z-10">
-                    <Link 
+                    <Link
                       href="#Form"
-                      className={`block w-full py-4 text-center font-bold  uppercase tracking-wider text-[13px] transition-colors ${
-                        tier.highlight 
-                          ? 'bg-[#C7A25C] text-white hover:bg-transparent hover:text-[#C7A25C] border-2 border-[#C7A25C]' 
+                      className={`block w-full py-4 text-center font-bold  uppercase tracking-wider text-[13px] transition-colors ${tier.highlight
+                          ? 'bg-[#C7A25C] text-white hover:bg-transparent hover:text-[#C7A25C] border-2 border-[#C7A25C]'
                           : 'bg-transparent text-[#1F1F1F] dark:text-white border border-[#ECE7DE] dark:border-white/10 hover:border-[#C7A25C] hover:text-[#C7A25C]'
-                      }`}
+                        }`}
                     >
                       Nhận tư vấn nhóm này
                     </Link>
