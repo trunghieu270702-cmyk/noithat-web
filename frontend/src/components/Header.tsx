@@ -55,7 +55,7 @@ export default function Header() {
               alt="Logo"
               className="h-[55px] object-contain transition-all duration-300 group-hover:scale-105"
             />
-            <span className="font-heading text-[14px] lg:text-[16px] font-bold tracking-[0.12em] hidden sm:block uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#c7a25c] via-[#f1be6d] to-[#D3AE3E]">
+            <span className="font-heading text-[14px] font-bold tracking-[0.12em] hidden sm:block uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#c7a25c] via-[#f1be6d] to-[#D3AE3E]">
               Arcviet Living Nexus
             </span>
           </Link>
