@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Marcellus&family=Roboto+Slab:wght@100..900&display=swap');
 @import "tailwindcss";
 @source "../";
 @variant dark (&:where(.dark, .dark *));
@@ -6,11 +6,11 @@
 @theme {
   --font-sans: "Roboto Slab", serif;
   --font-serif: "Roboto Slab", serif;
-  --font-mono: "Cinzel", serif;
-  --font-display: "Cinzel", serif;
+  --font-mono: "Marcellus", serif;
+  --font-display: "Marcellus", serif;
 
-  --font-label: "Cinzel", serif;
-  --font-heading: "Cinzel", serif;
+  --font-label: "Marcellus", serif;
+  --font-heading: "Marcellus", serif;
   --font-menu: "Roboto Slab", serif;
   --font-body: "Roboto Slab", serif;
 
@@ -68,11 +68,11 @@
   --spacing-margin-desktop: 80px;
   --spacing-container-max: 1440px;
 
-  --font-headline-md: "Cinzel", serif;
-  --font-display-xl: "Cinzel", serif;
-  --font-headline-lg: "Cinzel", serif;
-  --font-headline-lg-mobile: "Cinzel", serif;
-  --font-label-sm: "Cinzel", serif;
+  --font-headline-md: "Marcellus", serif;
+  --font-display-xl: "Marcellus", serif;
+  --font-headline-lg: "Marcellus", serif;
+  --font-headline-lg-mobile: "Marcellus", serif;
+  --font-label-sm: "Marcellus", serif;
   --font-body-lg: "Roboto Slab", serif;
   --font-body-md: "Roboto Slab", serif;
 }
@@ -82,6 +82,10 @@
     background-color: #FAF9F8;
     color: #1a1a1a;
     font-family: var(--font-body);
+  }
+
+  .font-heading {
+    text-transform: uppercase;
   }
 
   .dark body {

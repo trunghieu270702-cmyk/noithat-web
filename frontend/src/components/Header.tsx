@@ -42,19 +42,22 @@ export default function Header() {
       {/* 2. MAIN HEADER (Sticky) */}
       <header
         className={`w-full z-40 transition-all duration-300 ${isScrolled
-            ? 'fixed top-0 bg-white/95 backdrop-blur-md shadow-sm py-3'
-            : 'absolute top-auto bg-transparent py-5'
+          ? 'fixed top-0 bg-white/95 backdrop-blur-md shadow-sm py-3'
+          : 'absolute top-auto bg-transparent py-5'
           }`}
       >
         <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-between">
 
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0 flex items-center gap-1.5 group">
             <img
-              src="/images/logo-header.png"
+              src="/images/logo-header2.png"
               alt="Logo"
-              className="h-[55px] object-contain transition-all duration-300"
+              className="h-[55px] object-contain transition-all duration-300 group-hover:scale-105"
             />
+            <span className="font-heading text-[14px] lg:text-[16px] font-bold tracking-[0.12em] hidden sm:block uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#c7a25c] via-[#f1be6d] to-[#D3AE3E]">
+              Arcviet Living Nexus
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

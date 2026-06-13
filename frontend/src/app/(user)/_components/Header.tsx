@@ -42,12 +42,15 @@ export default function Header() {
         <div className="max-w-[1400px] mx-auto px-6 w-full flex items-center justify-between h-[80px]">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/">
+            <Link href="/" className="flex items-center group">
               <img
                 src="/images/logo-header.png"
                 alt="logo"
-                className="h-[55px] w-auto transition-transform hover:scale-105"
+                className="h-[55px] w-auto transition-transform group-hover:scale-105"
               />
+              <span className="font-heading text-[14px] lg:text-[16px] font-bold tracking-[0.12em] hidden sm:block uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#c7a25c] via-[#f1be6d] to-[#D3AE3E]">
+                Arcviet Living Nexus
+              </span>
             </Link>
           </div>
 
