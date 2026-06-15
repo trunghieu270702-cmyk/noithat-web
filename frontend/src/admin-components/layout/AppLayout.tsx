@@ -31,19 +31,26 @@ import { useTheme } from '../ThemeProvider';
 import { useAuthStore } from '@/admin-features/auth/stores/useAuthStore';
 
 const navigation = [
+  // 1. Dashboard & CRM
   { name: 'Tổng quan', href: '/admin', icon: LayoutGrid },
+  { name: 'Yêu cầu tư vấn (Lead)', href: '/admin/leads', icon: MessageSquare },
+  
+  // 2. Ecosystem Entities
   { name: 'Đơn vị đối tác', href: '/admin/units', icon: Building2 },
   { name: 'Dự án', href: '/admin/projects', icon: FolderKanban },
-  { name: 'Yêu cầu tư vấn (Lead)', href: '/admin/leads', icon: MessageSquare },
   { name: 'Giám sát thi công', href: '/admin/supervisions', icon: ShieldCheck },
+  
+  // 3. Content & Marketing
   { name: 'Cẩm nang nội thất', href: '/admin/articles', icon: FileText },
-  { name: 'Trang SEO tĩnh', href: '/admin/seo', icon: FileSearch },
-  { name: 'Thư viện Media', href: '/admin/media', icon: ImageIcon },
-  { name: 'Danh mục & Bộ lọc', href: '/admin/categories', icon: Tags },
-  { name: 'Quản lý Homepage', href: '/admin/homepage', icon: Home },
+  // { name: 'Trang SEO tĩnh', href: '/admin/seo', icon: FileSearch },
   { name: 'Đánh giá & Review', href: '/admin/testimonials', icon: Star },
-  { name: 'Khách hàng', href: '/admin/customers', icon: Users },
-  { name: 'Vận hành nội bộ', href: '/admin/operations', icon: Briefcase },
+  { name: 'Thư viện Media', href: '/admin/media', icon: ImageIcon },
+  
+  // 4. Configuration
+  { name: 'Danh mục & Bộ lọc', href: '/admin/categories', icon: Tags },
+  // { name: 'Quản lý Homepage', href: '/admin/homepage', icon: Home },
+  // { name: 'Khách hàng', href: '/admin/customers', icon: Users },
+  // { name: 'Vận hành nội bộ', href: '/admin/operations', icon: Briefcase },
 ];
 
 const systemNav = [
@@ -71,6 +78,9 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     (n) => location.pathname === n.href || location.pathname.startsWith(`${n.href}/`)
   );
 
+  const noScrollPages = ['/admin/units', '/admin/projects', '/admin/leads', '/admin/supervisions', '/admin/articles', '/admin/seo', '/admin/categories', '/admin/testimonials', '/admin/customers', '/admin/operations'];
+  const isNoScroll = noScrollPages.includes(location.pathname);
+
   return (
     <div className="flex h-screen bg-[#f4f5f7] dark:bg-[#0b0c10] text-[#111827] dark:text-[#f3f4f6] overflow-hidden admin-wrapper">
       <aside className="w-[260px] flex-shrink-0 bg-white dark:bg-[#1e1f24] border-r border-gray-200 dark:border-gray-800 flex flex-col transition-colors duration-300">
@@ -82,7 +92,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
               <Command strokeWidth={2} className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="font-medium text-base leading-tight text-gray-900 dark:text-white">Hệ Sinh Thái</span>
+              <span className="font-bold text-base leading-tight text-[#5865f2] dark:text-[#a59ffd] tracking-tight">ArcViet Living Nexus</span>
               <span className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">Quản lý hệ thống</span>
             </div>
           </div>
@@ -168,11 +178,12 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#fbfbfa] dark:bg-[#0b0c10]">
         {/* Header */}
-        <header className="h-[72px] flex items-center justify-between px-8 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] transition-colors duration-300">
-          <h1 className="font-heading text-[20px] font-medium text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
+        <header className="h-[72px] flex items-center justify-between px-8 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#14151a] transition-colors duration-300 shrink-0">
+          {/* <h1 className=" text-[20px] font-medium text-gray-900 dark:text-white tracking-tight flex items-center gap-2">
             {currentPage && <currentPage.icon strokeWidth={2} className="w-5 h-5 text-[#5865f2]" />}
             {currentPage?.name || 'Tổng quan'}
-          </h1>
+          </h1> */}
+          <div />
 
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -211,8 +222,8 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
         </header>
 
         {/* Main Area */}
-        <div className="flex-1 flex flex-col relative overflow-y-auto bg-[#fbfbfa] dark:bg-[#0b0c10]">
-          <div className="h-full flex flex-col p-4 md:p-6 lg:p-8 w-full min-h-min">
+        <div className={`flex-1 flex flex-col relative bg-[#fbfbfa] dark:bg-[#0b0c10] ${isNoScroll ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+          <div className={`flex flex-col p-4 md:p-6 lg:p-8 w-full ${isNoScroll ? 'h-full overflow-hidden' : 'min-h-min h-full'}`}>
             {children}
           </div>
         </div>

@@ -39,11 +39,30 @@ export default function ArticleDetail() {
 
         setArticle(foundArticle);
 
+        // Increment view count if not already viewed in this session
+        const viewedArticles = JSON.parse(sessionStorage.getItem('viewedArticles') || '[]');
+        if (!viewedArticles.includes(foundArticle.id)) {
+          fetch(`${apiUrl}/articles/${foundArticle.id}/view`, { method: 'PATCH' }).catch(console.error);
+          sessionStorage.setItem('viewedArticles', JSON.stringify([...viewedArticles, foundArticle.id]));
+          // Optimistically update the view count in UI
+          foundArticle.views = (foundArticle.views || 0) + 1;
+        }
+
         // Filter out current, match category if possible
         let related = allArticles.filter((a: any) => a.id !== foundArticle.id);
-        const sameCat = related.filter((a: any) => a.category === foundArticle.category);
-        if (sameCat.length > 0) {
-          related = sameCat;
+        const articleTags = foundArticle.tags ? foundArticle.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
+        
+        const sameCatOrTag = related.filter((a: any) => {
+          if (a.category === foundArticle.category) return true;
+          if (a.tags && articleTags.length > 0) {
+            const aTags = a.tags.split(',').map((t: string) => t.trim());
+            return articleTags.some((t: string) => aTags.includes(t));
+          }
+          return false;
+        });
+        
+        if (sameCatOrTag.length > 0) {
+          related = sameCatOrTag;
         }
         setRelatedArticles(related.slice(0, 3));
 
@@ -83,6 +102,8 @@ export default function ArticleDetail() {
   const formattedDate = article.createdAt
     ? format(new Date(article.createdAt), 'dd/MM/yyyy')
     : 'Đang cập nhật';
+
+  const tagsList = article.tags ? article.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
 
   return (
     <div className="pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
@@ -150,13 +171,15 @@ export default function ArticleDetail() {
         {/* Tags */}
         <div className="mt-16 pt-8 border-t border-gray-200 dark:border-white/10 flex items-center gap-4">
           <Tag className="w-5 h-5 text-gray-400" />
-          <div className="flex gap-2">
-            <span className="px-3 py-1 modern-section border border-gray-200 dark:border-white/10 text-gray-600 dark:text-[#ccc] text-sm rounded-sm">
-              Nội thất
-            </span>
-            <span className="px-3 py-1 modern-section border border-gray-200 dark:border-white/10 text-gray-600 dark:text-[#ccc] text-sm rounded-sm">
+          <div className="flex flex-wrap gap-2">
+            <span className="px-3 py-1 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-[#ccc] text-sm rounded-[4px] hover:text-[#D3AE3E] transition-colors cursor-pointer">
               {article.category || 'Xu hướng'}
             </span>
+            {tagsList.map((tag: string, idx: number) => (
+              <span key={idx} className="px-3 py-1 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-[#ccc] text-sm rounded-[4px] hover:text-[#D3AE3E] transition-colors cursor-pointer">
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
 

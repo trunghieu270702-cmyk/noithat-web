@@ -1,12 +1,19 @@
 "use client";
 import React, { useState } from 'react';
-import { Search, Filter, Tags, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, Type, Link, Settings2, RotateCcw } from 'lucide-react';
+import { Search, Filter, Tags, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, Type, Link, Settings2, RotateCcw, Loader2, FolderOpen, Pin } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
+import ConfirmModal from '@/admin-components/ui/ConfirmModal';
 import { toast } from 'sonner';
 
-const TYPES = ['Bài viết', 'Dự án', 'Bộ lọc Đơn vị'];
+const TYPES = ['Bài viết', 'Dự án', 'Đơn vị thiết kế'];
+
+const TYPE_COLOR_MAP: Record<string, string> = {
+  'Bài viết': 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20',
+  'Dự án': 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20',
+  'Đơn vị thiết kế': 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20',
+};
 
 const STATUS_MAP: Record<string, string> = {
   'ACTIVE': 'Hoạt động',
@@ -55,9 +62,12 @@ export default function CategoriesPage() {
   const hasActiveFilter = activeFiltersCount > 0;
 
   const [formData, setFormData] = useState<any>({
-    id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE'
+    id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE', isPinned: false
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false, title: '', desc: '', onConfirm: () => {}
+  });
 
   const filteredData = data.filter(c => {
     const matchesSearch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -82,7 +92,7 @@ export default function CategoriesPage() {
     totalItems: filteredData.length,
     articleCount: filteredData.filter(d => d.type === 'Bài viết').length,
     projectCount: filteredData.filter(d => d.type === 'Dự án').length,
-    filterCount: filteredData.filter(d => d.type === 'Bộ lọc Đơn vị').length
+    filterCount: filteredData.filter(d => d.type === 'Đơn vị thiết kế').length
   };
 
   const toggleSelectAll = () => {
@@ -138,14 +148,45 @@ export default function CategoriesPage() {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('Bạn có chắc chắn muốn xóa?')) return;
-    try {
-      await apiClient.delete(`/categories/${id}`);
-      fetchCategories();
-    } catch (error) {
-      console.error(error);
-    }
+  const handleDelete = (id: number) => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Xóa danh mục',
+      desc: 'Bạn có chắc chắn muốn xóa danh mục này? Hành động này không thể hoàn tác.',
+      onConfirm: async () => {
+        try {
+          await apiClient.delete(`/categories/${id}`);
+          toast.success('Xóa danh mục thành công');
+          fetchCategories();
+        } catch (error) {
+          console.error(error);
+          toast.error('Có lỗi xảy ra khi xóa');
+        } finally {
+          setConfirmModal(prev => ({ ...prev, isOpen: false }));
+        }
+      }
+    });
+  };
+
+  const handleBulkDelete = () => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Xóa hàng loạt',
+      desc: `Bạn có chắc chắn muốn xóa ${selectedIds.length} danh mục đã chọn? Hành động này không thể hoàn tác.`,
+      onConfirm: async () => {
+        try {
+          await Promise.all(selectedIds.map(id => apiClient.delete(`/categories/${id}`)));
+          toast.success(`Đã xóa ${selectedIds.length} danh mục thành công`);
+          setSelectedIds([]);
+          fetchCategories();
+        } catch (error) {
+          console.error('Bulk delete error:', error);
+          toast.error('Lỗi khi xóa hàng loạt');
+        } finally {
+          setConfirmModal(prev => ({ ...prev, isOpen: false }));
+        }
+      }
+    });
   };
 
   return (
@@ -169,8 +210,8 @@ export default function CategoriesPage() {
             <button
               onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
               className={`flex items-center gap-2 px-3 h-[38px] rounded-[4px] text-sm font-medium transition-all border cursor-pointer ${isFiltersExpanded
-                  ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
-                  : 'bg-white dark:bg-[#14151a] border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]'
+                ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
+                : 'bg-white dark:bg-[#14151a] border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]'
                 }`}
             >
               <Filter className="w-4 h-4" />
@@ -180,10 +221,18 @@ export default function CategoriesPage() {
           </div>
 
           <div className="flex items-center gap-2 justify-end">
+            {selectedIds.length > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 rounded-[4px] text-sm font-medium transition-colors border border-red-200 dark:border-red-500/20 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" /> Xóa đã chọn ({selectedIds.length})
+              </button>
+            )}
             <button
               onClick={() => {
                 setModalMode('add');
-                setFormData({ id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE' });
+                setFormData({ id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE', isPinned: false });
                 setErrors({});
                 setIsDrawerOpen(true);
               }}
@@ -203,20 +252,23 @@ export default function CategoriesPage() {
                 <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
               </button>
               {openTypePopover && (
-                <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-sm">
-                  <div className="flex flex-col gap-1">
-                    {TYPES.map((val) => (
-                      <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
-                        <input type="checkbox" checked={typeFilter.includes(val)} onChange={(e) => {
-                          if (e.target.checked) setTypeFilter([...typeFilter, val]);
-                          else setTypeFilter(typeFilter.filter(s => s !== val));
-                          setPage(0);
-                        }} className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300" />
-                        <span>{val}</span>
-                      </label>
-                    ))}
+                <>
+                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenTypePopover(false); }} />
+                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
+                    <div className="flex flex-col gap-1">
+                      {TYPES.map((val) => (
+                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
+                          <input type="checkbox" checked={typeFilter.includes(val)} onChange={(e) => {
+                            if (e.target.checked) setTypeFilter([...typeFilter, val]);
+                            else setTypeFilter(typeFilter.filter(s => s !== val));
+                            setPage(0);
+                          }} className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300" />
+                          <span>{val}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>
@@ -242,7 +294,7 @@ export default function CategoriesPage() {
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className="font-heading font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Danh Mục</h3>
+              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Danh Mục</h3>
               {!isSummaryCollapsed && <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} danh mục</span>}
             </div>
 
@@ -322,14 +374,35 @@ export default function CategoriesPage() {
               </tr>
             </thead>
             <tbody>
-              {currentData.length === 0 ? (
+              {isLoading ? (
                 <tr>
-                  <td colSpan={4} className="px-5 py-16 text-center animate-in fade-in zoom-in-95 duration-500">
+                  <td colSpan={4} className="px-5 py-24 text-center">
+                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                      <Loader2 className="w-8 h-8 animate-spin text-[#5865f2] mb-4" />
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Đang tải dữ liệu...</h3>
+                    </div>
+                  </td>
+                </tr>
+              ) : currentData.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="px-5 py-24 text-center animate-in fade-in zoom-in-95 duration-500">
                     <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                       <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
-                        <Tags className="w-8 h-8 text-gray-400" />
+                        <FolderOpen className="w-8 h-8 text-gray-400" />
                       </div>
-                      <h3 className="font-heading text-lg font-medium text-gray-900 dark:text-white mb-2">Không tìm thấy danh mục</h3>
+                      <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Không có dữ liệu</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có danh mục nào được tạo. Hãy tạo mới để bắt đầu.</p>
+                      <button
+                        onClick={() => {
+                          setModalMode('add');
+                          setFormData({ id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE', isPinned: false });
+                          setErrors({});
+                          setIsDrawerOpen(true);
+                        }}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors"
+                      >
+                        <Plus className="w-4 h-4" /> Thêm Danh mục
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -346,13 +419,16 @@ export default function CategoriesPage() {
                           {selectedIds.includes(item.id) && <Check className="w-3 h-3 text-white" />}
                         </div>
                         <div>
-                          <div className="font-medium text-sm text-gray-900 dark:text-white">{item.name}</div>
+                          <div className="font-medium text-sm text-gray-900 dark:text-white flex items-center gap-2">
+                            {item.name}
+                            {item.isPinned && <Pin className="w-3.5 h-3.5 text-amber-500 fill-amber-500/20" />}
+                          </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">/{item.slug}</div>
                         </div>
                       </div>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800">{item.type}</span>
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-[4px] text-[11px] font-medium ${TYPE_COLOR_MAP[item.type] || 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800'}`}>{item.type}</span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-[11px] font-medium ${item.status === 'ACTIVE' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20' : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-800'
@@ -408,7 +484,7 @@ export default function CategoriesPage() {
                   <Tags className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="font-heading text-base font-medium text-gray-900 dark:text-white tracking-tight">
+                  <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
                     {modalMode === 'add' ? 'Thêm Danh Mục' : 'Cập Nhật Danh Mục'}
                   </h2>
                 </div>
@@ -422,7 +498,7 @@ export default function CategoriesPage() {
               <form id="category-form" onSubmit={handleSave} className="p-6 space-y-8">
                 {/* Section: Thông tin danh mục */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
                     Thông tin cơ bản
                   </h3>
@@ -434,7 +510,26 @@ export default function CategoriesPage() {
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                           <Type className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
                         </div>
-                        <input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); if (errors.name) setErrors({ ...errors, name: '' }); }} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Thiết kế nội thất..." />
+                        <input type="text" value={formData.name} onChange={e => {
+                          const name = e.target.value;
+                          const generateSlug = (text: string) => {
+                            return text.toString().toLowerCase()
+                              .replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a')
+                              .replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e')
+                              .replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i')
+                              .replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o')
+                              .replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u')
+                              .replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y')
+                              .replace(/đ/gi, 'd')
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9\-]/g, '')
+                              .replace(/\-\-+/g, '-')
+                              .replace(/^-+/, '')
+                              .replace(/-+$/, '');
+                          };
+                          setFormData({ ...formData, name, slug: generateSlug(name) });
+                          if (errors.name) setErrors({ ...errors, name: '' });
+                        }} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Thiết kế nội thất..." />
                       </div>
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
@@ -456,7 +551,7 @@ export default function CategoriesPage() {
 
                 {/* Section: Phân loại & Trạng thái */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-50 dark:bg-amber-500/100"></span>
                     Phân loại & Trạng thái
                   </h3>
@@ -471,6 +566,16 @@ export default function CategoriesPage() {
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng thái</label>
                       <CustomDropdown className="w-full" options={[{ value: 'ACTIVE', label: 'Hoạt động', color: 'green' }, { value: 'HIDDEN', label: 'Ẩn' }]} value={formData.status} onChange={val => setFormData({ ...formData, status: val as any })} />
                     </div>
+                  </div>
+
+                  <div className="space-y-1.5 flex flex-col justify-center mt-6">
+                    <label className="flex items-center gap-2 cursor-pointer group w-max">
+                      <div className={`w-10 h-5 rounded-full transition-colors relative ${formData.isPinned ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600'}`}>
+                        <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${formData.isPinned ? 'translate-x-5' : ''}`}></div>
+                      </div>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 select-none">Ghim ra trang chủ Cẩm nang</span>
+                      <input type="checkbox" className="hidden" checked={formData.isPinned} onChange={e => setFormData({ ...formData, isPinned: e.target.checked })} />
+                    </label>
                   </div>
                 </div>
               </form>
@@ -487,6 +592,14 @@ export default function CategoriesPage() {
           </div>
         </div>
       )}
+
+      <ConfirmModal
+        isOpen={confirmModal.isOpen}
+        onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmModal.onConfirm}
+        title={confirmModal.title}
+        description={confirmModal.desc}
+      />
     </div>
   );
 }

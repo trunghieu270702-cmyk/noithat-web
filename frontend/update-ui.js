@@ -1,48 +1,46 @@
 const fs = require('fs');
 const path = require('path');
 
-function walk(directory) {
-    let results = [];
-    const list = fs.readdirSync(directory);
-    list.forEach(file => {
-        const filePath = path.join(directory, file);
-        const stat = fs.statSync(filePath);
-        if (stat && stat.isDirectory()) {
-            results = results.concat(walk(filePath));
-        } else if (file === 'page.tsx') {
-            results.push(filePath);
-        }
-    });
-    return results;
+function getFiles(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    file = path.join(dir, file);
+    const stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getFiles(file));
+    } else {
+      if (file.endsWith('page.tsx')) {
+        results.push(file);
+      }
+    }
+  });
+  return results;
 }
 
-const files = walk('d:/Hieudeptraivl/noithat-main/frontend/src/app/admin');
+const files = getFiles('frontend/src/app/admin/(dashboard)');
+let changed = 0;
 
-files.forEach(file => {
-    let content = fs.readFileSync(file, 'utf8');
-    let changed = false;
+files.forEach(f => {
+  let content = fs.readFileSync(f, 'utf8');
+  let original = content;
 
-    if (content.includes('>Đặt lại</button>')) {
-        content = content.replace(/className=\"[^\"]*text-red-500[^\"]*\">Đặt lại<\/button>/g,
-            'className="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-red-500 text-xs font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors ml-2"><RotateCcw strokeWidth={2} className="w-3.5 h-3.5" /> Đặt lại</button>');
+  // 1. Refactor Headlines in forms
+  content = content.replace(
+    /<h3 className="([^"]*)text-gray-900 dark:text-white([^"]*)uppercase tracking-wider([^"]*)">/g,
+    '<h3 className="$1text-[#5865f2] dark:text-[#5865f2]$2uppercase tracking-wider$3">'
+  );
 
-        if (!content.includes('RotateCcw')) {
-            content = content.replace(/import\s+\{([^}]+)\}\s+from\s+['"]lucide-react['"]/g, (m, p1) => `import {${p1}, RotateCcw} from 'lucide-react'`);
-        }
-        changed = true;
-    }
+  // 2. Refactor Status Colors - the default fallback
+  content = content.replace(
+    /'bg-gray-50 text-gray-700 border border-gray-200'/g,
+    "'bg-gray-100 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300 border border-gray-200 dark:border-gray-700/50'"
+  );
 
-    if (content.includes('font-bold')) {
-        content = content.replace(/font-bold/g, 'font-medium');
-        changed = true;
-    }
-    if (content.includes('font-semibold')) {
-        content = content.replace(/font-semibold/g, 'font-medium');
-        changed = true;
-    }
-
-    if (changed) {
-        fs.writeFileSync(file, content, 'utf8');
-        console.log('Updated ' + file);
-    }
+  if (content !== original) {
+    fs.writeFileSync(f, content, 'utf8');
+    changed++;
+  }
 });
+
+console.log('Refactored ' + changed + ' files.');

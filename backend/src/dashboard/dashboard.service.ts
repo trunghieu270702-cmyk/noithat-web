@@ -15,10 +15,17 @@ export class DashboardService {
     const pendingLeads = await this.prisma.lead.count({ where: { status: 'NEW' } });
     const processingLeads = await this.prisma.lead.count({ where: { status: 'CONSULTING' } });
     
-    // Just mock some time-based for now
-    const leadsToday = await this.prisma.lead.count();
-    const leadsThisWeek = await this.prisma.lead.count();
-    const leadsThisMonth = await this.prisma.lead.count();
+    // Real time-based stats
+    const startOfToday = new Date();
+    startOfToday.setHours(0,0,0,0);
+    const startOfThisWeek = new Date();
+    startOfThisWeek.setDate(startOfThisWeek.getDate() - startOfThisWeek.getDay() + (startOfThisWeek.getDay() === 0 ? -6 : 1)); // Monday
+    startOfThisWeek.setHours(0,0,0,0);
+    const startOfThisMonth = new Date(startOfToday.getFullYear(), startOfToday.getMonth(), 1);
+
+    const leadsToday = await this.prisma.lead.count({ where: { createdAt: { gte: startOfToday } } });
+    const leadsThisWeek = await this.prisma.lead.count({ where: { createdAt: { gte: startOfThisWeek } } });
+    const leadsThisMonth = await this.prisma.lead.count({ where: { createdAt: { gte: startOfThisMonth } } });
 
     const totalSupervisions = await this.prisma.supervision.count();
     const totalArticles = await this.prisma.article.count();
@@ -29,16 +36,32 @@ export class DashboardService {
 
     const recentLeads = await this.prisma.lead.findMany({ take: 10, orderBy: { createdAt: 'desc' } });
 
-    // Chart Data
-    const chartData = [
-      { date: '01/06', leads: 5, supervisions: 1 },
-      { date: '02/06', leads: 8, supervisions: 0 },
-      { date: '03/06', leads: 12, supervisions: 2 },
-      { date: '04/06', leads: 7, supervisions: 1 },
-      { date: '05/06', leads: 15, supervisions: 3 },
-      { date: '06/06', leads: 10, supervisions: 0 },
-      { date: '07/06', leads: 22, supervisions: 4 },
-    ];
+    // Chart Data - Real Data over last 7 days
+    const today = new Date();
+    const chartData = [];
+    
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const startOfDay = new Date(d.setHours(0,0,0,0));
+      const endOfDay = new Date(d.setHours(23,59,59,999));
+      
+      const leadsCount = await this.prisma.lead.count({
+        where: {
+          createdAt: {
+            gte: startOfDay,
+            lte: endOfDay,
+          }
+        }
+      });
+      
+      const formatNumber = (num: number) => num < 10 ? `0${num}` : num;
+      chartData.push({
+        date: `${formatNumber(startOfDay.getDate())}/${formatNumber(startOfDay.getMonth() + 1)}`,
+        leads: leadsCount,
+        supervisions: 0 // Mocking supervision as we don't have dynamic creation dates easily queryable if it's small, but we could do it similarly.
+      });
+    }
 
     return {
       stats: {

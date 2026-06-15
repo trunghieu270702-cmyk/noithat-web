@@ -164,8 +164,8 @@ export default function CustomersPage() {
             <button
               onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
               className={`flex items-center gap-2 px-3 h-[38px] rounded-[4px] text-sm font-medium transition-all border cursor-pointer ${isFiltersExpanded
-                  ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
-                  : 'bg-white dark:bg-[#14151a] border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]'
+                ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
+                : 'bg-white dark:bg-[#14151a] border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23]'
                 }`}
             >
               <Filter className="w-4 h-4" />
@@ -198,20 +198,23 @@ export default function CustomersPage() {
                 <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
               </button>
               {openLocationPopover && (
-                <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-sm">
-                  <div className="flex flex-col gap-1">
-                    {Object.entries(LOCATION_MAP).map(([val, label]) => (
-                      <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
-                        <input type="checkbox" checked={locationFilter.includes(val)} onChange={(e) => {
-                          if (e.target.checked) setLocationFilter([...locationFilter, val]);
-                          else setLocationFilter(locationFilter.filter(s => s !== val));
-                          setPage(0);
-                        }} className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300" />
-                        <span>{label}</span>
-                      </label>
-                    ))}
+                <>
+                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenLocationPopover(false); }} />
+                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
+                    <div className="flex flex-col gap-1">
+                      {Object.entries(LOCATION_MAP).map(([val, label]) => (
+                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
+                          <input type="checkbox" checked={locationFilter.includes(val)} onChange={(e) => {
+                            if (e.target.checked) setLocationFilter([...locationFilter, val]);
+                            else setLocationFilter(locationFilter.filter(s => s !== val));
+                            setPage(0);
+                          }} className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300" />
+                          <span>{label}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>
@@ -237,7 +240,7 @@ export default function CustomersPage() {
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className="font-heading font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Khách Hàng</h3>
+              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Khách Hàng</h3>
               {!isSummaryCollapsed && <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} khách hàng</span>}
             </div>
 
@@ -314,9 +317,9 @@ export default function CustomersPage() {
                   <td colSpan={6} className="px-5 py-16 text-center animate-in fade-in zoom-in-95 duration-500">
                     <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                       <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
-                        <Users className="w-8 h-8 text-gray-400" />
+                        <Users className="w-8 h-8 text-gray-500" />
                       </div>
-                      <h3 className="font-heading text-lg font-medium text-gray-900 dark:text-white mb-2">Không tìm thấy khách hàng</h3>
+                      <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Không tìm thấy khách hàng</h3>
                     </div>
                   </td>
                 </tr>
@@ -401,7 +404,7 @@ export default function CustomersPage() {
                   <Users className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="font-heading text-base font-medium text-gray-900 dark:text-white tracking-tight">
+                  <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
                     {modalMode === 'add' ? 'Thêm Khách Hàng' : 'Cập Nhật Hồ Sơ'}
                   </h2>
                 </div>
@@ -417,7 +420,7 @@ export default function CustomersPage() {
 
                 {/* Section: Thông tin khách hàng */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
                     Thông tin khách hàng
                   </h3>
@@ -471,7 +474,7 @@ export default function CustomersPage() {
 
                 {/* Section: Hoạt động & Tài liệu */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
                     Hoạt động & Tài liệu
                   </h3>

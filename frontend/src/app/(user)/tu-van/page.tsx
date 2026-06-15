@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { toast } from 'sonner';
 
 function FormSelect({ label, options, value, onChange }: { label: string, options: { value: string, label: string }[], value: string, onChange: (val: string) => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,15 +100,15 @@ export default function TuVanPage() {
       });
 
       if (res.ok) {
-        alert("Cảm ơn bạn! Yêu cầu của bạn đã được gửi đi.");
+        toast.success("Cảm ơn bạn! Yêu cầu của bạn đã được gửi đi thành công.");
         // Reset form or redirect
         setName(''); setPhone(''); setEmail(''); setNotes('');
       } else {
-        alert("Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.");
+        toast.error("Có lỗi xảy ra khi gửi yêu cầu. Vui lòng thử lại.");
       }
     } catch (err) {
       console.error(err);
-      alert("Không thể kết nối đến máy chủ.");
+      toast.error("Không thể kết nối đến máy chủ.");
     } finally {
       setIsSubmitting(false);
     }
@@ -271,10 +272,12 @@ export default function TuVanPage() {
 
             {/* Submit */}
             <div className="text-center pt-6 border-t border-gray-200 dark:border-white/10">
-              <button type="submit" className="w-full md:w-auto bg-[#ce9e51] hover:bg-[#b88c45] text-white font-bold py-4 px-12 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
-                Gửi nhu cầu tư vấn
+              <button type="submit" disabled={isSubmitting} className="w-full md:w-auto bg-[#ce9e51] hover:bg-[#b88c45] disabled:bg-[#ce9e51]/50 text-white font-bold py-4 px-12 rounded-[2px] transition-colors uppercase tracking-wider text-sm flex items-center justify-center gap-2 mx-auto">
+                {isSubmitting ? (
+                  <><svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Đang xử lý...</>
+                ) : 'Gửi nhu cầu tư vấn'}
               </button>
-              <p className="text-white/40 text-xs mt-4">Thông tin của bạn sẽ được bảo mật và chỉ dùng để tư vấn đơn vị phù hợp.</p>
+              <p className="text-gray-500 dark:text-white/40 text-xs mt-4">Thông tin của bạn sẽ được bảo mật và chỉ dùng để tư vấn đơn vị phù hợp.</p>
             </div>
           </form>
         </div>

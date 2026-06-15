@@ -49,7 +49,14 @@ Always ask: "Can this be reused elsewhere?" If yes: Create reusable abstraction.
 * **Structure**: Feature-Based Architecture. Every feature must contain components, hooks, services, types, validators. Separate UI, Business Logic, and API Logic.
 * **State Management**: React State (Local), Zustand (Shared), React Query (Server). Never use global state unnecessarily.
 * **Design System**: Use Shadcn UI. Always build reusable components (Button, Input, Dropdown, Avatar, Chip, Badge, Modal, Drawer, Table, Pagination). Support variants, accessibility, dark mode.
-* **UI/UX AESTHETIC STANDARD**: The exact layout and style of `pawn-receipts/page.tsx` must be used as the absolute standard base template for all future screens. This includes light/dark theme (`bg-white dark:bg-[#14151a]`), max border-radius of 8px (`rounded-lg`), Lucide icons, full-height table layout, zero shadows on cards (`shadow-none`), cursor pointer on hover, and modern Empty States.
+* **UI/UX AESTHETIC STANDARD (ASANA STYLE)**: The system must strictly follow Asana's UI/UX aesthetic. Characteristics include:
+  - Clean, minimalist design with plenty of white space.
+  - Subtle borders (`border-gray-200` in light mode, `border-gray-800` in dark mode).
+  - Standard, smaller rounded corners (`rounded-[8px]` or `rounded-md`, NEVER large rounded like 16px).
+  - Flat buttons with very subtle hover effects, avoiding heavy drop shadows.
+  - Typography is clean, using standard font (Roboto), avoiding oversized or overly bold elements unless necessary for hierarchy.
+  - Modals and Drawers should have clean headers with thin separators, muted background colors (e.g., pure white or slightly off-white, and dark gray `#1e1f21` in dark mode).
+  - Empty states should be simple, elegant, using soft gray colors and simple icons.
 * **Filter System Architecture**: All filter blocks must follow the exact structure from `pawn-receipts/page.tsx`. Use the toggle "Bộ lọc" button, an expandable grid block with popovers/inputs, and an Active Tags row below it with clear buttons. Do not use generic select dropdowns.
 * **Data Loading Pattern**: For data tables, always use the `isFirstLoad = true` pattern and initialize `isLoading = true`. Never wipe the table empty during subsequent fetches. Apply `opacity-50 pointer-events-none` to the rows to indicate loading instead of removing data, to prevent UI jitter.
 * **Form Architecture**: Avoid duplicated forms. Create reusable FormField, FormInput, FormSelect, FormDatePicker, FormUpload using React Hook Form + Zod.

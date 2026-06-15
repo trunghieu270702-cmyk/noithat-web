@@ -101,7 +101,7 @@ export default function DashboardPage() {
         </div>
 
         <div>
-          <h3 className="font-heading text-sm font-normal text-gray-500 dark:text-gray-400 mb-1">{title}</h3>
+          <h3 className="text-sm font-normal text-gray-500 dark:text-gray-400 mb-1">{title}</h3>
           <p className="text-2xl font-medium text-gray-900 dark:text-white">{isLoading ? '...' : value}</p>
         </div>
       </div>
@@ -160,7 +160,7 @@ export default function DashboardPage() {
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-heading text-xl font-medium text-gray-900 dark:text-white">Tổng quan Hệ sinh thái</h2>
+          <h2 className="text-xl font-medium text-gray-900 dark:text-white">Tổng quan Hệ sinh thái</h2>
           <p className="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Theo dõi các chỉ số quan trọng và hiệu suất hoạt động.</p>
         </div>
 
@@ -175,7 +175,7 @@ export default function DashboardPage() {
               </span>
             )}
           </PopoverTrigger>
-          <PopoverContent align="end" className="w-auto p-0 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 shadow-sm rounded-[4px] overflow-hidden">
+          <PopoverContent align="end" className="w-auto p-0 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 shadow-sm rounded-[4px] overflow-hidden font-asana">
             <div className="flex">
               <div className="flex flex-col p-2 border-r border-gray-100 dark:border-gray-800 min-w-[140px] bg-gray-50/50 dark:bg-[#14151a]">
                 <p className="text-[11px] font-medium text-gray-500 dark:text-gray-400 mb-2 px-2 mt-1">Lọc nhanh</p>
@@ -240,7 +240,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-2 bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col h-[400px]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div>
-              <h3 className="font-heading text-base font-medium text-gray-900 dark:text-white">Biểu đồ Tăng trưởng</h3>
+              <h3 className="text-base font-medium text-gray-900 dark:text-white">Biểu đồ Tăng trưởng</h3>
               <p className="text-[13px] font-normal text-gray-500 dark:text-gray-400 mt-0.5">So sánh lượng Yêu cầu và Giám sát theo thời gian.</p>
             </div>
             <div className="flex bg-gray-50 dark:bg-[#14151a] p-1 rounded-[4px] border border-gray-100 dark:border-gray-800">
@@ -318,7 +318,7 @@ export default function DashboardPage() {
 
           {/* Pie Chart */}
           <div className="bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] border border-gray-200 dark:border-gray-800 p-5 flex flex-col flex-shrink-0 h-[190px]">
-            <h3 className="font-heading text-[14px] font-medium text-gray-900 dark:text-white mb-1">Tỷ lệ Trạng thái Yêu cầu</h3>
+            <h3 className="text-[14px] font-medium text-gray-900 dark:text-white mb-1">Tỷ lệ Trạng thái Yêu cầu</h3>
             <div className="flex-1 flex items-center min-h-0 relative">
               <div className="w-1/2 h-full relative min-h-0 min-w-0">
                 <ResponsiveContainer width="100%" height="100%">
@@ -375,7 +375,7 @@ export default function DashboardPage() {
           {/* Paginated Recent Leads */}
           <div className="bg-white dark:bg-[#1a1b23] rounded-[4px]-[12px] border border-gray-200 dark:border-gray-800 flex flex-col flex-1 min-h-0 overflow-hidden relative">
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-800 shrink-0">
-              <h3 className="font-heading text-[14px] font-medium text-gray-900 dark:text-white">Yêu cầu mới nhất</h3>
+              <h3 className="text-[14px] font-medium text-gray-900 dark:text-white">Yêu cầu mới nhất</h3>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setLeadPage(p => Math.max(0, p - 1))}

@@ -99,7 +99,7 @@ export default function LoginPage() {
               <div className="w-12 h-12 bg-white dark:bg-[#181b22] border border-gray-100 dark:border-gray-800 rounded-[4px] flex items-center justify-center mb-4">
                 <Lock className="w-6 h-6 text-[#5865f2]" />
               </div>
-              <h2 className="font-heading text-2xl font-medium tracking-tight text-gray-900 dark:text-white">
+              <h2 className="text-2xl font-medium tracking-tight text-gray-900 dark:text-white">
                 ARCVIET LIVING <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ce9e51] to-[#e4c27a]">NEXUS</span>
               </h2>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-widest font-medium">Login to Dashboard</p>

@@ -24,6 +24,17 @@ export class ArticlesService {
     });
   }
 
+  incrementView(id: number) {
+    return this.prisma.article.update({
+      where: { id },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+  }
+
   remove(id: number) {
     return this.prisma.article.delete({ where: { id } });
   }

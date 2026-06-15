@@ -126,7 +126,7 @@ export default function SettingsPage() {
     <div className="space-y-6 animate-in fade-in duration-500 w-full">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-heading text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
             <Settings className="w-5 h-5 text-[#5865f2]" />
             Cài đặt Hệ thống
           </h2>
@@ -163,8 +163,8 @@ export default function SettingsPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-[4px] text-sm font-medium transition-all cursor-pointer border ${activeTab === tab.id
-                  ? 'bg-[#5865f2] text-white border-[#5865f2] shadow-sm'
-                  : 'bg-white dark:bg-[#1a1b23] text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#262930] hover:text-gray-900 dark:hover:text-white shadow-sm'
+                ? 'bg-[#5865f2] text-white border-[#5865f2] shadow-sm'
+                : 'bg-white dark:bg-[#1a1b23] text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-[#262930] hover:text-gray-900 dark:hover:text-white shadow-sm'
                 }`}
             >
               {tab.icon}
@@ -179,7 +179,7 @@ export default function SettingsPage() {
           {activeTab === 'general' && (
             <div className="bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-300 shadow-none">
               <div className="space-y-6">
-                <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 pb-4">
+                <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 pb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
                   Thông tin chung
                 </h3>
@@ -240,7 +240,7 @@ export default function SettingsPage() {
           {activeTab === 'seo' && (
             <div className="bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-300 shadow-none">
               <div className="space-y-6">
-                <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 pb-4">
+                <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 pb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                   Cấu hình Global SEO
                 </h3>
@@ -268,7 +268,7 @@ export default function SettingsPage() {
           {activeTab === 'tracking' && (
             <div className="bg-white dark:bg-[#14151a] rounded-[4px] border border-gray-200 dark:border-gray-800 p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-300 shadow-none">
               <div className="space-y-6">
-                <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 pb-4">
+                <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 dark:border-gray-800 pb-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
                   Mã nhúng theo dõi (Tracking Scripts)
                 </h3>
@@ -299,7 +299,7 @@ export default function SettingsPage() {
             <div className="bg-red-50 dark:bg-red-900/10 rounded-[4px] border border-red-200 dark:border-red-900/30 p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-300 shadow-none">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h3 className="font-heading text-red-800 dark:text-red-400 font-medium flex items-center gap-2 mb-1 text-base">
+                  <h3 className="text-red-800 dark:text-red-400 font-medium flex items-center gap-2 mb-1 text-base">
                     <ShieldAlert className="w-5 h-5" /> Khu vực nguy hiểm
                   </h3>
                   <p className="text-red-600 dark:text-red-500/80 text-sm">Xóa toàn bộ bộ nhớ Cache và System Data trên hệ thống. Không thể hoàn tác sau khi thực hiện.</p>

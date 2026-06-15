@@ -44,6 +44,23 @@ export async function POST(request: Request) {
       const cloudinaryData = await cloudinaryRes.json();
       if (cloudinaryData.secure_url) {
         uploadedUrls.push(cloudinaryData.secure_url);
+        
+        // Save to backend media library
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+          await fetch(`${apiUrl}/media`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              url: cloudinaryData.secure_url,
+              name: file.name,
+              type: file.type,
+              size: file.size,
+            })
+          });
+        } catch (e) {
+          console.error('Failed to save media to backend:', e);
+        }
       } else {
         console.error('Cloudinary error:', cloudinaryData);
       }

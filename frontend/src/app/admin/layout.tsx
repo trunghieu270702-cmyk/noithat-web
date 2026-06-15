@@ -11,8 +11,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <ThemeProvider defaultTheme="system" storageKey="admin-theme">
       <div 
-        className={`min-h-screen h-full w-full antialiased tracking-tight text-gray-900 dark:text-gray-100 admin-wrapper`}
-        style={{ fontFamily: '"Geist", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' }}
+        className={`min-h-screen h-full w-full antialiased tracking-tight text-gray-900 dark:text-gray-100 font-asana admin-wrapper`}
       >
         {children}
       </div>

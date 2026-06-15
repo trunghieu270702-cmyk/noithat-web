@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import { Search, Plus, Filter, Edit, Trash2, FolderKanban, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, CheckCircle2, Building2, Banknote, Maximize, Tag, Image as ImageIcon, RotateCcw } from 'lucide-react';
+import { Search, Plus, Filter, Edit, Trash2, FolderKanban, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, CheckCircle2, Building2, Banknote, Maximize, Tag, Image as ImageIcon, RotateCcw, Loader2, FolderOpen } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import apiClient from '@/admin-lib/apiClient';
 import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
@@ -13,27 +14,26 @@ const STATUS_MAP: Record<string, string> = {
   'COMPLETED': 'Hoàn thành'
 };
 
-const PROJECT_TYPE_MAP: Record<string, string> = {
-  'Chung cư': 'Chung cư',
-  'Nhà phố': 'Nhà phố',
-  'Biệt thự': 'Biệt thự',
-  'Văn phòng': 'Văn phòng'
-};
+
 
 export default function ProjectsPage() {
+  const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [unitOptions, setUnitOptions] = useState<any[]>([]);
+  const [PROJECT_TYPES, setProjectTypes] = useState<{value: string, label: string}[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchProjectsData = async () => {
     try {
       setIsLoading(true);
-      const [resProj, resUnits] = await Promise.all([
+      const [resProj, resUnits, resCat] = await Promise.all([
         apiClient.get('/projects'),
-        apiClient.get('/units')
+        apiClient.get('/units'),
+        apiClient.get('/categories')
       ]);
       setData(Array.isArray(resProj.data) ? resProj.data : []);
       setUnitOptions(Array.isArray(resUnits.data) ? resUnits.data.map((u: any) => ({ value: u.id.toString(), label: u.name })) : []);
+      setProjectTypes(Array.isArray(resCat.data) ? resCat.data.filter((c: any) => c.type === 'Dự án').map((c: any) => ({ value: c.name, label: c.name })) : []);
     } catch (error) {
       console.error('Failed to fetch projects data:', error);
     } finally {
@@ -219,8 +219,8 @@ export default function ProjectsPage() {
             <button
               onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
               className={`flex items-center gap-2 px-3 h-[38px] rounded-[4px] text-sm font-medium transition-all border cursor-pointer ${isFiltersExpanded
-                  ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
-                  : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#262930]'
+                ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
+                : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#262930]'
                 }`}
             >
               <Filter className="w-4 h-4" />
@@ -262,52 +262,58 @@ export default function ProjectsPage() {
                 <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
               </button>
               {openStatusPopover && (
-                <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-sm">
-                  <div className="flex flex-col gap-1">
-                    {Object.entries(STATUS_MAP).map(([val, label]) => (
-                      <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
-                        <input
-                          type="checkbox" checked={statusFilter.includes(val)}
-                          onChange={(e) => {
-                            if (e.target.checked) setStatusFilter([...statusFilter, val]);
-                            else setStatusFilter(statusFilter.filter(s => s !== val));
-                            setPage(0);
-                          }}
-                          className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300"
-                        />
-                        <span>{label}</span>
-                      </label>
-                    ))}
+                <>
+                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenStatusPopover(false); }} />
+                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
+                    <div className="flex flex-col gap-1">
+                      {Object.entries(STATUS_MAP).map(([val, label]) => (
+                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
+                          <input
+                            type="checkbox" checked={statusFilter.includes(val)}
+                            onChange={(e) => {
+                              if (e.target.checked) setStatusFilter([...statusFilter, val]);
+                              else setStatusFilter(statusFilter.filter(s => s !== val));
+                              setPage(0);
+                            }}
+                            className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300"
+                          />
+                          <span>{label}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
 
             <div className="flex flex-col gap-1.5 relative">
               <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Loại công trình</span>
               <button onClick={() => setOpenTypePopover(!openTypePopover)} className="flex items-center justify-between w-full h-9 px-3 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] transition-colors">
-                <span className="truncate">{typeFilter.length === 0 ? "Tất cả loại hình" : typeFilter.map(s => PROJECT_TYPE_MAP[s]).join(', ')}</span>
+                <span className="truncate">{typeFilter.length === 0 ? "Tất cả loại hình" : typeFilter.join(', ')}</span>
                 <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
               </button>
               {openTypePopover && (
-                <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-sm">
-                  <div className="flex flex-col gap-1">
-                    {Object.entries(PROJECT_TYPE_MAP).map(([val, label]) => (
-                      <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
-                        <input
-                          type="checkbox" checked={typeFilter.includes(val)}
-                          onChange={(e) => {
-                            if (e.target.checked) setTypeFilter([...typeFilter, val]);
-                            else setTypeFilter(typeFilter.filter(s => s !== val));
-                            setPage(0);
-                          }}
-                          className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300"
-                        />
-                        <span>{label}</span>
-                      </label>
-                    ))}
+                <>
+                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenTypePopover(false); }} />
+                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
+                    <div className="flex flex-col gap-1">
+                      {PROJECT_TYPES.map((t) => (
+                        <label key={t.value} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm">
+                          <input
+                            type="checkbox" checked={typeFilter.includes(t.value)}
+                            onChange={(e) => {
+                              if (e.target.checked) setTypeFilter([...typeFilter, t.value]);
+                              else setTypeFilter(typeFilter.filter(s => s !== t.value));
+                              setPage(0);
+                            }}
+                            className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300"
+                          />
+                          <span>{t.label}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>
@@ -324,7 +330,7 @@ export default function ProjectsPage() {
           )}
           {typeFilter.length > 0 && (
             <div className="flex items-center gap-1.5 pl-2.5 pr-1 py-1 bg-amber-50 dark:bg-amber-500/100/10 text-amber-600 dark:text-amber-500 border border-amber-500/20 rounded-[4px] text-sm font-medium">
-              Loại: {typeFilter.map(c => PROJECT_TYPE_MAP[c]).join(', ')}
+              Loại: {typeFilter.join(', ')}
               <button onClick={() => setTypeFilter([])} className="p-0.5 hover:bg-amber-50 dark:bg-amber-500/100/20 rounded-[4px] transition-colors ml-1"><X className="w-3.5 h-3.5" /></button>
             </div>
           )}
@@ -339,7 +345,7 @@ export default function ProjectsPage() {
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className="font-heading font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Dự Án</h3>
+              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Dự Án</h3>
               {!isSummaryCollapsed && <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} dự án</span>}
             </div>
 
@@ -414,25 +420,35 @@ export default function ProjectsPage() {
               </tr>
             </thead>
             <tbody>
-              {currentData.length === 0 ? (
+              {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-16 text-center animate-in fade-in zoom-in-95 duration-500">
+                  <td colSpan={6} className="px-5 py-24 text-center">
+                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                      <Loader2 className="w-8 h-8 animate-spin text-[#5865f2] mb-4" />
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Đang tải dữ liệu...</h3>
+                    </div>
+                  </td>
+                </tr>
+              ) : currentData.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-5 py-24 text-center animate-in fade-in zoom-in-95 duration-500">
                     <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                       <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
-                        <FolderKanban className="w-8 h-8 text-gray-400" />
+                        <FolderOpen className="w-8 h-8 text-gray-400" />
                       </div>
-                      <h3 className="font-heading text-lg font-medium text-gray-900 dark:text-white mb-2">Không tìm thấy dự án</h3>
+                      <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Không có dữ liệu</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có dự án nào được tạo. Hãy tạo dự án đầu tiên của bạn.</p>
                       <button onClick={() => {
                         setModalMode('add');
                         setFormData({
                           id: '', name: '', unitId: unitOptions.length > 0 ? unitOptions[0].value : '',
-                          projectType: 'Chung cư', budget: '', area: 0, status: 'IN_PROGRESS',
+                          projectType: PROJECT_TYPES.length > 0 ? PROJECT_TYPES[0].value : '', budget: '', area: 0, status: 'IN_PROGRESS',
                           startDate: new Date().toISOString().split('T')[0], images: [],
                         });
                         setErrors({});
                         setIsDrawerOpen(true);
-                      }} className="mt-4 px-5 py-2.5 bg-[#5865f2] text-white rounded-[4px] text-sm font-medium">
-                        Tạo Dự Án Ngay
+                      }} className="flex items-center gap-2 px-5 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors">
+                        <Plus className="w-4 h-4" /> Tạo Dự Án Mới
                       </button>
                     </div>
                   </td>
@@ -527,7 +543,7 @@ export default function ProjectsPage() {
                   <FolderKanban className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="font-heading text-base font-medium text-gray-900 dark:text-white tracking-tight">
+                  <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
                     {modalMode === 'add' ? 'Thêm Dự Án Mới' : 'Cập Nhật Dự Án'}
                   </h2>
                 </div>
@@ -542,7 +558,7 @@ export default function ProjectsPage() {
 
                 {/* Section: Thông tin dự án */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
                     Thông tin dự án
                   </h3>
@@ -568,7 +584,49 @@ export default function ProjectsPage() {
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-1.5 relative z-30">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Loại Công Trình</label>
-                      <CustomDropdown className="w-full" options={[{ value: 'Chung cư', label: 'Chung cư' }, { value: 'Nhà phố', label: 'Nhà phố' }, { value: 'Biệt thự', label: 'Biệt thự' }, { value: 'Văn phòng', label: 'Văn phòng' }]} value={formData.projectType} onChange={val => setFormData({ ...formData, projectType: val })} />
+                      <CustomDropdown className="w-full" options={PROJECT_TYPES} value={formData.projectType} onChange={val => setFormData({ ...formData, projectType: val })} onQuickAdd={async (newVal) => {
+                        if (newVal) {
+                          const prevVal = formData.projectType;
+                          // Optimistic update
+                          setFormData({ ...formData, projectType: newVal });
+                          setProjectTypes(prev => prev.some(p => p.value === newVal) ? prev : [...prev, { value: newVal, label: newVal }]);
+
+                          try {
+                            const generateSlug = (text: string) => text.toString().toLowerCase()
+                              .replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a')
+                              .replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e')
+                              .replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i')
+                              .replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o')
+                              .replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u')
+                              .replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y')
+                              .replace(/đ/gi, 'd')
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9\-]/g, '')
+                              .replace(/\-\-+/g, '-')
+                              .replace(/^-+/, '')
+                              .replace(/-+$/, '');
+
+                            const slug = generateSlug(newVal) + '-' + Math.floor(Math.random() * 1000);
+                            await apiClient.post('/categories', { name: newVal, slug, type: 'Dự án', status: 'ACTIVE' });
+                            
+                            // Background sync
+                            apiClient.get('/categories').then(catRes => {
+                              const projTypes = (catRes.data as any[]).filter((c: any) => c.type === 'Dự án').map((c: any) => ({ value: c.name, label: c.name }));
+                              setProjectTypes(projTypes);
+                            });
+
+                            toast.success(`Đã thêm loại công trình "${newVal}"`);
+                          } catch (error) {
+                            console.error(error);
+                            // Rollback on error
+                            setFormData(prev => ({ ...prev, projectType: prevVal }));
+                            setProjectTypes(prev => prev.filter(p => p.value !== newVal));
+                            toast.error('Lỗi khi tạo loại công trình mới');
+                          }
+                        } else {
+                          router.push('/admin/categories');
+                        }
+                      }} emptyText="Chưa có Loại dự án" />
                     </div>
                     <div className="space-y-1.5 relative z-30">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng Thái</label>
@@ -602,7 +660,7 @@ export default function ProjectsPage() {
 
                 {/* Section: Hình ảnh */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
                     Hình Ảnh Dự Án
                   </h3>

@@ -92,7 +92,7 @@ export default function CustomerDetailPage() {
     return (
       <div className="h-full flex flex-col items-center justify-center text-gray-500">
         <User className="w-16 h-16 mb-4 text-gray-300" />
-        <h2 className="font-heading text-xl font-medium">Không tìm thấy khách hàng</h2>
+        <h2 className="text-xl font-medium">Không tìm thấy khách hàng</h2>
         <Link href="/admin/customers" className="mt-4 text-[#5865f2] hover:underline">Quay lại danh sách</Link>
       </div>
     );
@@ -133,7 +133,7 @@ export default function CustomerDetailPage() {
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h2 className="font-heading text-2xl font-medium tracking-tight text-gray-900 dark:text-white">Chi tiết Khách hàng</h2>
+          <h2 className="text-2xl font-medium tracking-tight text-gray-900 dark:text-white">Chi tiết Khách hàng</h2>
           <p className="text-sm text-gray-500 mt-0.5">Hồ sơ và lịch sử giao dịch toàn diện.</p>
         </div>
       </div>
@@ -147,7 +147,7 @@ export default function CustomerDetailPage() {
               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 border-2 border-white dark:border-[#14151a] shadow-sm flex items-center justify-center text-blue-700 dark:text-blue-400 font-medium text-3xl mb-4">
                 {customer.fullName.charAt(0).toUpperCase()}
               </div>
-              <h3 className="font-heading text-xl font-medium text-gray-900 dark:text-white">{customer.fullName}</h3>
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white">{customer.fullName}</h3>
               <p className="text-sm font-medium text-[#5865f2] mt-1">Khách hàng thành viên</p>
             </div>
 

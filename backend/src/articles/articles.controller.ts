@@ -20,6 +20,11 @@ export class ArticlesController {
     return this.articlesService.findOne(+id);
   }
 
+  @Patch(':id/view')
+  incrementView(@Param('id') id: string) {
+    return this.articlesService.incrementView(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDto: any) {
     return this.articlesService.update(+id, updateDto);

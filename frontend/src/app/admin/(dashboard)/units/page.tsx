@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Plus, Filter, Edit, Trash2, Building2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, MapPin, Phone } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Search, Plus, Filter, Edit, Trash2, Building2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, MapPin, Phone, Loader2, FolderOpen } from 'lucide-react';
 import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
@@ -23,7 +24,9 @@ const STATUS_MAP: Record<string, string> = {
 };
 
 export default function UnitsPage() {
+  const router = useRouter();
   const [data, setData] = useState<any[]>([]);
+  const [UNIT_TYPES, setUnitTypes] = useState<{value: string, label: string}[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchUnits = async () => {
@@ -31,6 +34,8 @@ export default function UnitsPage() {
       setIsLoading(true);
       const res = await apiClient.get('/units');
       setData(Array.isArray(res.data) ? res.data : []);
+      const catRes = await apiClient.get('/categories');
+      setUnitTypes(Array.isArray(catRes.data) ? catRes.data.filter((c: any) => c.type === 'Bộ lọc Đơn vị').map((c: any) => ({ value: c.name, label: c.name })) : []);
     } catch (error) {
       console.error('Failed to fetch units:', error);
     } finally {
@@ -214,8 +219,8 @@ export default function UnitsPage() {
             <button
               onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
               className={`flex items-center gap-2 px-3 h-[38px] rounded-[4px] text-sm font-medium transition-all focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 border cursor-pointer ${isFiltersExpanded
-                  ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
-                  : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#262930]'
+                ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
+                : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#262930]'
                 }`}
             >
               <Filter className="w-4 h-4" />
@@ -265,25 +270,28 @@ export default function UnitsPage() {
                 <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
               </button>
               {openStatusPopover && (
-                <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-sm">
-                  <div className="flex flex-col gap-1">
-                    {Object.entries(STATUS_MAP).map(([val, label]) => (
-                      <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm text-gray-700 dark:text-gray-200">
-                        <input
-                          type="checkbox"
-                          checked={statusFilter.includes(val)}
-                          onChange={(e) => {
-                            if (e.target.checked) setStatusFilter([...statusFilter, val]);
-                            else setStatusFilter(statusFilter.filter(s => s !== val));
-                            setPage(0);
-                          }}
-                          className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300 focus:ring-[#5865f2]"
-                        />
-                        <span>{label}</span>
-                      </label>
-                    ))}
+                <>
+                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenStatusPopover(false); }} />
+                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
+                    <div className="flex flex-col gap-1">
+                      {Object.entries(STATUS_MAP).map(([val, label]) => (
+                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm text-gray-700 dark:text-gray-200">
+                          <input
+                            type="checkbox"
+                            checked={statusFilter.includes(val)}
+                            onChange={(e) => {
+                              if (e.target.checked) setStatusFilter([...statusFilter, val]);
+                              else setStatusFilter(statusFilter.filter(s => s !== val));
+                              setPage(0);
+                            }}
+                            className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300 focus:ring-[#5865f2]"
+                          />
+                          <span>{label}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
 
@@ -300,25 +308,28 @@ export default function UnitsPage() {
                 <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
               </button>
               {openSegmentPopover && (
-                <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-[4px] shadow-sm">
-                  <div className="flex flex-col gap-1">
-                    {Object.entries(SEGMENT_MAP).map(([val, label]) => (
-                      <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm text-gray-700 dark:text-gray-200">
-                        <input
-                          type="checkbox"
-                          checked={segmentFilter.includes(val)}
-                          onChange={(e) => {
-                            if (e.target.checked) setSegmentFilter([...segmentFilter, val]);
-                            else setSegmentFilter(segmentFilter.filter(s => s !== val));
-                            setPage(0);
-                          }}
-                          className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300 focus:ring-[#5865f2]"
-                        />
-                        <span>{label}</span>
-                      </label>
-                    ))}
+                <>
+                  <div className="fixed inset-0 z-40" onClick={(e) => { e.stopPropagation(); setOpenSegmentPopover(false); }} />
+                  <div className="absolute top-16 left-0 z-50 w-full p-2 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm shadow-black/5 dark:shadow-none">
+                    <div className="flex flex-col gap-1">
+                      {Object.entries(SEGMENT_MAP).map(([val, label]) => (
+                        <label key={val} className="flex items-center gap-2.5 p-2 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 cursor-pointer text-sm text-gray-700 dark:text-gray-200">
+                          <input
+                            type="checkbox"
+                            checked={segmentFilter.includes(val)}
+                            onChange={(e) => {
+                              if (e.target.checked) setSegmentFilter([...segmentFilter, val]);
+                              else setSegmentFilter(segmentFilter.filter(s => s !== val));
+                              setPage(0);
+                            }}
+                            className="w-4 h-4 text-[#5865f2] rounded-[4px] border-gray-300 focus:ring-[#5865f2]"
+                          />
+                          <span>{label}</span>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
 
@@ -365,7 +376,7 @@ export default function UnitsPage() {
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className="font-heading font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Đơn Vị</h3>
+              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Đơn Vị</h3>
               {!isSummaryCollapsed && (
                 <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} đơn vị trong bộ lọc</span>
               )}
@@ -448,8 +459,8 @@ export default function UnitsPage() {
                   <div className="flex items-center gap-4">
                     <div
                       className={`w-4 h-4 rounded-[4px] border flex items-center justify-center cursor-pointer transition-colors ${selectedIds.length === currentData.length && currentData.length > 0
-                          ? 'bg-[#5865f2] border-[#5865f2]'
-                          : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent'
+                        ? 'bg-[#5865f2] border-[#5865f2]'
+                        : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent'
                         }`}
                       onClick={toggleSelectAll}
                     >
@@ -478,17 +489,24 @@ export default function UnitsPage() {
               </tr>
             </thead>
             <tbody>
-              {currentData.length === 0 ? (
+              {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-5 py-16 text-center animate-in fade-in zoom-in-95 duration-500">
+                  <td colSpan={6} className="px-5 py-24 text-center">
                     <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
-                      <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800/50 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-700/50">
-                        <Building2 className="w-8 h-8 text-gray-400 dark:text-gray-500 dark:text-gray-400" strokeWidth={1.5} />
+                      <Loader2 className="w-8 h-8 animate-spin text-[#5865f2] mb-4" />
+                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Đang tải dữ liệu...</h3>
+                    </div>
+                  </td>
+                </tr>
+              ) : currentData.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-5 py-24 text-center animate-in fade-in zoom-in-95 duration-500">
+                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                      <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
+                        <FolderOpen className="w-8 h-8 text-gray-400" />
                       </div>
-                      <h3 className="font-heading text-lg font-medium text-gray-900 dark:text-white mb-2">Không tìm thấy đơn vị nào</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-sm">
-                        Hãy thử thay đổi bộ lọc hoặc thêm mới đơn vị đối tác.
-                      </p>
+                      <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Không có dữ liệu</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có đơn vị đối tác nào. Hãy thêm đơn vị đầu tiên.</p>
                       <button
                         onClick={() => {
                           setModalMode('add');
@@ -501,7 +519,7 @@ export default function UnitsPage() {
                         }}
                         className="flex items-center gap-2 px-5 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors cursor-pointer"
                       >
-                        <Plus className="w-4 h-4" /> Tạo Đơn Vị Ngay
+                        <Plus className="w-4 h-4" /> Thêm Đơn Vị Mới
                       </button>
                     </div>
                   </td>
@@ -513,8 +531,8 @@ export default function UnitsPage() {
                       <div className="flex items-center gap-3">
                         <div
                           className={`w-4 h-4 rounded-[4px] border flex items-center justify-center cursor-pointer transition-colors shrink-0 ${selectedIds.includes(unit.id)
-                              ? 'bg-[#5865f2] border-[#5865f2]'
-                              : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent'
+                            ? 'bg-[#5865f2] border-[#5865f2]'
+                            : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-transparent'
                             }`}
                           onClick={() => toggleSelect(unit.id)}
                         >
@@ -534,8 +552,8 @@ export default function UnitsPage() {
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
                       <div>
                         <span className={`inline-block px-1.5 py-0.5 rounded-[4px] text-xs font-medium mb-1 ${unit.segment === 'cao-cap' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 dark:bg-amber-900/20 dark:text-amber-400' :
-                            unit.segment === 'trung-cap' ? 'bg-blue-50 text-blue-700 dark:text-blue-400 dark:bg-blue-900/20 dark:text-blue-400' :
-                              'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:bg-gray-800 dark:text-gray-300'
+                          unit.segment === 'trung-cap' ? 'bg-blue-50 text-blue-700 dark:text-blue-400 dark:bg-blue-900/20 dark:text-blue-400' :
+                            'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:bg-gray-800 dark:text-gray-300'
                           }`}>
                           {SEGMENT_MAP[unit.segment] || unit.segment}
                         </span>
@@ -550,8 +568,8 @@ export default function UnitsPage() {
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-xs font-medium ${unit.status === 'ACTIVE' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 dark:bg-emerald-900/20 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/30' :
-                          unit.status === 'PENDING' ? 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400 border border-orange-200 dark:border-orange-800/30' :
-                            'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:bg-gray-800 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
+                        unit.status === 'PENDING' ? 'bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400 border border-orange-200 dark:border-orange-800/30' :
+                          'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:bg-gray-800 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
                         }`}>
                         {STATUS_MAP[unit.status] || unit.status}
                       </span>
@@ -623,7 +641,7 @@ export default function UnitsPage() {
                   <Building2 className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="font-heading text-base font-medium text-gray-900 dark:text-white tracking-tight">
+                  <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
                     {modalMode === 'add' ? 'Thêm Đơn Vị Đối Tác Mới' : 'Cập Nhật Đơn Vị'}
                   </h2>
                 </div>
@@ -639,7 +657,7 @@ export default function UnitsPage() {
 
                 {/* Section: Thông tin chung */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
                     Thông tin chung
                   </h3>
@@ -702,7 +720,7 @@ export default function UnitsPage() {
 
                 {/* Section: Năng lực */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
                     Năng lực & Thế mạnh
                   </h3>
@@ -740,14 +758,51 @@ export default function UnitsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 relative z-30">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Loại Công Trình Thế Mạnh</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="text" value={formData.projectType} onChange={e => setFormData({ ...formData, projectType: e.target.value })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Chung cư, Nhà phố..." />
-                      </div>
+                      <CustomDropdown className="w-full" options={UNIT_TYPES} value={formData.projectType} onChange={val => setFormData({ ...formData, projectType: val })} onQuickAdd={async (newVal) => {
+                        if (newVal) {
+                          const prevVal = formData.projectType;
+                          // Optimistic update
+                          setFormData({ ...formData, projectType: newVal });
+                          setUnitTypes(prev => prev.some(p => p.value === newVal) ? prev : [...prev, { value: newVal, label: newVal }]);
+
+                          try {
+                            const generateSlug = (text: string) => text.toString().toLowerCase()
+                              .replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a')
+                              .replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e')
+                              .replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i')
+                              .replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o')
+                              .replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u')
+                              .replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y')
+                              .replace(/đ/gi, 'd')
+                              .replace(/\s+/g, '-')
+                              .replace(/[^a-z0-9\-]/g, '')
+                              .replace(/\-\-+/g, '-')
+                              .replace(/^-+/, '')
+                              .replace(/-+$/, '');
+
+                            const slug = generateSlug(newVal) + '-' + Math.floor(Math.random() * 1000);
+                            await apiClient.post('/categories', { name: newVal, slug, type: 'Đơn vị thiết kế', status: 'ACTIVE' });
+                            
+                            // Background sync
+                            apiClient.get('/categories').then(catRes => {
+                              const unitTypes = (catRes.data as any[]).filter((c: any) => c.type === 'Đơn vị thiết kế').map((c: any) => ({ value: c.name, label: c.name }));
+                              setUnitTypes(unitTypes);
+                            });
+
+                            toast.success(`Đã thêm loại công trình "${newVal}"`);
+                          } catch (error) {
+                            console.error(error);
+                            // Rollback on error
+                            setFormData(prev => ({ ...prev, projectType: prevVal }));
+                            setUnitTypes(prev => prev.filter(p => p.value !== newVal));
+                            toast.error('Lỗi khi tạo danh mục mới');
+                          }
+                        } else {
+                          router.push('/admin/categories');
+                        }
+                      }} emptyText="Chưa có Loại công trình" />
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Phong Cách Thiết Kế</label>
@@ -764,7 +819,7 @@ export default function UnitsPage() {
                 <div className="h-px bg-gray-100 dark:bg-gray-800/60 -mx-6"></div>
 
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-50 dark:bg-amber-500/100"></span>
                     Bài viết giới thiệu chi tiết
                   </h3>

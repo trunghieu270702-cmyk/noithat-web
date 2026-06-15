@@ -25,7 +25,7 @@ export default function OperationsPage() {
     <div className="space-y-6 animate-in fade-in duration-500 w-full">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-heading text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-[#5865f2]" />
             Vận hành Nội bộ
           </h2>
@@ -40,7 +40,7 @@ export default function OperationsPage() {
           <div className="space-y-6">
             <div className="flex justify-between items-center pb-4 border-b border-gray-200 dark:border-gray-800">
               <div>
-                <h3 className="font-heading text-lg font-medium text-gray-900 dark:text-white">Danh sách Tài khoản</h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Danh sách Tài khoản</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Quản lý nhân viên và quyền truy cập vào hệ thống.</p>
               </div>
               <button className="bg-[#5865f2] hover:bg-[#4752c4] text-white px-4 py-2 rounded-[4px] text-sm font-medium transition-colors shadow-sm flex items-center gap-2 border-0 cursor-pointer">
@@ -87,7 +87,7 @@ export default function OperationsPage() {
           <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-gray-200 dark:border-gray-800">
               <div>
-                <h3 className="font-heading text-lg font-medium text-gray-900 dark:text-white">Nhật ký Hệ thống (Audit Logs)</h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Nhật ký Hệ thống (Audit Logs)</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Lịch sử mọi thao tác thay đổi dữ liệu trên hệ thống.</p>
               </div>
               <div className="relative w-full sm:w-64">

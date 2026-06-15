@@ -152,7 +152,7 @@ export default function SeoPages() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-heading text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
             <FileSearch className="w-5 h-5 text-[#5865f2]" />
             Quản lý Trang SEO Tĩnh (Landing Pages)
           </h2>
@@ -232,8 +232,8 @@ export default function SeoPages() {
                   </td>
                   <td className="px-5 py-4">
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] text-[11px] font-medium ${page.status === 'PUBLISHED'
-                        ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/30 dark:bg-emerald-900/20 dark:text-emerald-400'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400'
+                      ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/30 dark:bg-emerald-900/20 dark:text-emerald-400'
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400'
                       }`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${page.status === 'PUBLISHED' ? 'bg-emerald-50 dark:bg-emerald-500/100' : 'bg-gray-50 dark:bg-[#1a1b23]0'}`}></span>
                       {page.status === 'PUBLISHED' ? 'Hoạt động' : 'Bản nháp'}
@@ -299,7 +299,7 @@ export default function SeoPages() {
                   <FileSearch className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="font-heading text-base font-medium text-gray-900 dark:text-white tracking-tight">
+                  <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
                     {modalMode === 'add' ? 'Tạo Trang SEO Mới' : 'Cập Nhật Trang SEO'}
                   </h2>
                 </div>
@@ -314,7 +314,7 @@ export default function SeoPages() {
 
                 {/* Section: Cấu hình URL & SEO */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
                     Thông tin URL & Đường dẫn
                   </h3>
@@ -352,7 +352,7 @@ export default function SeoPages() {
 
                 {/* Section: Thẻ Meta & Keyword */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
                     Thẻ Meta & Keyword
                   </h3>
@@ -403,7 +403,7 @@ export default function SeoPages() {
 
                 {/* Section: Nội dung Landing Page */}
                 <div className="space-y-5">
-                  <h3 className="font-heading text-xs font-medium text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-50 dark:bg-amber-500/100"></span>
                     Nội dung Landing Page
                   </h3>

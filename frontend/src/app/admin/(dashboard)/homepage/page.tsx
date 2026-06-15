@@ -106,7 +106,7 @@ export default function HomepageManager() {
     <div className="space-y-6 animate-in fade-in duration-500 w-full">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-heading text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
+          <h2 className="text-xl font-medium tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
             <Home className="w-5 h-5 text-[#5865f2]" />
             Quản lý Trang chủ (Homepage)
           </h2>
@@ -136,7 +136,7 @@ export default function HomepageManager() {
               className="px-6 py-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#1a1b23] transition-colors"
               onClick={() => setExpandedSection(expandedSection === sec.id ? '' : sec.id)}
             >
-              <h3 className="font-heading text-base font-medium text-gray-900 dark:text-white">{sec.label}</h3>
+              <h3 className="text-base font-medium text-gray-900 dark:text-white">{sec.label}</h3>
               {expandedSection === sec.id ? <ChevronUp className="w-5 h-5 text-gray-500 dark:text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-500 dark:text-gray-400" />}
             </div>
 

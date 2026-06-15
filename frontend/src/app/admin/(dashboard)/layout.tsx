@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AppLayout from "@/admin-components/layout/AppLayout";
 import { useAuthStore } from "@/admin-features/auth/stores/useAuthStore";
-import { Toaster } from 'sonner';
+import { Toaster } from '@/admin-components/ui/sonner';
 import { Loader2 } from "lucide-react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Loader2 className="w-8 h-8 text-[#5865f2] animate-spin" />
           </div>
           <div className="flex flex-col items-center">
-            <h3 className="font-heading text-base font-semibold text-gray-900 dark:text-white">Xác thực tài khoản</h3>
+            <h3 className="text-base font-semibold text-gray-900 dark:text-white">Xác thực tài khoản</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Đang chuyển hướng đến trang đăng nhập...</p>
           </div>
         </div>

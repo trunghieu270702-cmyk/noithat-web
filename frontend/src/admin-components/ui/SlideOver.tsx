@@ -47,7 +47,7 @@ export function SlideOver({ isOpen, onClose, title, description, children }: Sli
         {/* Header */}
         <div className="flex items-start justify-between px-6 py-5 border-b border-border">
           <div>
-            <h2 className="font-heading text-lg font-medium tracking-tight text-foreground">{title}</h2>
+            <h2 className=" text-lg font-medium tracking-tight text-foreground">{title}</h2>
             {description && (
               <p className="mt-1 text-sm text-muted-foreground">{description}</p>
             )}
