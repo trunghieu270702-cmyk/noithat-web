@@ -489,3 +489,14 @@
 .admin-wrapper *::-webkit-scrollbar-thumb:hover {
   background: rgba(107, 114, 128, 0.8) !important;
 }
+
+/* Button Glow Motion */
+@keyframes btn-glow-motion {
+  0% { box-shadow: 0 0 5px rgba(211, 174, 62, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(211, 174, 62, 0.8), 0 0 30px rgba(211, 174, 62, 0.6); }
+  100% { box-shadow: 0 0 5px rgba(211, 174, 62, 0.4); }
+}
+
+.btn-glow-motion {
+  animation: btn-glow-motion 2s infinite;
+}

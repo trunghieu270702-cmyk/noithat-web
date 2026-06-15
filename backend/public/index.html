@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pawn System - Clean Management Portal</title>
-    <!-- Google Fonts for Mona Sans Variable Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
-    <script>
-      (function() {
-        try {
-          var theme = localStorage.getItem('vite-ui-theme') || 'system';
-          var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-          if (isDark) {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-        } catch (e) {}
-      })();
-    </script>
-    <style>
-      /* Apply Mona Sans and system fallback fonts */
-      body {
-        font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      h1, h2, h3, h4, h5, h6, .font-display {
-        font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      }
-    </style>
-    <script type="module" crossorigin src="/assets/index-D7z6NgIL.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DKf0zqX7.css">
-  </head>
-  <body class="min-h-screen selection:bg-primary/30 selection:text-primary overflow-x-hidden">
-    <div id="root"></div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pawn System - Clean Management Portal</title>
+  <!-- Google Fonts for Mona Sans Variable Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet">
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('vite-ui-theme') || 'system';
+        var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <style>
+    /* Apply Mona Sans and system fallback fonts */
+    body {
+      font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .font-display {
+      font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index-D7z6NgIL.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DKf0zqX7.css">
+</head>
+
+<body class="min-h-screen selection:bg-primary/30 selection:text-primary overflow-x-hidden">
+  <div id="root"></div>
+</body>
+
 </html>

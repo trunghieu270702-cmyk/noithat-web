@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <>
       {/* 1. TOP BAR */}
-      <div className="hidden md:block bg-[#1c1918] py-2 w-full z-50 relative">
+      <div className=" font-display hidden md:block bg-[#1c1918] py-2 w-full z-50 relative">
         <div className="max-w-[1200px] mx-auto px-4 flex items-center justify-start gap-8">
           <div className="flex items-center gap-2 cursor-pointer group">
             <Mail className="text-[#D3AE3E] w-3.5 h-3.5 group-hover:scale-110 transition-transform" />

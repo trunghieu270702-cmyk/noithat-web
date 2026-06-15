@@ -20,7 +20,7 @@ function CustomSelect({ label, options, value, onChange }: { label: string, opti
   const selectedLabel = options.find(o => o.value === value)?.label || options[0].label;
 
   return (
-    <div className="flex-1 min-w-[200px]" ref={dropdownRef}>
+    <div className={`flex-1 min-w-[200px] relative ${isOpen ? 'z-50' : 'z-10'}`} ref={dropdownRef}>
       <label className="block text-sm text-gray-400 dark:text-white/50 mb-2 font-medium">{label}</label>
       <div className="relative">
         <div
@@ -112,7 +112,7 @@ export default function DonViThietKePage() {
         </div>
 
         {/* Filters Scaffold */}
-        <div id="phan-khuc" className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none p-6 rounded-[4px] mb-12 border border-[#ECE7DE] dark:border-white/10 flex flex-wrap gap-4 items-end">
+        <div id="phan-khuc" className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none p-6 rounded-[4px] mb-12 border border-[#ECE7DE] dark:border-white/10 flex flex-wrap gap-4 items-end relative z-[60]">
           <CustomSelect
             label="Phân khúc"
             value={segment}

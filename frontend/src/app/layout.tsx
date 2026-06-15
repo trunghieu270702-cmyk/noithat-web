@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "NoiThat – Kiến Trúc & Nội Thất Cao Cấp",
   description: "Hệ sinh thái thiết kế kiến trúc và nội thất cao cấp.",
+  icons: {
+    icon: "/images/logo-main.png",
+  },
 };
 
 /**
