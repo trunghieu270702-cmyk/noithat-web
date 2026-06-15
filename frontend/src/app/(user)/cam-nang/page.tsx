@@ -104,8 +104,15 @@ export default function CamNangPage() {
   }
 
   return (
-    <div className="pt-[120px] pb-20 bg-white dark:bg-[#111111] min-h-screen text-gray-900 dark:text-white">
-      <div className="container mx-auto px-6 max-w-[1400px]">
+    <div className="relative pt-[120px] pb-20 bg-white dark:bg-[#111111] min-h-screen text-gray-900 dark:text-white">
+      {/* Ambient Light Blobs for WOW Effect */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D3AE3E]/15 blur-[120px]" />
+        <div className="absolute top-[40%] right-[-10%] w-[30%] h-[50%] rounded-full bg-[#D3AE3E]/10 blur-[100px]" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] rounded-full bg-[#D3AE3E]/10 blur-[150px]" />
+      </div>
+
+      <div className="relative z-10 container mx-auto px-6 max-w-[1400px]">
         {/* Page Header */}
         <div className="text-center mb-12">
           <h1 className="font-heading text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Cẩm Nang Nội Thất</h1>
@@ -254,7 +261,7 @@ export default function CamNangPage() {
               <div className="mt-10 text-center">
                 <button 
                   onClick={handleLoadMore}
-                  className="px-8 py-3 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white font-bold uppercase tracking-wider text-sm rounded-[2px] hover:bg-[#ce9e51] hover:text-white transition-colors duration-300"
+                  className="px-8 py-3 border-2 border-[#ce9e51] bg-transparent text-[#ce9e51] font-bold uppercase tracking-wider text-sm rounded-[2px] hover:bg-[#ce9e51] hover:text-white transition-all duration-300"
                 >
                   Xem thêm bài viết
                 </button>
@@ -266,21 +273,28 @@ export default function CamNangPage() {
           <div className="lg:col-span-4">
             <div className="sticky top-[120px] space-y-10">
 
-              {/* Widget: Categories */}
-              <div className="bg-gray-50 dark:bg-white/5 rounded-[8px] p-6 border border-gray-100 dark:border-white/5">
-                <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white mb-5 uppercase tracking-wide">Chuyên mục</h3>
-                <ul className="space-y-3">
-                  {categories.filter(c => c.type === 'Bài viết').map((cat, idx) => (
-                    <li key={idx}>
-                      <Link href={`/cam-nang/danh-muc/${cat.slug}`} className="flex items-center justify-between text-gray-600 dark:text-white/70 hover:text-[#ce9e51] dark:hover:text-[#ce9e51] transition-colors group">
-                        <span className="flex items-center gap-2">
-                          <i className="fa fa-chevron-right text-[10px] text-gray-300 group-hover:text-[#ce9e51]"></i>
-                          {cat.name}
-                        </span>
-                        {/* Optionally show count here if available */}
-                      </Link>
-                    </li>
-                  ))}
+              <div className="bg-white dark:bg-[#151515] rounded-[2px] p-6 border border-[#E5E7EB] dark:border-[#333] shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-1 h-6 bg-[#ce9e51]"></div>
+                  <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white uppercase tracking-wider m-0">Chuyên mục</h3>
+                </div>
+                <ul className="space-y-0">
+                  {categories.filter(c => c.type === 'Bài viết').map((cat, idx, arr) => {
+                    const count = publishedArticles.filter(a => a.category === cat.name).length;
+                    return (
+                      <li key={idx} className={`group ${idx !== arr.length - 1 ? 'border-b border-gray-100 dark:border-white/5' : ''}`}>
+                        <Link href={`/cam-nang/danh-muc/${cat.slug}`} className="flex items-center justify-between py-3.5 px-2 text-gray-600 dark:text-gray-400 hover:text-[#ce9e51] dark:hover:text-[#ce9e51] hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 rounded-[2px]">
+                          <span className="flex items-center gap-3 font-medium transition-transform duration-300 group-hover:translate-x-1">
+                            <i className="fa fa-angle-right text-[12px] text-[#ce9e51]/50 group-hover:text-[#ce9e51]"></i>
+                            {cat.name}
+                          </span>
+                          <span className="flex items-center justify-center min-w-[28px] h-[28px] rounded-full bg-gray-100 dark:bg-[#222] text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:bg-[#ce9e51] group-hover:text-white transition-colors">
+                            {count}
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 

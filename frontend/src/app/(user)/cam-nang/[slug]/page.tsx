@@ -106,8 +106,15 @@ export default function ArticleDetail() {
   const tagsList = article.tags ? article.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
 
   return (
-    <div className="pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
-      <div className="max-w-[1400px] mx-auto px-6">
+    <div className="relative pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
+      {/* Ambient Light Blobs for WOW Effect */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D3AE3E]/15 blur-[120px]" />
+        <div className="absolute top-[40%] right-[-10%] w-[30%] h-[50%] rounded-full bg-[#D3AE3E]/10 blur-[100px]" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] rounded-full bg-[#D3AE3E]/10 blur-[150px]" />
+      </div>
+
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-[13px] text-gray-500 dark:text-[#888] uppercase tracking-wider font-semibold mb-8">
