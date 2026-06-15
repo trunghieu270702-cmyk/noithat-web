@@ -24,7 +24,7 @@ interface CustomDropdownProps {
   className?: string;
   onQuickAdd?: (newVal?: string) => void;
   emptyText?: string;
-  emptyText?: string;
+  placeholder?: string;
 }
 
 export default function CustomDropdown({ options, value, onChange, placeholder = 'Select option...', className = '', onQuickAdd, emptyText }: CustomDropdownProps) {
