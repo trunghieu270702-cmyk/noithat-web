@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import ArchitecturalAccent from './ArchitecturalAccent';
 
 export default function SectionPartners() {
   const [partners, setPartners] = useState<any[]>([]);
@@ -10,7 +11,7 @@ export default function SectionPartners() {
   useEffect(() => {
     const fetchPartners = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/units`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/units`);
         const data = await res.json();
         if (Array.isArray(data)) {
           // Lấy 6 đơn vị đầu tiên để hiển thị trang chủ
@@ -26,7 +27,9 @@ export default function SectionPartners() {
   }, []);
 
   return (
-    <section className="py-20 bg-[#FCFBF8] dark:bg-[#1a1a1a] modern-section border-y border-gray-200 dark:border-white/20 relative overflow-hidden">
+    <section className="py-20 bg-transparent dark:bg-transparent modern-section border-y border-gray-200 dark:border-white/20 relative overflow-hidden">
+      <ArchitecturalAccent variant="overlapping-squares" className="top-10 right-10 w-48 h-48 opacity-50" />
+      
       <div className="absolute inset-0 bg-[url('/images/common/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
       
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">

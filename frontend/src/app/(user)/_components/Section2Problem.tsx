@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
+import ArchitecturalAccent from './ArchitecturalAccent';
 
 const PROBLEMS = [
   {
@@ -42,7 +43,9 @@ const PROBLEMS = [
 
 export default function Section2Problem() {
   return (
-    <section className="relative py-32 bg-[#FDFCFB] dark:bg-[#131313] modern-section overflow-hidden">
+    <section className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <ArchitecturalAccent variant="overlapping-squares" className="bottom-10 right-10 w-64 h-64 opacity-50" />
+
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#ECE7DE]/50 dark:from-[#1a1a1a] to-transparent opacity-50 pointer-events-none" />
 
@@ -64,20 +67,20 @@ export default function Section2Problem() {
         </ScrollReveal>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-[2px]">
           {PROBLEMS.map((problem, index) => (
-            <ScrollReveal 
-              key={problem.num} 
-              animation="fade-up" 
+            <ScrollReveal
+              key={problem.num}
+              animation="fade-up"
               delay={200 + index * 100}
-              className={`relative group overflow-hidden rounded-2xl ${problem.colSpan}`}
+              className={`relative group overflow-hidden rounded-[2px] ${problem.colSpan}`}
             >
-              <div className="h-full card rounded-2xl dark:bg-[#131313] border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 transition-all duration-500 p-8 md:p-10 flex flex-col justify-between min-h-[300px]">
-                
+              <div className="h-full card rounded-[2px] dark:bg-[#131313] border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 transition-all duration-500 p-8 md:p-10 flex flex-col justify-between min-h-[300px]">
+
                 {/* Optional Background Image for some blocks */}
                 {problem.bgImg && (
                   <>
-                    <div 
+                    <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110 opacity-30 group-hover:opacity-20"
                       style={{ backgroundImage: `url(${problem.bgImg})` }}
                     />
@@ -86,7 +89,10 @@ export default function Section2Problem() {
                 )}
 
                 <div className="relative z-10">
-                  <div className="text-[#C7A25C] text-6xl font-bold opacity-40 mb-6 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-500 inline-block">
+                  <div
+                    className="text-transparent text-6xl md:text-7xl font-bold mb-6 group-hover:-translate-y-2 transition-all duration-500 inline-block drop-shadow-sm"
+                    style={{ WebkitTextStroke: '1px #C7A25C' }}
+                  >
                     {problem.num}
                   </div>
                   <h3 className="font-heading text-xl md:text-2xl font-bold text-[#1F1F1F] dark:text-white mb-4 group-hover:text-[#C7A25C] transition-colors leading-snug">

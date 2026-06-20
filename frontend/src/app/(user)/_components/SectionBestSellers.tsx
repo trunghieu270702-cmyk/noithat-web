@@ -54,7 +54,7 @@ const BEST_SELLERS = [
 
 export default function SectionBestSellers() {
   return (
-    <section className="py-24 bg-[#F4F1EC] dark:bg-[#131313] modern-section relative border-t border-gray-200 dark:border-white/20">
+    <section className="py-24 bg-transparent dark:bg-transparent modern-section relative border-t border-gray-200 dark:border-white/20">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 uppercase">
@@ -68,13 +68,23 @@ export default function SectionBestSellers() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {BEST_SELLERS.map((product) => (
             <div key={product.id} className="group flex flex-col bg-white dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-gray-100 dark:border-white/10 rounded-[4px] overflow-hidden hover:-translate-y-2 transition-all duration-300 luxury-glow shadow-sm shadow-black/20">
-              <div className="relative aspect-[4/3] overflow-hidden bg-black/50">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
-                />
-                <div className="absolute top-4 left-4 flex gap-2">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                {/* Luxury Corner Accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
+                
+                <div className="w-full h-full relative overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                  {/* Default Inner Border */}
+                  <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 rounded-[1px]"></div>
+                </div>
+
+                <div className="absolute top-4 left-4 flex gap-2 z-20">
                   {product.tags.map(tag => (
                     <span key={tag} className="bg-black/80 backdrop-blur-md text-[#D3AE3E] text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-[2px] luxury-glow">
                       {tag}

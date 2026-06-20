@@ -77,7 +77,7 @@ export default function DonViThietKePage() {
   useEffect(() => {
     const fetchUnits = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/units`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/units`);
         const data = await res.json();
         if (Array.isArray(data)) {
           // Map API data to the fields required by the UI
@@ -173,31 +173,29 @@ export default function DonViThietKePage() {
               <p className="text-gray-500 dark:text-white/60 max-w-md mx-auto text-lg">Hệ thống hiện đang cập nhật danh sách các đơn vị thiết kế và thi công nội thất chuyên nghiệp. Vui lòng quay lại sau!</p>
             </div>
           ) : units.map((unit) => (
-            <div key={unit.id} className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none rounded-[4px] overflow-hidden group border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 hover:-translate-y-1 transition-all luxury-glow">
+            <div key={unit.id} className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none rounded-[4px] overflow-hidden group border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 hover:-translate-y-1 transition-all luxury-glow relative">
+              <Link href={`/don-vi-thiet-ke/${unit.id}`} className="absolute inset-0 z-40" aria-label={`Xem chi tiết hồ sơ ${unit.name}`}></Link>
               <div className="h-[240px] relative overflow-hidden">
-                <div
-                  className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                  style={{ backgroundImage: `url(${unit.image})` }}
-                ></div>
-                <div className={`absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-[2px] uppercase tracking-widest z-20 ${getCategoryStyles(unit.category)}`}>
+                {/* Luxury Corner Accents */}
+                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
+                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
+                
+                <div className="w-full h-full relative overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-1000"
+                    style={{ backgroundImage: `url(${unit.image})` }}
+                  ></div>
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                  {/* Default Inner Border */}
+                  <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 rounded-[1px]"></div>
+                </div>
+                <div className={`absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-[2px] uppercase tracking-widest z-20 shadow-md ${getCategoryStyles(unit.category)}`}>
                   {unit.category}
                 </div>
               </div>
               <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-heading text-2xl font-bold text-[#1F1F1F] dark:text-white">{unit.name}</h3>
-                  <button 
-                    className="flex items-center gap-2 group/cb hover:opacity-80 transition-opacity"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      router.push(`/don-vi-thiet-ke/so-sanh?ids=${unit.id}`);
-                    }}
-                  >
-                    <div className="w-5 h-5 rounded border border-[#C7A25C] flex items-center justify-center">
-                      <svg className="w-3 h-3 text-[#C7A25C]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                    </div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#C7A25C]">So sánh</span>
-                  </button>
+                <div className="mb-2">
+                  <h3 className="font-heading text-2xl font-bold text-[#1F1F1F] dark:text-white mb-2">{unit.name}</h3>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-white/60 mb-4 line-clamp-2">{unit.description}</p>
 
@@ -216,11 +214,18 @@ export default function DonViThietKePage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 relative z-50">
                   <div className="flex gap-2">
-                    <Link href={`/don-vi-thiet-ke/${unit.id}`} className="text-center block flex-1 bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-4 rounded-[2px] transition-colors uppercase tracking-wider text-xs">
-                      Hồ sơ chi tiết
-                    </Link>
+                    <button 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        router.push(`/don-vi-thiet-ke/so-sanh?ids=${unit.id}`);
+                      }}
+                      className="flex-1 flex items-center justify-center gap-2 bg-transparent border border-[#E5C98A] dark:border-white/30 hover:bg-[#C7A25C] hover:border-[#C7A25C] text-[#C7A25C] hover:text-white font-bold py-3 px-4 rounded-[2px] transition-all duration-300 uppercase tracking-wider text-xs group/cb shadow-[0_4px_15px_rgba(199,162,92,0.05)] hover:shadow-[0_4px_15px_rgba(199,162,92,0.3)]"
+                    >
+                      <svg className="w-4 h-4 text-[#C7A25C] group-hover/cb:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                      So sánh
+                    </button>
                     {unit.fanpage && (
                       <a href={unit.fanpage} target="_blank" rel="noreferrer" className="flex items-center justify-center bg-[#3b5998] hover:bg-[#2d4373] text-white px-4 rounded-[2px] transition-colors" title="Facebook Fanpage">
                         <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>

@@ -62,7 +62,7 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
     if (unitId) {
       const fetchUnit = async () => {
         try {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/units`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/units`);
           const data = await res.json();
           if (Array.isArray(data)) {
             const found = data.find((u: any) => u.id.toString() === unitId.toString());
@@ -115,7 +115,7 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
         source: 'Website'
       };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/leads`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

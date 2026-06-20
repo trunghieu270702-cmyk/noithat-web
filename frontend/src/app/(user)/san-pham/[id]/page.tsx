@@ -1,9 +1,14 @@
-import React from 'react';
+'use client';
+import React, { useState, use } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import QuoteModal from '../../_components/QuoteModal';
 
-export default async function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params;
+export default function ProductDetail({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [selectedProductName, setSelectedProductName] = useState('');
+  const [selectedProductImage, setSelectedProductImage] = useState('');
 
   // Mock data based on ID or just a generic product
   const product = {
@@ -83,10 +88,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
               {product.name}
             </h1>
 
-            <div className="flex items-baseline gap-4 mb-8 pb-8 border-b border-gray-200 dark:border-white/10">
-              <span className="text-3xl lg:text-4xl font-bold text-[#D3AE3E]">{product.price}</span>
-              <span className="text-xl text-gray-400 line-through font-medium">{product.originalPrice}</span>
-            </div>
+
 
             <p className="text-gray-600 dark:text-[#ccc] text-base leading-relaxed mb-10">
               {product.description}
@@ -108,12 +110,20 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-auto">
-              <button className="flex-[2] bg-[#D3AE3E] text-white hover:bg-[#b88c45] py-5 px-6 rounded-[2px] font-bold uppercase tracking-widest text-[13px] transition-all duration-300 flex items-center justify-center gap-3 shadow-sm shadow-[#D3AE3E]/20 hover:shadow-sm hover:-translate-y-1">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                Thêm vào giỏ
+            <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-8 border-t border-gray-200 dark:border-white/10">
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedProductName(product.name);
+                  setSelectedProductImage(product.images[0]);
+                  setIsQuoteModalOpen(true);
+                }}
+                className="flex-[2] bg-[#D3AE3E] text-white hover:bg-[#b88c45] py-5 px-6 rounded-[2px] font-bold uppercase tracking-widest text-[13px] transition-all duration-300 flex items-center justify-center gap-3 shadow-sm shadow-[#D3AE3E]/20 hover:shadow-sm hover:-translate-y-1"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                Nhận báo giá
               </button>
-              <Link href="/tu-van" className="flex-1 bg-transparent border-2 border-[#D3AE3E] text-[#D3AE3E] hover:bg-[#D3AE3E] hover:text-white py-5 px-6 rounded-[2px] font-bold uppercase tracking-widest text-[13px] text-center transition-all duration-300 flex items-center justify-center gap-2">
+              <Link href={`/tu-van?product=${product.id}`} className="flex-1 bg-transparent border-2 border-[#D3AE3E] text-[#D3AE3E] hover:bg-[#D3AE3E] hover:text-white py-5 px-6 rounded-[2px] font-bold uppercase tracking-widest text-[13px] text-center transition-all duration-300 flex items-center justify-center gap-2">
                 Tư vấn
               </Link>
             </div>
@@ -179,9 +189,20 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
                 </div>
                 <div className="p-6">
                   <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white group-hover:text-[#D3AE3E] transition-colors mb-2 line-clamp-2">Bàn Trà Sofa Mặt Đá Ceramic Nhập Khẩu</h3>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[#D3AE3E] font-bold text-lg">4.200.000đ</span>
-                    <span className="text-gray-400 text-sm line-through">5.000.000đ</span>
+                  <div className="mt-auto pt-4 border-t border-gray-100 dark:border-white/5 relative z-20">
+                    <span 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSelectedProductName('Bàn Trà Sofa Mặt Đá Ceramic Nhập Khẩu');
+                        setSelectedProductImage(`/images/main/${item + 3}.jpg`);
+                        setIsQuoteModalOpen(true);
+                      }}
+                      className="flex items-center justify-center gap-2 w-full bg-[#FAF8F2] dark:bg-[#131313] border border-[#E5C98A]/50 dark:border-[#C7A25C]/30 text-[#C7A25C] font-bold uppercase tracking-wider text-[11px] py-3 rounded-[2px] group-hover:bg-[#C7A25C] group-hover:text-white group-hover:border-[#C7A25C] hover:bg-[#C7A25C] hover:text-white hover:border-[#C7A25C] transition-all duration-300"
+                    >
+                      Nhận báo giá
+                      <ArrowLeft className="w-4 h-4 rotate-180" />
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -190,6 +211,15 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
         </div>
 
       </div>
+
+      {typeof document !== 'undefined' && (
+        <QuoteModal 
+          isOpen={isQuoteModalOpen} 
+          onClose={() => setIsQuoteModalOpen(false)} 
+          productName={selectedProductName} 
+          productImage={selectedProductImage}
+        />
+      )}
     </div>
   );
 }

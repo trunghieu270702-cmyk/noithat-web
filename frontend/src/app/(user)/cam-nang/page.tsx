@@ -15,8 +15,8 @@ export default function CamNangPage() {
     const fetchData = async () => {
       try {
         const [resArticles, resCats] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/articles`),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/categories`)
+          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/articles`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/categories`)
         ]);
 
         if (resArticles.ok) {
@@ -104,7 +104,7 @@ export default function CamNangPage() {
   }
 
   return (
-    <div className="relative pt-[120px] pb-20 bg-white dark:bg-[#111111] min-h-screen text-gray-900 dark:text-white">
+    <div className="relative pt-[120px] pb-20 bg-transparent dark:bg-transparent min-h-screen text-gray-900 dark:text-white">
       {/* Ambient Light Blobs for WOW Effect */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D3AE3E]/15 blur-[120px]" />

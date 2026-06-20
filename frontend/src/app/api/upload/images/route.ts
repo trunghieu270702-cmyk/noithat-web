@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         
         // Save to backend media library
         try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1';
           await fetch(`${apiUrl}/media`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
+import ArchitecturalAccent from './ArchitecturalAccent';
 
 // Reusing some high quality images for the categories
 const CATEGORIES = [
@@ -21,7 +22,7 @@ const CATEGORIES = [
 
 export default function Section7Categories() {
   return (
-    <section id="Categories" className="relative py-32 bg-[#FCFBF8] dark:bg-[#131313] modern-section overflow-hidden border-t border-[#ECE7DE] dark:border-white/20">
+    <section id="Categories" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden border-t border-[#ECE7DE] dark:border-white/20">
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -30,6 +31,7 @@ export default function Section7Categories() {
           backgroundSize: "30px 30px"
         }}
       />
+      <ArchitecturalAccent variant="overlapping-circles" className="top-10 right-10 w-56 h-56 opacity-50" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 

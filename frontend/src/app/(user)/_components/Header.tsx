@@ -47,7 +47,7 @@ export default function Header() {
       </div>
 
       {/* --- MAIN HEADER --- */}
-      <div className="w-full sticky top-0 z-50 bg-white/95 dark:bg-[#131313]/95 backdrop-blur-sm border-b border-gray-100 dark:border-white/10 transition-all duration-300">
+      <div className="w-full sticky top-0 z-50 bg-[#FAF8F2]/80 dark:bg-black/50 backdrop-blur-xl border-b border-[#D3AE3E]/10 dark:border-white/5 transition-all duration-500 shadow-[0_4px_30px_rgba(211,174,62,0.05)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.6)] supports-[backdrop-filter]:bg-[#FAF8F2]/60 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/40">
         <div className="max-w-[1400px] mx-auto px-6 w-full flex items-center justify-between h-[80px]">
           {/* Logo */}
           <div className="flex-shrink-0">

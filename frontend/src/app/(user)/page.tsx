@@ -5,6 +5,7 @@ import SectionHotProducts from './_components/SectionHotProducts';
 import SectionBestSellers from './_components/SectionBestSellers';
 import SectionPartners from './_components/SectionPartners';
 import SectionPolicies from './_components/SectionPolicies';
+import Section9ProcessShort from './_components/Section9ProcessShort';
 import Portfolio from './_components/Portfolio';
 import Blog from './_components/Blog';
 import Section10CTA from './_components/Section10CTA';
@@ -40,6 +41,8 @@ export default function UserHomePage() {
         {/* Section 6: Chính sách & Cam kết */}
         <SectionPolicies />
         
+        {/* Section 7: Quy trình làm việc (Rút gọn) */}
+        <Section9ProcessShort />
 
         {/* Section 8: Bài viết nổi bật */}
         <Blog />

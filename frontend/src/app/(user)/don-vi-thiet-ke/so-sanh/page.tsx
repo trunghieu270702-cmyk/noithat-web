@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState, use } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -14,10 +15,17 @@ export default function SoSanhPage({ searchParams }: { searchParams: Promise<{ i
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Auto-open modal if exactly 1 unit is selected (e.g., coming directly from the list)
+  useEffect(() => {
+    if (ids.length === 1) {
+      setShowModal(true);
+    }
+  }, [ids.length]);
+
   useEffect(() => {
     const fetchUnits = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/units`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/units`);
         const data = await res.json();
         if (Array.isArray(data)) {
           const mapped = data.map((u: any, idx: number) => ({
@@ -266,8 +274,8 @@ export default function SoSanhPage({ searchParams }: { searchParams: Promise<{ i
       </div>
 
       {/* Modal Chọn Đơn vị */}
-      {showModal && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      {showModal && typeof document !== 'undefined' ? createPortal(
+        <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white dark:bg-[#131313] w-full max-w-4xl rounded-[4px] shadow-2xl overflow-hidden animate-fadeInUp flex flex-col max-h-[90vh]">
             <div className="p-6 border-b border-[#ECE7DE] dark:border-white/10 flex justify-between items-center bg-gray-50 dark:bg-white/5">
               <h2 className="font-heading text-2xl font-bold">Chọn đối tác so sánh</h2>
@@ -312,8 +320,9 @@ export default function SoSanhPage({ searchParams }: { searchParams: Promise<{ i
               )}
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+        document.body
+      ) : null}
 
     </div>
   );

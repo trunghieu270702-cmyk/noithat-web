@@ -13,7 +13,7 @@ const VALUES = [
 
 export default function Section3Solution() {
   return (
-    <section className="relative py-32 bg-[#F8F6F2] dark:bg-[#131313] overflow-hidden border-y border-[#ECE7DE] dark:border-white/5">
+    <section className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden border-y border-[#ECE7DE] dark:border-white/5">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           

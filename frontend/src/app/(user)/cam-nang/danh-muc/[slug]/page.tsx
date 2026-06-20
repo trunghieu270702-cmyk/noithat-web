@@ -95,7 +95,7 @@ export default function CategoryArchivePage() {
   }
 
   return (
-    <div className="pt-[120px] pb-24 bg-white dark:bg-[#111111] min-h-screen text-gray-900 dark:text-white">
+    <div className="pt-[120px] pb-24 bg-transparent dark:bg-transparent min-h-screen text-gray-900 dark:text-white">
       <div className="container mx-auto px-6 max-w-[1200px]">
         
         {/* Breadcrumb & Header */}

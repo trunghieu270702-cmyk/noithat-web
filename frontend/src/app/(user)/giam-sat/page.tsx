@@ -9,7 +9,7 @@ export default function GiamSatPage() {
   useEffect(() => {
     const fetchSupervisions = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/supervisions`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/supervisions`);
         const data = await res.json();
         if (Array.isArray(data)) {
           setPackages(data.filter((p: any) => p.status === 'PUBLISHED' || p.status === 'ACTIVE' || !p.status || p.status === 'Hoạt động'));

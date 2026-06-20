@@ -12,7 +12,7 @@ export default function Portfolio() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1'}/projects`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/projects`);
         if (!res.ok) throw new Error('API error');
         const text = await res.text();
         if (!text || text.startsWith('<')) throw new Error('Invalid JSON response');
@@ -52,7 +52,7 @@ export default function Portfolio() {
   );
 
   return (
-    <section id="Portfolio" className="relative py-32 bg-[#F5F4F1] dark:bg-[#1a1a1a] modern-section overflow-hidden">
+    <section id="Portfolio" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"

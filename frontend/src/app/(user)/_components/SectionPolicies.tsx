@@ -29,7 +29,7 @@ const POLICIES = [
 
 export default function SectionPolicies() {
   return (
-    <section className="py-24 bg-[#F6F4F0] dark:bg-[#131313] modern-section relative border-t border-[#ECE7DE] dark:border-white/20">
+    <section className="py-24 bg-transparent dark:bg-transparent modern-section relative border-t border-[#ECE7DE] dark:border-white/20">
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[2px] bg-[#C7A25C]/10 border border-[#C7A25C]/20 text-[#A67C00] dark:text-[#FFD700] text-xs font-bold uppercase tracking-wider mb-4 luxury-glow">

@@ -1,48 +1,51 @@
 'use client';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
+import ArchitecturalAccent from './ArchitecturalAccent';
 
 const PROCESS_STEPS = [
   {
     num: '01',
-    title: 'Khách hàng gửi nhu cầu',
+    title: 'Gửi nhu cầu công trình',
     desc: 'Khách hàng cung cấp thông tin cơ bản về công trình: loại công trình, diện tích, ngân sách, phong cách mong muốn, khu vực và thời gian dự kiến triển khai.',
   },
   {
     num: '02',
-    title: 'Tư vấn phân khúc phù hợp',
+    title: 'ARCVIET tư vấn và phân loại nhu cầu',
     desc: 'Dựa trên thông tin khách hàng cung cấp, đội ngũ tư vấn sẽ xác định nhóm đơn vị phù hợp: cơ bản, trung cấp hoặc cao cấp.',
   },
   {
     num: '03',
-    title: 'Đề xuất đơn vị trong hệ sinh thái',
+    title: 'Đề xuất đối tác phù hợp',
     desc: 'Khách hàng được gợi ý một số đơn vị phù hợp nhất trong hệ sinh thái hơn 30 đơn vị thiết kế – thi công.',
   },
   {
     num: '04',
-    title: 'Xem hồ sơ và so sánh',
-    desc: 'Khách hàng xem thông tin chi tiết của từng đơn vị: dịch vụ, dự án tiêu biểu, phong cách, thế mạnh, quy trình và ngân sách tham khảo.',
-  },
-  {
-    num: '05',
-    title: 'Kết nối và nhận báo giá',
+    title: 'Kết nối nhận báo giá',
     desc: 'Website hỗ trợ kết nối khách hàng với đơn vị phù hợp để trao đổi chi tiết, khảo sát nếu cần và nhận báo giá cụ thể.',
   },
   {
-    num: '06',
-    title: 'Triển khai thiết kế – thi công',
+    num: '05',
+    title: 'Triển khai thiết kế/thi công',
     desc: 'Sau khi thống nhất phương án, khách hàng làm việc với đơn vị được chọn để triển khai thiết kế, thi công hoặc thi công trọn gói.',
   },
   {
+    num: '06',
+    title: 'Theo dõi tiến độ',
+    desc: 'Hệ thống hỗ trợ theo dõi tiến độ công trình, đảm bảo dự án được triển khai đúng kế hoạch đã đề ra.',
+  },
+  {
     num: '07',
-    title: 'Giám sát thi công nếu khách hàng cần',
+    title: 'Giám sát/nghiệm thu nếu cần',
     desc: 'Khách hàng có thể chọn thêm gói giám sát hạng mục thiết yếu hoặc gói quản lý toàn bộ dự án để kiểm soát quá trình thi công tốt hơn.',
   }
 ];
 
 export default function Section9Process() {
   return (
-    <section id="Process" className="relative py-32 bg-[#F4F2EE] dark:bg-[#131313] modern-section overflow-hidden">
+    <section id="Process" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <ArchitecturalAccent variant="overlapping-rectangles" className="bottom-10 left-10 w-64 h-64 opacity-50" />
+      
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
         {/* Section Header */}
@@ -77,7 +80,7 @@ export default function Section9Process() {
                   {/* Content Box */}
                   <div className="w-full md:w-1/2 pl-16 md:pl-0 md:pr-16 md:text-right flex flex-col justify-center pt-2 md:pt-0">
                     <div className={`card dark:bg-[#131313] p-6 md:p-8 border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 transition-colors group relative rounded-[4px] shadow-sm ${isEven ? 'md:ml-16 md:text-left' : ''}`}>
-                      <div className={`hidden md:block absolute top-4 ${isEven ? 'right-4' : 'left-4'} text-[#C7A25C] opacity-[0.03] text-7xl  font-black group-hover:opacity-10 transition-opacity pointer-events-none`}>
+                      <div className={`hidden md:block absolute top-4 ${isEven ? 'right-4' : 'left-4'} text-[#C7A25C] opacity-[0.03] text-7xl font-black group-hover:opacity-10 transition-opacity pointer-events-none`}>
                         {step.num}
                       </div>
                       <h3 className="font-heading text-[18px] md:text-[20px] font-bold text-[#1F1F1F] dark:text-white mb-3 group-hover:text-[#C7A25C] transition-colors relative z-10">

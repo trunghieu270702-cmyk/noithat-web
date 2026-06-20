@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import QuoteModal from '../_components/QuoteModal';
 
 function CustomSelect({ label, options, value, onChange }: { label: string, options: { value: string, label: string }[], value: string, onChange: (val: string) => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +33,7 @@ function CustomSelect({ label, options, value, onChange }: { label: string, opti
         </div>
 
         {isOpen && (
-          <div className="absolute z-50 w-full mt-2 modern-section shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[2px] py-2 animate-fadeInDown max-h-[300px] overflow-y-auto">
+          <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#1c1c1c] shadow-lg dark:shadow-2xl border border-[#ECE7DE] dark:border-white/10 rounded-[2px] py-2 animate-fadeInDown max-h-[300px] overflow-y-auto">
             {options.map((opt) => (
               <div
                 key={opt.value}
@@ -66,10 +67,14 @@ export default function SanPhamPage() {
   });
   const [isLoading, setIsLoading] = useState(true);
 
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [selectedProductName, setSelectedProductName] = useState('');
+  const [selectedProductImage, setSelectedProductImage] = useState('');
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1';
         const res = await fetch(`${apiUrl}/projects`);
         if (!res.ok) throw new Error('API error');
 
@@ -126,15 +131,21 @@ export default function SanPhamPage() {
   return (
     <div className="pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white transition-colors duration-300">
       <div className="container mx-auto px-6 max-w-[1400px]">
-        <div className="text-center mb-16">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">Tất cả sản phẩm</h1>
-          <p className="text-gray-600 dark:text-white/70 text-lg max-w-3xl mx-auto">
-            Khám phá bộ sưu tập nội thất cao cấp của chúng tôi, được thiết kế và chế tác tinh xảo, mang lại không gian sống đẳng cấp và tiện nghi.
+        <div className="flex flex-col items-center justify-center text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-[2px] bg-gradient-to-r from-[#C7A25C]/20 to-transparent border-l-2 border-[#C7A25C] text-[#A67C00] dark:text-[#FFD700] text-[11px] font-bold uppercase tracking-widest mb-4 luxury-glow mx-auto">
+            <span className="w-2 h-2 rounded-[2px] bg-[#C7A25C] animate-pulse"></span>
+            Nội Thất Cao Cấp
+          </div>
+          <h1 className="w-full uppercase font-heading text-4xl md:text-5xl font-bold text-[#1F1F1F] dark:text-white leading-tight mb-4">
+            Tất cả <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C7A25C] to-[#E5C98A]">Sản Phẩm</span>
+          </h1>
+          <p className="text-[#1F1F1F]/60 dark:text-white/60 text-base md:text-lg max-w-3xl mx-auto">
+            Khám phá những sản phẩm nội thất cao cấp của chúng tôi, nơi từng đường nét đều được thiết kế và chế tác tinh xảo, mang lại một không gian sống đậm chất nghệ thuật và hoàn mỹ.
           </p>
         </div>
 
         {/* Filters Scaffold */}
-        <div className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none p-6 rounded-[4px] mb-12 border border-[#ECE7DE] dark:border-white/10 flex flex-wrap gap-4 items-end relative z-[60]">
+        <div className="bg-white dark:bg-[#1c1c1c] shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none p-6 rounded-[2px] mb-12 border border-[#ECE7DE] dark:border-white/5 flex flex-wrap gap-4 items-end relative z-[60]">
           <CustomSelect
             label="Loại công trình"
             value={activeFilters.type}
@@ -185,15 +196,25 @@ export default function SanPhamPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {filteredItems.map((item) => (
-              <Link href={item.link} key={item.id} className="group flex flex-col modern-section border border-gray-100 dark:border-white/5 rounded-[4px] overflow-hidden hover:shadow-lg hover:-translate-y-2 transition-all duration-300 luxury-glow">
-                <div className="aspect-[4/3] bg-gray-100 dark:bg-white/5 relative overflow-hidden">
-                  <img src={item.img} alt={item.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  <div className="absolute top-4 left-4 bg-[#D3AE3E] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 shadow-sm z-10">Mới nhất</div>
+              <Link href={item.link} key={item.id} className="group flex flex-col bg-white dark:bg-[#131313] border border-[#ECE7DE] dark:border-white/5 rounded-[2px] overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-500 luxury-glow relative">
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  {/* Luxury Corner Accents */}
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
+                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
+                  
+                  <div className="w-full h-full relative overflow-hidden">
+                    <img src={item.img} alt={item.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+                    {/* Default Inner Border */}
+                    <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 rounded-[1px]"></div>
+                  </div>
+                  
+                  <div className="absolute top-4 left-4 bg-[#D3AE3E] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 shadow-md z-20">Mới nhất</div>
                   
                   {/* Partner Logo */}
                   <div className="absolute top-4 right-4 z-20 w-11 h-11 bg-white rounded-full p-1.5 shadow-xl flex items-center justify-center group/logo border border-gray-100 hover:scale-110 transition-transform">
                     <img src={item.unitLogo} alt={item.unitName} className="w-full h-full object-contain rounded-full" />
-                    <div className="absolute top-full mt-2 right-0 bg-gray-900 text-white text-[11px] px-2.5 py-1.5 rounded-[2px] opacity-0 invisible group-hover/logo:opacity-100 group-hover/logo:visible whitespace-nowrap transition-all shadow-lg pointer-events-none font-medium">
+                    <div className="absolute top-full mt-2 right-0 bg-[#1a1a1a] text-[#D3AE3E] text-[11px] px-3 py-1.5 rounded-[2px] opacity-0 invisible group-hover/logo:opacity-100 group-hover/logo:visible whitespace-nowrap transition-all shadow-lg pointer-events-none font-bold tracking-widest uppercase border border-[#D3AE3E]/30">
                       {item.unitName}
                     </div>
                   </div>
@@ -201,11 +222,20 @@ export default function SanPhamPage() {
                 <div className="p-6 flex flex-col flex-grow">
                   <div className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">{item.categories.join(', ')}</div>
                   <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white group-hover:text-[#D3AE3E] transition-colors mb-4 line-clamp-2 leading-snug">{item.title}</h3>
-                  <div className="mt-auto flex items-center justify-between">
-                    <span className="text-[#D3AE3E] font-bold text-lg">{item.price}</span>
-                    <div className="w-8 h-8 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center group-hover:bg-[#D3AE3E] group-hover:text-white text-gray-400 transition-colors">
+                  <div className="mt-auto pt-4 border-t border-gray-100 dark:border-white/5 relative z-20">
+                    <span 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setSelectedProductName(item.title);
+                        setSelectedProductImage(item.image);
+                        setIsQuoteModalOpen(true);
+                      }}
+                      className="flex items-center justify-center gap-2 w-full bg-[#FAF8F2] dark:bg-[#131313] border border-[#E5C98A]/50 dark:border-[#C7A25C]/30 text-[#C7A25C] font-bold uppercase tracking-wider text-[11px] py-3 rounded-[2px] group-hover:bg-[#C7A25C] group-hover:text-white group-hover:border-[#C7A25C] hover:bg-[#C7A25C] hover:text-white hover:border-[#C7A25C] transition-all duration-300"
+                    >
+                      Nhận báo giá
                       <ArrowRight className="w-4 h-4" />
-                    </div>
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -213,6 +243,15 @@ export default function SanPhamPage() {
           </div>
         )}
       </div>
+
+      {typeof document !== 'undefined' && (
+        <QuoteModal 
+          isOpen={isQuoteModalOpen} 
+          onClose={() => setIsQuoteModalOpen(false)} 
+          productName={selectedProductName} 
+          productImage={selectedProductImage}
+        />
+      )}
     </div>
   );
 }

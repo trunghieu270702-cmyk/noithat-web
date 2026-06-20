@@ -7,11 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new PrismaExceptionFilter());
   app.enableCors({
-    origin: [
-      process.env.FRONTEND_URL,
-      'http://localhost:3000',
-      'https://frontend-production-280f.up.railway.app'
-    ].filter(Boolean) as string[],
+    origin: true,
     credentials: true,
   });
   

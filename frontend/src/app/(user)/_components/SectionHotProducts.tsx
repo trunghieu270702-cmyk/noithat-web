@@ -1,8 +1,9 @@
 'use client';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
+import QuoteModal from './QuoteModal';
 
 const HOT_PRODUCTS = [
   { id: 1, name: 'Sofa Da Thật Nhập Khẩu Italia', category: 'Sofa Cao Cấp', image: '/images/main/3.jpg', price: 'Liên hệ' },
@@ -21,8 +22,12 @@ export default function SectionHotProducts() {
     [Autoplay({ delay: 4000, stopOnInteraction: true })]
   );
 
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [selectedProductName, setSelectedProductName] = useState('');
+  const [selectedProductImage, setSelectedProductImage] = useState('');
+
   return (
-    <section className="py-24 bg-[#F8F6F2] dark:bg-[#1a1a1a] modern-section relative overflow-hidden">
+    <section className="py-24 bg-transparent dark:bg-transparent modern-section relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full bg-[#C7A25C]/5 blur-[150px] pointer-events-none" />
 
@@ -82,11 +87,19 @@ export default function SectionHotProducts() {
                       <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-2 leading-snug drop-shadow-md">
                         {product.name}
                       </h3>
-                      <div className="flex items-center justify-between mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                        <p className="text-[#E2C792] font-semibold tracking-wider">{product.price}</p>
-                        <span className="text-white/70 text-sm flex items-center gap-1 group/btn hover:text-white">
-                          Chi tiết
-                          <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                      <div className="mt-4 pt-4 border-t border-white/20 relative z-20">
+                        <span 
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setSelectedProductName(product.name);
+                            setSelectedProductImage(product.image);
+                            setIsQuoteModalOpen(true);
+                          }}
+                          className="flex items-center justify-center gap-2 w-full bg-white/10 backdrop-blur-sm border border-[#D3AE3E]/50 text-[#D3AE3E] font-bold uppercase tracking-wider text-[11px] py-3 rounded-[2px] hover:bg-[#D3AE3E] hover:text-white transition-all duration-300"
+                        >
+                          Nhận báo giá
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </span>
                       </div>
                     </div>
@@ -108,6 +121,15 @@ export default function SectionHotProducts() {
           </Link>
         </div>
       </div>
+
+      {typeof document !== 'undefined' && (
+        <QuoteModal 
+          isOpen={isQuoteModalOpen} 
+          onClose={() => setIsQuoteModalOpen(false)} 
+          productName={selectedProductName} 
+          productImage={selectedProductImage}
+        />
+      )}
     </section>
   );
 }

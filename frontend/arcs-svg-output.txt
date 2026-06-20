@@ -1,0 +1,50 @@
+<circle cx="-50" cy="250" r="100" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="120" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="140" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="160" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="180" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="200" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="220" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="240" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="260" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="280" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="300" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="320" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="340" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="360" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="380" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="400" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="420" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="440" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="460" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="480" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="500" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="520" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="540" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="560" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="580" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<circle cx="-50" cy="250" r="600" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 100 150 L 100 600" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 50 100 Q 100 100 100 150" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 130 165 L 130 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 80 115 Q 130 115 130 165" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 160 180 L 160 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 110 130 Q 160 130 160 180" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 190 195 L 190 600" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 140 145 Q 190 145 190 195" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 220 210 L 220 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 170 160 Q 220 160 220 210" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 250 225 L 250 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 200 175 Q 250 175 250 225" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 280 240 L 280 600" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 230 190 Q 280 190 280 240" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 310 255 L 310 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 260 205 Q 310 205 310 255" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 340 270 L 340 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 290 220 Q 340 220 340 270" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 370 285 L 370 600" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 320 235 Q 370 235 370 285" fill="none" stroke={strokeColor} strokeWidth="0.75" opacity={strokeOpacity} />
+<path d="M 400 300 L 400 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 350 250 Q 400 250 400 300" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 430 315 L 430 600" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />
+<path d="M 380 265 Q 430 265 430 315" fill="none" stroke={strokeColor} strokeWidth="0.25" opacity={strokeOpacity} />

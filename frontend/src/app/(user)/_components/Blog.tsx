@@ -11,7 +11,7 @@ export default function Blog() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1';
         const res = await fetch(`${apiUrl}/articles`);
         if (!res.ok) {
           console.error('API error status:', res.status, res.statusText);
@@ -54,7 +54,7 @@ export default function Blog() {
   }, []);
 
   return (
-    <section id="Blog" className="relative py-32 bg-[#F9F8F6] dark:bg-[#131313] modern-section overflow-hidden">
+    <section id="Blog" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6">
 
         {/* Section Header */}

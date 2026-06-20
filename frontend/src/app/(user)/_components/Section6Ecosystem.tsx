@@ -101,7 +101,7 @@ function CheckList({ items, title }: { items: string[], title: string }) {
 
 export default function Section6Ecosystem() {
   return (
-    <section id="Ecosystem" className="relative py-32 bg-[#F8F6F2] dark:bg-[#131313] overflow-hidden">
+    <section id="Ecosystem" className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden">
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
         {/* Section Header */}

@@ -95,7 +95,7 @@ export default function Section8Supervision() {
   const [activeTab, setActiveTab] = useState(PACKAGES[0]);
 
   return (
-    <section id="Supervision" className="relative py-32 bg-[#F8F6F2] dark:bg-[#131313] overflow-hidden border-t border-[#ECE7DE] dark:border-white/5">
+    <section id="Supervision" className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden border-t border-[#ECE7DE] dark:border-white/5">
       <div className="max-w-[1400px] mx-auto px-6">
         
         {/* Section Header */}
