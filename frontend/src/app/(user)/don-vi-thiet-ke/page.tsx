@@ -79,6 +79,18 @@ export default function DonViThietKePage() {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/units`);
         const data = await res.json();
+        
+        const getAvatarUrl = (avatar: any) => {
+          if (Array.isArray(avatar) && avatar.length > 0) return avatar[0].url;
+          if (typeof avatar === 'string') {
+            try {
+              const parsed = JSON.parse(avatar);
+              if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].url;
+            } catch(e) { return avatar; }
+          }
+          return avatar?.url || null;
+        };
+
         if (Array.isArray(data)) {
           // Map API data to the fields required by the UI
           const mappedUnits = data.map((u: any, idx: number) => ({
@@ -89,7 +101,7 @@ export default function DonViThietKePage() {
             style: u.style || 'Hiện đại',
             location: u.location || 'Toàn quốc',
             description: u.shortDescription || u.description || 'Đơn vị thiết kế thi công nội thất chuyên nghiệp.',
-            image: u.avatar || `/images/common/bg-hero-${(idx % 2) + 1}.jpg`,
+            avatarUrl: getAvatarUrl(u.avatar),
             fanpage: u.fanpage || null,
             services: u.services || []
           }));
@@ -175,21 +187,27 @@ export default function DonViThietKePage() {
           ) : units.map((unit) => (
             <div key={unit.id} className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none rounded-[4px] overflow-hidden group border border-[#ECE7DE] dark:border-white/5 hover:border-[#C7A25C]/50 hover:-translate-y-1 transition-all luxury-glow relative">
               <Link href={`/don-vi-thiet-ke/${unit.id}`} className="absolute inset-0 z-40" aria-label={`Xem chi tiết hồ sơ ${unit.name}`}></Link>
-              <div className="h-[240px] relative overflow-hidden">
+              <div className="h-[240px] relative overflow-hidden flex items-center justify-center bg-gray-50 dark:bg-[#151515]">
+                {/* Subtle Grid Background */}
+                <div className="absolute inset-0 bg-[url('/images/common/noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none z-0"></div>
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0"></div>
+                
                 {/* Luxury Corner Accents */}
                 <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
                 <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#D3AE3E] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-30"></div>
                 
-                <div className="w-full h-full relative overflow-hidden">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-1000"
-                    style={{ backgroundImage: `url(${unit.image})` }}
-                  ></div>
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                  {/* Default Inner Border */}
-                  <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 rounded-[1px]"></div>
-                </div>
-                <div className={`absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-[2px] uppercase tracking-widest z-20 shadow-md ${getCategoryStyles(unit.category)}`}>
+                {/* Avatar Display */}
+                {unit.avatarUrl ? (
+                  <div className="w-[180px] h-[120px] md:w-[220px] md:h-[140px] bg-white rounded-[4px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center p-4 relative z-20 group-hover:scale-105 transition-transform duration-500 border border-[#ECE7DE] dark:border-white/5">
+                    <img src={unit.avatarUrl} alt={unit.name} className="max-w-full max-h-full object-contain transition-transform duration-500" />
+                  </div>
+                ) : (
+                  <div className="w-[180px] h-[120px] md:w-[220px] md:h-[140px] bg-gradient-to-br from-[#1F1F1F] to-[#333] dark:from-[#2a2a2a] dark:to-[#1a1a1a] rounded-[4px] shadow-lg flex items-center justify-center p-6 relative z-20 group-hover:scale-105 transition-transform duration-500 border border-[#ECE7DE]/20 dark:border-white/10">
+                    <span className="text-5xl font-heading font-bold text-[#D3AE3E] tracking-widest">{unit.name.substring(0, 2).toUpperCase()}</span>
+                  </div>
+                )}
+                
+                <div className={`absolute top-4 left-4 text-[10px] font-bold px-3 py-1.5 rounded-[2px] uppercase tracking-widest z-40 shadow-md ${getCategoryStyles(unit.category)}`}>
                   {unit.category}
                 </div>
               </div>

@@ -73,20 +73,6 @@ export default function Header() {
             <Link href="/" className={`font-menu text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Trang chủ</Link>
 
             <div className="relative group cursor-pointer">
-              <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/san-pham') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
-                Đối tác/Hạng mục
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </span>
-              {/* Dropdown Menu */}
-              <div className="absolute top-full left-0 mt-6 w-56 bg-white dark:bg-[#131313] border-t-2 border-[#D3AE3E] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
-                <Link href="/san-pham" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Tất cả sản phẩm</Link>
-                <Link href="/san-pham?filter=noi-bat" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Sản phẩm nổi bật</Link>
-                <Link href="/san-pham?filter=ban-chay" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Sản phẩm bán chạy</Link>
-                <Link href="/#danh-muc-san-pham" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Danh mục sản phẩm</Link>
-              </div>
-            </div>
-
-            <div className="relative group cursor-pointer">
               <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/he-sinh-thai') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
                 Hệ sinh thái
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -98,6 +84,20 @@ export default function Header() {
                 <Link href="/he-sinh-thai#phan-khuc" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Phân khúc dịch vụ</Link>
                 <Link href="/he-sinh-thai#loi-ich" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Lợi ích khách hàng</Link>
                 <Link href="/he-sinh-thai#so-sanh" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">So sánh phương án tự triển khai</Link>
+              </div>
+            </div>
+
+            <div className="relative group cursor-pointer">
+              <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/san-pham') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
+                Đối tác/Hạng mục
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              </span>
+              {/* Dropdown Menu */}
+              <div className="absolute top-full left-0 mt-6 w-56 bg-white dark:bg-[#131313] border-t-2 border-[#D3AE3E] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
+                <Link href="/san-pham" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Tất cả sản phẩm</Link>
+                <Link href="/san-pham?filter=noi-bat" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Sản phẩm nổi bật</Link>
+                <Link href="/don-vi-thiet-ke" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Các đối tác chính</Link>
+                <Link href="/#danh-muc-san-pham" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Danh mục sản phẩm</Link>
               </div>
             </div>
 
@@ -167,8 +167,8 @@ export default function Header() {
 
         <nav className="flex flex-col items-center gap-8 w-full px-6 h-full overflow-y-auto py-20">
           <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className={`font-menu text-2xl font-semibold uppercase tracking-widest transition-all ${isActive('/') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Trang Chủ</Link>
-          <Link href="/san-pham" onClick={() => setIsMobileMenuOpen(false)} className={`font-menu text-2xl font-semibold uppercase tracking-widest transition-all ${isActive('/san-pham') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Đối tác/Hạng mục</Link>
           <Link href="/he-sinh-thai" onClick={() => setIsMobileMenuOpen(false)} className={`font-menu text-2xl font-semibold uppercase tracking-widest transition-all ${isActive('/he-sinh-thai') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Hệ Sinh Thái</Link>
+          <Link href="/san-pham" onClick={() => setIsMobileMenuOpen(false)} className={`font-menu text-2xl font-semibold uppercase tracking-widest transition-all ${isActive('/san-pham') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Đối tác/Hạng mục</Link>
           <Link href="/giam-sat" onClick={() => setIsMobileMenuOpen(false)} className={`font-menu text-2xl font-semibold uppercase tracking-widest transition-all ${isActive('/dich-vu') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Dịch Vụ</Link>
           <Link href="/cam-nang" onClick={() => setIsMobileMenuOpen(false)} className={`font-menu text-2xl font-semibold uppercase tracking-widest transition-all ${isActive('/cam-nang') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Cẩm Nang</Link>
           <Link href="/tu-van" onClick={() => setIsMobileMenuOpen(false)} className="font-menu mt-8 bg-[#D3AE3E] text-white px-8 py-3.5 text-sm font-bold uppercase tracking-widest w-full text-center hover:bg-[#b88c45] transition-colors rounded-[2px]">

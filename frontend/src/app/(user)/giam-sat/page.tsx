@@ -7,20 +7,25 @@ export default function GiamSatPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSupervisions = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/supervisions`);
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setPackages(data.filter((p: any) => p.status === 'PUBLISHED' || p.status === 'ACTIVE' || !p.status || p.status === 'Hoạt động'));
-        }
-      } catch (error) {
-        console.error('Failed to fetch supervisions:', error);
-      } finally {
-        setIsLoading(false);
+    setIsLoading(true);
+    const hardcodedPackages = [
+      {
+        id: 1,
+        packageName: 'Dịch vụ thiết yếu',
+        shortDescription: 'Kiểm soát các công đoạn quan trọng nhất của công trình.',
+        targetAudience: 'Khách hàng muốn tiết kiệm chi phí\nKhách hàng đã có kinh nghiệm cơ bản\nCông trình quy mô nhỏ',
+        scopeOfWork: 'Kiểm tra vật liệu đầu vào\nGiám sát các giai đoạn thi công chính\nNghiệm thu hạng mục khuất lấp'
+      },
+      {
+        id: 2,
+        packageName: 'Full combo (Trọn gói)',
+        shortDescription: 'Giám sát toàn diện từ đầu đến cuối, an tâm tuyệt đối.',
+        targetAudience: 'Khách hàng bận rộn, không có thời gian\nKhách hàng lần đầu làm nhà\nCông trình quy mô lớn, phức tạp',
+        scopeOfWork: 'Kiểm tra vật liệu đầu vào toàn diện\nGiám sát thi công hàng ngày\nBáo cáo tiến độ định kỳ\nNghiệm thu toàn bộ công trình\nHỗ trợ xử lý sự cố phát sinh'
       }
-    };
-    fetchSupervisions();
+    ];
+    setPackages(hardcodedPackages);
+    setIsLoading(false);
   }, []);
 
   return (

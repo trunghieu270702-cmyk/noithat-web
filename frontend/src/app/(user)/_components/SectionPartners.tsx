@@ -8,6 +8,17 @@ export default function SectionPartners() {
   const [partners, setPartners] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getAvatarUrl = (avatar: any) => {
+    if (Array.isArray(avatar) && avatar.length > 0) return avatar[0].url;
+    if (typeof avatar === 'string') {
+      try {
+        const parsed = JSON.parse(avatar);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].url;
+      } catch (e) { return avatar; }
+    }
+    return avatar?.url || null;
+  };
+
   useEffect(() => {
     const fetchPartners = async () => {
       try {
@@ -35,7 +46,7 @@ export default function SectionPartners() {
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         <div className="text-center mb-12">
           <h2 className="font-heading text-sm md:text-base font-semibold text-[#D3AE3E] uppercase tracking-[0.2em] mb-2">
-            Đơn vị Thiết kế & Thi công
+            Các đối tác chính
           </h2>
           <p className="text-gray-400 dark:text-white/40 text-sm">Hệ sinh thái hơn 30 đối tác chuyên nghiệp hàng đầu</p>
         </div>
@@ -45,18 +56,16 @@ export default function SectionPartners() {
           {isLoading ? (
              [1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-[140px] animate-pulse bg-gray-200 dark:bg-white/5 rounded-[4px] border border-gray-100 dark:border-white/10"></div>)
           ) : partners.map((partner) => (
-            <Link href={`/don-vi-thiet-ke/${partner.id}`} key={partner.id} className="flex flex-col items-center justify-center p-6 card dark:bg-[#1a1a1a] dark:hover:bg-white/10 border border-[#ECE7DE] dark:border-white/20 hover:border-[#C7A25C]/50 transition-all duration-300 group cursor-pointer grayscale hover:grayscale-0 hover:-translate-y-1 hover:shadow-lg luxury-glow rounded-[4px]">
-              <div className="w-14 h-14 mb-4 text-gray-400 dark:text-white/40 group-hover:text-[#C7A25C] transition-all rounded-full overflow-hidden border border-gray-200 dark:border-white/10 flex items-center justify-center bg-white shadow-sm">
-                {partner.avatar ? (
-                  <img src={partner.avatar} alt={partner.name} className="w-full h-full object-cover" />
+            <Link href={`/don-vi-thiet-ke/${partner.id}`} key={partner.id} className="flex flex-col items-center justify-center p-6 card dark:bg-[#1a1a1a] dark:hover:bg-white/10 border border-[#ECE7DE] dark:border-white/20 hover:border-[#C7A25C]/50 transition-all duration-300 group cursor-pointer hover:-translate-y-1 hover:shadow-lg luxury-glow rounded-[4px]">
+              <div className="w-20 h-20 mb-4 text-gray-400 dark:text-white/40 group-hover:text-[#C7A25C] transition-all rounded-full overflow-hidden border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center bg-white shadow-sm p-2 shadow-[0_5px_15px_rgba(0,0,0,0.05)] dark:shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
+                {getAvatarUrl(partner.avatar) ? (
+                  <img src={getAvatarUrl(partner.avatar)} alt={partner.name} className="w-full h-full object-contain" />
                 ) : (
-                  <svg fill="currentColor" viewBox="0 0 24 24" className="w-8 h-8">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                  </svg>
+                  <span className="text-xl font-heading font-bold text-[#D3AE3E]">{partner.name.substring(0, 2).toUpperCase()}</span>
                 )}
               </div>
               <h3 className="font-heading font-bold text-[#1F1F1F] dark:text-white tracking-wider text-center line-clamp-1">{partner.name}</h3>
-              <p className="text-[10px] text-gray-400 dark:text-white/40 uppercase tracking-widest mt-1 text-center line-clamp-1">{partner.segment || 'Đối tác'}</p>
+              <p className="text-[10px] text-gray-400 dark:text-white/40 uppercase tracking-widest mt-1 text-center line-clamp-1" title={partner.shortDescription || partner.segment || 'Đối tác'}>{partner.shortDescription || partner.segment || 'Đối tác'}</p>
             </Link>
           ))}
         </div>

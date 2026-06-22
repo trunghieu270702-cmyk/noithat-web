@@ -128,10 +128,10 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        {/* Section 3: Công trình tiêu biểu */}
+        {/* Section 3: Sản phẩm tiêu biểu */}
         <div className="mb-16">
           <h2 className="font-heading text-2xl font-bold mb-6 flex items-center gap-3">
-            <span className="w-8 h-1 bg-[#C7A25C] inline-block"></span> Công trình tiêu biểu
+            <span className="w-8 h-1 bg-[#C7A25C] inline-block"></span> Sản phẩm tiêu biểu
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {unit.projects.map((proj: any, i: number) => (

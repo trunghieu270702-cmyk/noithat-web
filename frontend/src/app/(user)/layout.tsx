@@ -10,7 +10,7 @@ import { Toaster } from 'sonner';
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className={`min-h-screen modern-section flex flex-col`}>
+      <div className={`min-h-screen modern-section flex flex-col relative`}>
         <Header />
         <main className="flex-grow">
           {children}

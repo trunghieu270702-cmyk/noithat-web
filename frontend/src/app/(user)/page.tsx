@@ -32,8 +32,8 @@ export default function UserHomePage() {
         {/* Section 3: Sản phẩm nổi bật */}
         <SectionHotProducts />
         
-        {/* Section 4: Sản phẩm bán chạy */}
-        <SectionBestSellers />
+        {/* Section 4: Sản phẩm bán chạy (Removed) */}
+        {/* <SectionBestSellers /> */}
         
         {/* Section 5: Thương hiệu / Đối tác hợp tác */}
         <SectionPartners />

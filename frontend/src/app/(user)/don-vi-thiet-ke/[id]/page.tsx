@@ -15,9 +15,22 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
         if (Array.isArray(data)) {
           const found = data.find((u: any) => u.id.toString() === resolvedParams.id.toString());
           if (found) {
+            
+            const getAvatarUrl = (avatar: any) => {
+              if (Array.isArray(avatar) && avatar.length > 0) return avatar[0].url;
+              if (typeof avatar === 'string') {
+                try {
+                  const parsed = JSON.parse(avatar);
+                  if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].url;
+                } catch(e) { return avatar; }
+              }
+              return avatar?.url || null;
+            };
+
             setUnit({
               id: found.id,
               name: found.name,
+              avatarUrl: getAvatarUrl(found.avatar),
               category: found.segment || 'Cơ bản',
               strengths: found.projectType || 'Chung cư, Nhà phố',
               style: found.style || 'Hiện đại',
@@ -27,13 +40,13 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
               profile: found.profile || null,
               fanpage: found.fanpage || null,
               services: (found.services && found.services.length > 0) ? found.services : [
-                'Thiết kế nội thất',
-                'Thi công nội thất',
-                'Thiết kế & thi công trọn gói'
+                found.shortDescription || 'Sản phẩm nội thất',
+                'Tư vấn lắp đặt',
+                'Bảo hành chính hãng'
               ],
-              projects: (found.products && found.products.length > 0) ? found.products.map((p: string) => ({ name: p, type: 'Dự án', area: '-', style: found.style || 'Hiện đại', time: '-' })) : [
-                { name: 'Dự án tiêu biểu 1', type: 'Chung cư', area: '75m2', style: 'Hiện đại', time: '30 ngày' },
-                { name: 'Dự án tiêu biểu 2', type: 'Nhà phố', area: '250m2', style: 'Tối giản', time: '45 ngày' }
+              projects: (found.products && found.products.length > 0) ? found.products.map((p: string) => ({ name: p, type: 'Sản phẩm', area: '-', style: found.style || 'Hiện đại', time: '-' })) : [
+                { name: `Sản phẩm tiêu biểu của ${found.name}`, type: found.segment, area: '-', style: 'Hiện đại', time: 'Có sẵn' },
+                { name: 'Dự án đã triển khai', type: 'Dự án', area: '100m2', style: 'Sang trọng', time: '30 ngày' }
               ],
               advantages: found.projectType ? found.projectType.split(',') : ['Mạnh về tối ưu chi phí'],
               workflow: [
@@ -75,8 +88,12 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
         {/* Section 1: Tổng quan đơn vị */}
         <div className="mb-16 pb-12 border-b border-[#ECE7DE] dark:border-white/10">
           <div className="flex flex-col md:flex-row gap-8 items-start">
-            <div className="w-full md:w-1/3 aspect-square card dark:bg-[#1c1c1c] rounded-[4px] border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center">
-              <span className="text-4xl text-[#1F1F1F]/20 dark:text-white/20 font-bold uppercase">{unit.name.substring(0, 2)}</span>
+            <div className="w-full md:w-1/3 aspect-square card dark:bg-[#1c1c1c] rounded-[4px] border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center p-8 bg-white overflow-hidden shadow-sm">
+              {unit.avatarUrl ? (
+                <img src={unit.avatarUrl} alt={unit.name} className="w-full h-full object-contain" />
+              ) : (
+                <span className="text-6xl text-[#1F1F1F]/20 dark:text-white/20 font-bold uppercase">{unit.name.substring(0, 2)}</span>
+              )}
             </div>
             <div className="w-full md:w-2/3">
               <span className="inline-block modern-section text-white text-xs font-bold px-3 py-1 rounded-[2px] uppercase tracking-wider mb-4">
@@ -141,10 +158,10 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           </div>
         </div>
 
-        {/* Section 3: Công trình tiêu biểu */}
+        {/* Section 3: Sản phẩm tiêu biểu */}
         <div className="mb-16">
           <h2 className="font-heading text-2xl font-bold mb-6 flex items-center gap-3">
-            <span className="w-8 h-1 bg-[#C7A25C] inline-block"></span> Công trình tiêu biểu
+            <span className="w-8 h-1 bg-[#C7A25C] inline-block"></span> Sản phẩm tiêu biểu
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {unit.projects.map((proj: any, i: number) => (
