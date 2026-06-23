@@ -1,5 +1,5 @@
 'use client';
-
+import SectionStarryMotif from '../_components/SectionStarryMotif';
 import React, { useState, useRef, useEffect, use } from 'react';
 import { toast } from 'sonner';
 
@@ -32,7 +32,8 @@ function FormSelect({ label, options, value, onChange }: { label: string, option
         </div>
 
         {isOpen && (
-          <div className="absolute z-50 w-full mt-2 modern-section shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[4px] shadow-sm py-2 animate-fadeInDown">
+          <div className="overflow-hidden relative absolute z-50 w-full mt-2 modern-section shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[4px] shadow-sm py-2 animate-fadeInDown">
+      <SectionStarryMotif position="random-corner" />
             {options.map((opt) => (
               <div
                 key={opt.value}

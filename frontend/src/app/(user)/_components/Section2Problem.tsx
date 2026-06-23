@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 import ArchitecturalAccent from './ArchitecturalAccent';
@@ -44,6 +45,7 @@ const PROBLEMS = [
 export default function Section2Problem() {
   return (
     <section className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <SectionStarryMotif />
       <ArchitecturalAccent variant="overlapping-squares" className="bottom-10 right-10 w-64 h-64 opacity-50" />
 
       {/* Background Decor */}

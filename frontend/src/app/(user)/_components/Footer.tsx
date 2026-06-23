@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
+import SectionStarryMotif from './SectionStarryMotif';
 
 const RECENT_POSTS = [
   {
@@ -37,8 +38,9 @@ const GALLERY = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#FAF8F2]/80 dark:bg-black/40 backdrop-blur-xl pt-24 pb-8 border-t border-[#D3AE3E]/10 dark:border-white/5 relative z-10 supports-[backdrop-filter]:bg-[#FAF8F2]/60 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/40 shadow-[0_-8px_30px_rgba(211,174,62,0.03)] dark:shadow-[0_-8px_30px_rgba(0,0,0,0.4)]">
-      <div className="max-w-[1400px] mx-auto px-6">
+    <footer className="overflow-hidden bg-[#FAF8F2]/80 dark:bg-black/40 backdrop-blur-xl pt-24 pb-8 border-t border-[#D3AE3E]/10 dark:border-white/5 relative z-10 supports-[backdrop-filter]:bg-[#FAF8F2]/60 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/40 shadow-[0_-8px_30px_rgba(211,174,62,0.03)] dark:shadow-[0_-8px_30px_rgba(0,0,0,0.4)]">
+      <SectionStarryMotif />
+      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
         {/* Top Section: 4 Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">

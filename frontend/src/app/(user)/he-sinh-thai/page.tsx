@@ -1,5 +1,5 @@
 'use client';
-
+import SectionStarryMotif from '../_components/SectionStarryMotif';
 import React from 'react';
 import Link from 'next/link';
 import Section6Ecosystem from '../_components/Section6Ecosystem';
@@ -11,7 +11,8 @@ import Section9Process from '../_components/Section9Process';
 
 export default function HeSinhThaiPage() {
   return (
-    <div className="modern-section min-h-screen">
+    <div className="overflow-hidden relative modern-section min-h-screen">
+      <SectionStarryMotif position="random-corner" />
       {/* Các nội dung giới thiệu hệ sinh thái */}
       <div id="gioi-thieu"><Section6Ecosystem /></div>
       <Section2Problem />

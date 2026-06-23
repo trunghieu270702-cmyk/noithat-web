@@ -1,5 +1,5 @@
 'use client';
-
+import SectionStarryMotif from '../_components/SectionStarryMotif';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -57,7 +57,8 @@ export default function PartnerRegistrationPage() {
   };
 
   return (
-    <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white">
+    <div className="overflow-hidden relative pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white">
+      <SectionStarryMotif position="random-corner" />
       <div className="container mx-auto px-6 max-w-[1400px]">
         
         {/* Header Section */}

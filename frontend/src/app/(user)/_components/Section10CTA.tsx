@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
@@ -6,6 +7,7 @@ import ScrollReveal from './ScrollReveal';
 export default function Section10CTA() {
   return (
     <section className="relative py-32 bg-[#F8F5F0] dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-gray-100 dark:border-white/10 flex items-center justify-center overflow-hidden border-y border-gray-200 dark:border-white/20">
+      <SectionStarryMotif />
       {/* Blurred Interior Scenery & Parallax */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed opacity-20 dark:opacity-40 transition-transform duration-1000"

@@ -1,3 +1,4 @@
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
@@ -60,6 +61,7 @@ const InstagramIcon = () => (
 export default function Team() {
   return (
     <section id="Team" className="relative py-32 bg-black overflow-hidden">
+      <SectionStarryMotif />
       <div className="max-w-[1400px] mx-auto px-6">
         
         {/* Section Header */}

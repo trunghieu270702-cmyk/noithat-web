@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
@@ -85,6 +86,7 @@ export default function Services() {
 
   return (
     <section id="Services" className="relative py-32 bg-[#131313] overflow-hidden">
+      <SectionStarryMotif />
       {/* Background Overlay */}
       <div className="absolute inset-0 bg-[url('/images/common/bg-pattern.jpg')] bg-cover bg-center opacity-5" />
 

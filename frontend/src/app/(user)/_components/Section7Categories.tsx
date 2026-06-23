@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 import ArchitecturalAccent from './ArchitecturalAccent';
@@ -23,6 +24,7 @@ const CATEGORIES = [
 export default function Section7Categories() {
   return (
     <section id="Categories" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden border-t border-[#ECE7DE] dark:border-white/20">
+      <SectionStarryMotif />
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"

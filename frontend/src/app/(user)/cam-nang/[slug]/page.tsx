@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from '../../_components/SectionStarryMotif';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -79,7 +80,8 @@ export default function ArticleDetail() {
 
   if (isLoading) {
     return (
-      <div className="pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen flex justify-center">
+      <div className="overflow-hidden relative pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen flex justify-center">
+      <SectionStarryMotif position="random-corner" />
         <div className="w-12 h-12 border-4 border-[#D3AE3E]/30 border-t-[#D3AE3E] rounded-full animate-spin mt-20"></div>
       </div>
     );

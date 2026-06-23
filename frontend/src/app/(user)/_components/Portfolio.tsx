@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
@@ -53,6 +54,7 @@ export default function Portfolio() {
 
   return (
     <section id="Portfolio" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <SectionStarryMotif />
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"

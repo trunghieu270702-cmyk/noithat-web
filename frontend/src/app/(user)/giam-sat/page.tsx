@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from '../_components/SectionStarryMotif';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -29,7 +30,8 @@ export default function GiamSatPage() {
   }, []);
 
   return (
-    <div className="pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white">
+    <div className="overflow-hidden relative pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white">
+      <SectionStarryMotif position="random-corner" />
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Header */}
         <div className="text-center mb-20 max-w-4xl mx-auto">

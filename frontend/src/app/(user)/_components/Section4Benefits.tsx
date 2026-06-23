@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useState } from 'react';
 import ScrollReveal from './ScrollReveal';
 import SpotlightCard from './SpotlightCard';
@@ -87,6 +88,7 @@ export default function Section4Benefits() {
 
   return (
     <section className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <SectionStarryMotif />
       <ArchitecturalAccent variant="overlapping-rectangles" className="top-10 left-10 w-56 h-56 opacity-50" />
       
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">

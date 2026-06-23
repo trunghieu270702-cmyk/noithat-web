@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
@@ -55,6 +56,7 @@ export default function Blog() {
 
   return (
     <section id="Blog" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <SectionStarryMotif />
       <div className="max-w-[1400px] mx-auto px-6">
 
         {/* Section Header */}

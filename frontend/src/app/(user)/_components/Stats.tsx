@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useEffect, useState, useRef } from 'react';
 import ScrollReveal from './ScrollReveal';
 
@@ -97,7 +98,8 @@ export default function Stats() {
   }, []);
 
   return (
-    <section className="relative py-24 bg-[#0a0a0a] border-y border-white/5">
+    <section className="overflow-hidden relative py-24 bg-[#0a0a0a] border-y border-white/5">
+      <SectionStarryMotif />
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center divide-y sm:divide-y-0 sm:divide-x divide-white/10">
           

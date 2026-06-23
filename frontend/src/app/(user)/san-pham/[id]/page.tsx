@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from '../../_components/SectionStarryMotif';
 import React, { useState, use } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
@@ -32,7 +33,8 @@ export default function ProductDetail({ params }: { params: Promise<{ id: string
   };
 
   return (
-    <div className="pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
+    <div className="overflow-hidden relative pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
+      <SectionStarryMotif position="random-corner" />
       <div className="max-w-[1400px] mx-auto px-6">
 
         {/* Breadcrumb & Back */}

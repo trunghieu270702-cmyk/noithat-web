@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from '../_components/SectionStarryMotif';
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
@@ -129,7 +130,8 @@ export default function SanPhamPage() {
   });
 
   return (
-    <div className="pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="overflow-hidden relative pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white transition-colors duration-300">
+      <SectionStarryMotif position="random-corner" />
       <div className="container mx-auto px-6 max-w-[1400px]">
         <div className="flex flex-col items-center justify-center text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-[2px] bg-gradient-to-r from-[#C7A25C]/20 to-transparent border-l-2 border-[#C7A25C] text-[#A67C00] dark:text-[#FFD700] text-[11px] font-bold uppercase tracking-widest mb-4 luxury-glow mx-auto">

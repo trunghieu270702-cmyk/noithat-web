@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 
@@ -14,6 +15,7 @@ const VALUES = [
 export default function Section3Solution() {
   return (
     <section className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden border-y border-[#ECE7DE] dark:border-white/5">
+      <SectionStarryMotif />
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           

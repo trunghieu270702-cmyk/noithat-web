@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 import ArchitecturalAccent from './ArchitecturalAccent';
@@ -44,6 +45,7 @@ const PROCESS_STEPS = [
 export default function Section9Process() {
   return (
     <section id="Process" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <SectionStarryMotif />
       <ArchitecturalAccent variant="overlapping-rectangles" className="bottom-10 left-10 w-64 h-64 opacity-50" />
       
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">

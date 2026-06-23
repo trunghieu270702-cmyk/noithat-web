@@ -1,9 +1,11 @@
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 
 export default function InnovationBanner() {
   return (
     <section className="relative py-32 bg-[#131313] flex items-center justify-center overflow-hidden">
+      <SectionStarryMotif />
       {/* Background Image & Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-fixed opacity-40"

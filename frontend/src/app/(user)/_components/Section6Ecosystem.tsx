@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useState } from 'react';
 import ScrollReveal from './ScrollReveal';
 import Link from 'next/link';
@@ -102,6 +103,7 @@ function CheckList({ items, title }: { items: string[], title: string }) {
 export default function Section6Ecosystem() {
   return (
     <section id="Ecosystem" className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden">
+      <SectionStarryMotif />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
         {/* Section Header */}

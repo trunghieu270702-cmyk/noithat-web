@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
@@ -96,6 +97,7 @@ export default function Section8Supervision() {
 
   return (
     <section id="Supervision" className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden border-t border-[#ECE7DE] dark:border-white/5">
+      <SectionStarryMotif />
       <div className="max-w-[1400px] mx-auto px-6">
         
         {/* Section Header */}

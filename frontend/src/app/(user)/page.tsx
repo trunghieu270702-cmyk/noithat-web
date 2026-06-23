@@ -1,3 +1,4 @@
+import SectionStarryMotif from './_components/SectionStarryMotif';
 import React from 'react';
 import HeroSlider from './_components/HeroSlider';
 import Section7Categories from './_components/Section7Categories';
@@ -14,6 +15,7 @@ import BackgroundVisuals from './_components/BackgroundVisuals';
 export default function UserHomePage() {
   return (
     <div className="w-full relative overflow-hidden modern-section">
+      <SectionStarryMotif position="random-corner" />
       {/* Ambient Light Blobs for WOW Effect */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Existing Blurs */}

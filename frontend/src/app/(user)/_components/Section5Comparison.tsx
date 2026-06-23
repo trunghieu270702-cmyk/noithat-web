@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 import SpotlightCard from './SpotlightCard';
@@ -49,6 +50,7 @@ const COMPARISON_DATA = [
 export default function Section5Comparison() {
   return (
     <section className="relative py-32 bg-transparent dark:bg-transparent overflow-hidden border-y border-[#ECE7DE] dark:border-white/5">
+      <SectionStarryMotif />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
         {/* Section Header */}
         <ScrollReveal animation="fade-up" delay={100}>

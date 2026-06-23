@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from '../../_components/SectionStarryMotif';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -59,7 +60,8 @@ export default function UnitDetailPage({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   if (isLoading) {
-    return <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white text-center">Đang tải thông tin đơn vị...</div>;
+    return <div className="overflow-hidden relative pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white text-center">
+      <SectionStarryMotif position="random-corner" />Đang tải thông tin đơn vị...</div>;
   }
 
   if (!unit) {

@@ -1,3 +1,4 @@
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import ScrollReveal from './ScrollReveal';
 
@@ -25,6 +26,7 @@ const PROCESS_STEPS = [
 export default function WorkProcess() {
   return (
     <section className="relative py-32 bg-black overflow-hidden">
+      <SectionStarryMotif />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
         
         {/* Section Header */}

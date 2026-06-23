@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import SectionStarryMotif from './SectionStarryMotif';
 import ScrollReveal from './ScrollReveal';
 import ArchitecturalAccent from './ArchitecturalAccent';
 
@@ -16,6 +17,7 @@ const PROCESS_STEPS = [
 export default function Section9ProcessShort() {
   return (
     <section className="relative py-24 bg-transparent dark:bg-transparent modern-section overflow-hidden">
+      <SectionStarryMotif />
       {/* Cinematic Lighting: Window Blind Shadows */}
       <div className="absolute inset-0 pointer-events-none z-[1] opacity-20 dark:opacity-30 mix-blend-multiply dark:mix-blend-overlay"
            style={{

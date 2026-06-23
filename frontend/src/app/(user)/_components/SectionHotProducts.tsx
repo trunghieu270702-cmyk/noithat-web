@@ -1,4 +1,5 @@
 'use client';
+import SectionStarryMotif from './SectionStarryMotif';
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -28,6 +29,7 @@ export default function SectionHotProducts() {
 
   return (
     <section className="py-24 bg-transparent dark:bg-transparent modern-section relative overflow-hidden">
+      <SectionStarryMotif />
       {/* Texture & Lighting Effects */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {/* Spotlight Effect */}

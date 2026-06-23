@@ -1,3 +1,4 @@
+import SectionStarryMotif from './SectionStarryMotif';
 import React from 'react';
 import Link from 'next/link';
 
@@ -54,7 +55,8 @@ const BEST_SELLERS = [
 
 export default function SectionBestSellers() {
   return (
-    <section className="py-24 bg-transparent dark:bg-transparent modern-section relative border-t border-gray-200 dark:border-white/20">
+    <section className="overflow-hidden py-24 bg-transparent dark:bg-transparent modern-section relative border-t border-gray-200 dark:border-white/20">
+      <SectionStarryMotif />
       <div className="max-w-[1400px] mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-heading text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 uppercase">

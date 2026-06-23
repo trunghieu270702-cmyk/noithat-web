@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ArchitecturalAccent from './ArchitecturalAccent';
+import SectionStarryMotif from './SectionStarryMotif';
 
 export default function SectionPartners() {
   const [partners, setPartners] = useState<any[]>([]);
@@ -38,12 +39,10 @@ export default function SectionPartners() {
   }, []);
 
   return (
-    <section className="py-20 bg-transparent dark:bg-transparent modern-section border-y border-gray-200 dark:border-white/20 relative overflow-hidden">
-      <ArchitecturalAccent variant="overlapping-squares" className="top-10 right-10 w-48 h-48 opacity-50" />
-      
-      <div className="absolute inset-0 bg-[url('/images/common/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
-      
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+    <section className="py-20 relative bg-[#f9f9f9] dark:bg-[#111111] border-t border-[#ECE7DE] dark:border-white/5 overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/images/common/noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none z-0"></div>
+      <SectionStarryMotif />
+      <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
         <div className="text-center mb-12">
           <h2 className="font-heading text-sm md:text-base font-semibold text-[#D3AE3E] uppercase tracking-[0.2em] mb-2">
             Các đối tác chính
