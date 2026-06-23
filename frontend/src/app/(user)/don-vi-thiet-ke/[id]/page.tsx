@@ -84,60 +84,86 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white">
-      <div className="container mx-auto px-6 max-w-[1400px]">
-        {/* Section 1: Tổng quan đơn vị */}
-        <div className="mb-16 pb-12 border-b border-[#ECE7DE] dark:border-white/10">
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            <div className="w-full md:w-1/3 aspect-square card dark:bg-[#1c1c1c] rounded-[4px] border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center p-8 bg-white overflow-hidden shadow-sm">
+      {/* Local Background wrapper to fix flatness without touching global CSS */}
+      <div className="absolute top-0 left-0 right-0 h-[600px] bg-[radial-gradient(circle_at_top_right,rgba(199,162,92,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(199,162,92,0.05),transparent_50%)] pointer-events-none z-0"></div>
+      
+      <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
+        {/* Section 1: Hero Section - Premium Visual Identity */}
+        <div className="mb-16 pb-16 relative">
+          
+          <div className="flex flex-col md:flex-row gap-12 items-center md:items-start relative z-20">
+            {/* Logo Glass Card */}
+            <div className="w-full md:w-1/3 max-w-[320px] aspect-square rounded-2xl border border-[#C7A25C]/20 flex items-center justify-center p-10 bg-white/60 dark:bg-[#1A1C21]/60 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.4)] group overflow-hidden relative">
+              {/* Subtle inner glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#C7A25C]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               {unit.avatarUrl ? (
-                <img src={unit.avatarUrl} alt={unit.name} className="w-full h-full object-contain" />
+                <img src={unit.avatarUrl} alt={unit.name} className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.05)] dark:drop-shadow-[0_10px_20px_rgba(255,255,255,0.05)] group-hover:scale-105 transition-transform duration-700 relative z-10" />
               ) : (
-                <span className="text-6xl text-[#1F1F1F]/20 dark:text-white/20 font-bold uppercase">{unit.name.substring(0, 2)}</span>
+                <span className="text-7xl font-heading font-bold text-[#C7A25C] tracking-widest relative z-10">{unit.name.substring(0, 2).toUpperCase()}</span>
               )}
             </div>
-            <div className="w-full md:w-2/3">
-              <span className="inline-block modern-section text-white text-xs font-bold px-3 py-1 rounded-[2px] uppercase tracking-wider mb-4">
+
+            {/* Brand Content */}
+            <div className="w-full md:w-2/3 pt-4 text-center md:text-left">
+              <span className="inline-block border border-[#C7A25C]/40 bg-[#C7A25C]/10 text-[#C7A25C] text-[11px] font-bold px-4 py-1.5 rounded-[2px] uppercase tracking-widest mb-6 shadow-sm">
                 Phân khúc {unit.category}
               </span>
-              <h1 className="font-heading text-4xl font-bold mb-4">{unit.name}</h1>
-              <p className="text-[#1F1F1F]/70 dark:text-white/70 text-lg mb-8 leading-relaxed">{unit.description}</p>
-
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div>
-                  <p className="text-[#1F1F1F]/50 dark:text-white/50 text-sm mb-1">Khu vực hoạt động</p>
-                  <p className="font-semibold">{unit.location}</p>
+              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-[#1F1F1F] dark:text-white leading-tight tracking-tight drop-shadow-sm">{unit.name}</h1>
+              
+              {/* Premium Stats - Replacing the basic text grid */}
+              <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-8">
+                <div className="bg-white/50 dark:bg-[#1A1C21]/50 backdrop-blur-sm border border-[#ECE7DE] dark:border-white/10 px-5 py-3 rounded-[4px] flex items-center gap-3 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-[#C7A25C]/10 flex items-center justify-center text-[#C7A25C]"><i className="fa fa-star text-sm"></i></div>
+                  <div>
+                    <div className="text-sm font-bold text-[#1F1F1F] dark:text-white leading-none">4.9/5</div>
+                    <div className="text-[#1F1F1F]/50 dark:text-white/50 text-[10px] uppercase tracking-widest mt-1">Đánh giá</div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[#1F1F1F]/50 dark:text-white/50 text-sm mb-1">Kinh nghiệm</p>
-                  <p className="font-semibold">{unit.experience}</p>
+                <div className="bg-white/50 dark:bg-[#1A1C21]/50 backdrop-blur-sm border border-[#ECE7DE] dark:border-white/10 px-5 py-3 rounded-[4px] flex items-center gap-3 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-[#C7A25C]/10 flex items-center justify-center text-[#C7A25C]"><i className="fa fa-briefcase text-sm"></i></div>
+                  <div>
+                    <div className="text-sm font-bold text-[#1F1F1F] dark:text-white leading-none">{unit.experience}</div>
+                    <div className="text-[#1F1F1F]/50 dark:text-white/50 text-[10px] uppercase tracking-widest mt-1">Kinh nghiệm</div>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[#1F1F1F]/50 dark:text-white/50 text-sm mb-1">Loại công trình thế mạnh</p>
-                  <p className="font-semibold">{unit.strengths}</p>
-                </div>
-                <div>
-                  <p className="text-[#1F1F1F]/50 dark:text-white/50 text-sm mb-1">Phong cách chủ đạo</p>
-                  <p className="font-semibold">{unit.style}</p>
+                <div className="bg-white/50 dark:bg-[#1A1C21]/50 backdrop-blur-sm border border-[#ECE7DE] dark:border-white/10 px-5 py-3 rounded-[4px] flex items-center gap-3 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-[#C7A25C]/10 flex items-center justify-center text-[#C7A25C]"><i className="fa fa-map-marker-alt text-sm"></i></div>
+                  <div>
+                    <div className="text-sm font-bold text-[#1F1F1F] dark:text-white leading-none">{unit.location}</div>
+                    <div className="text-[#1F1F1F]/50 dark:text-white/50 text-[10px] uppercase tracking-widest mt-1">Khu vực</div>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4">
-                <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:modern-section dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
-                  Kết nối với đơn vị này
+              <p className="text-[#1F1F1F]/70 dark:text-white/70 text-lg mb-10 leading-relaxed max-w-2xl font-medium">{unit.description}</p>
+
+              {/* CTA Hierarchy */}
+              <div className="flex flex-wrap justify-center md:justify-start items-center gap-4">
+                {/* Primary Button */}
+                <Link href={`/tu-van?unit=${unit.id}`} className="bg-gradient-to-r from-[#C7A25C] to-[#E5C98A] hover:from-[#b5924f] hover:to-[#d4ba7b] text-white font-bold py-4 px-10 rounded-[2px] transition-all uppercase tracking-wider text-sm flex items-center gap-3 shadow-[0_10px_20px_rgba(199,162,92,0.25)] hover:shadow-[0_10px_25px_rgba(199,162,92,0.4)] hover:-translate-y-1">
+                  Kết nối với đơn vị này <i className="fa fa-arrow-right"></i>
                 </Link>
-                <button className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
-                  Yêu cầu báo giá sơ bộ
+                
+                {/* Secondary Button */}
+                <button className="bg-transparent border border-[#C7A25C] text-[#C7A25C] hover:bg-[#C7A25C] hover:text-white font-bold py-4 px-8 rounded-[2px] transition-all uppercase tracking-wider text-sm shadow-sm hover:shadow-md hover:-translate-y-1">
+                  Yêu cầu báo giá
                 </button>
-                {unit.profile && (
-                  <a href={unit.profile} target="_blank" rel="noreferrer" className="bg-[#C7A25C] hover:bg-[#b08e4f] text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm flex items-center gap-2">
-                    <i className="fa fa-download"></i> Tải Hồ sơ năng lực
-                  </a>
-                )}
-                {unit.fanpage && (
-                  <a href={unit.fanpage} target="_blank" rel="noreferrer" className="bg-[#3b5998] hover:bg-[#2d4373] text-white font-bold py-3 px-6 rounded-[2px] transition-colors uppercase tracking-wider text-sm flex items-center gap-2">
-                    <i className="fa fa-facebook-f"></i> Fanpage
-                  </a>
-                )}
+                
+                {/* Tertiary Links */}
+                <div className="flex gap-4 ml-2">
+                  {unit.profile && (
+                    <a href={unit.profile.startsWith('http') ? unit.profile : `https://${unit.profile}`} target="_blank" rel="noreferrer" className="text-[#1F1F1F]/60 dark:text-white/60 hover:text-[#C7A25C] dark:hover:text-[#C7A25C] font-semibold transition-colors flex items-center gap-2 text-sm uppercase tracking-wide group">
+                      <i className="fa fa-globe group-hover:rotate-12 transition-transform"></i>
+                      <span className="border-b border-transparent group-hover:border-[#C7A25C]">Website</span>
+                    </a>
+                  )}
+                  {unit.fanpage && (
+                    <a href={unit.fanpage} target="_blank" rel="noreferrer" className="text-[#1F1F1F]/60 dark:text-white/60 hover:text-[#C7A25C] dark:hover:text-[#C7A25C] font-semibold transition-colors flex items-center gap-2 text-sm uppercase tracking-wide group">
+                      <i className="fa fa-facebook-f group-hover:rotate-12 transition-transform"></i>
+                      <span className="border-b border-transparent group-hover:border-[#C7A25C]">Fanpage</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>

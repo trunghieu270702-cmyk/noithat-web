@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 
 interface BackgroundVisualsProps {
   mouseX?: number;
@@ -6,8 +6,17 @@ interface BackgroundVisualsProps {
 }
 
 export default function BackgroundVisuals({ mouseX = 0, mouseY = 0 }: BackgroundVisualsProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Sinh random particles với các lớp chiều sâu (Parallax Z) khác nhau
   const particles = useMemo(() => {
+    // Return empty array during SSR to avoid hydration mismatch
+    if (!mounted) return [];
+    
     return Array.from({ length: 80 }).map((_, i) => ({
       id: i,
       tx: `${(Math.random() - 0.5) * 200}px`,
@@ -20,7 +29,7 @@ export default function BackgroundVisuals({ mouseX = 0, mouseY = 0 }: Background
       parallaxZ: Math.random() * 120 + 30, // 30px đến 150px
       opacity: Math.random() * 0.6 + 0.2, // 0.2 đến 0.8
     }));
-  }, []);
+  }, [mounted]);
 
   return (
     <>
@@ -149,181 +158,102 @@ export default function BackgroundVisuals({ mouseX = 0, mouseY = 0 }: Background
           </svg>
         </div>
 
-        {/* Left Side: Ultra-Detailed CAD Blueprint Cantilever (Bản vẽ 3D chi tiết cao) */}
+        {/* Left Side: Architectural Blueprint Sketch (True 3D Parallax & Tech Styling) */}
         <div 
-          className="absolute bottom-[2%] left-[-5%] md:left-[2%] w-[350px] md:w-[550px] h-[70%] pointer-events-none hidden lg:block" 
+          className="absolute bottom-[2%] left-[2%] md:left-[5%] w-[220px] md:w-[320px] h-[40%] pointer-events-none hidden lg:block" 
           style={{ 
-            opacity: 0.35, // Tăng nhẹ opacity để rõ hơn trong Light Mode
+            opacity: 0.6,
             animation: 'float-slow 20s ease-in-out infinite alternate-reverse',
-            // Main container parallax
-            transform: `translate(${mouseX * 10}px, ${mouseY * 10}px)`
+            // Base layer movement
+            transform: `translate(${mouseX * 5}px, ${mouseY * 5}px)`
           }}
         >
-          <svg viewBox="-50 0 550 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMinYMax meet">
-            <g stroke="#D3AE3E">
-              {(() => {
-                const dx = 50; 
-                const dy = -25; 
+          <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMinYMax meet">
+            
+            {/* LAYER 1: Deep Background Grid (Moves Opposite) */}
+            <g stroke="#D3AE3E" strokeWidth="0.1" opacity="0.2" style={{ transform: `translate(${mouseX * -15}px, ${mouseY * -15}px)` }}>
+              <path d="M 50 50 L 350 50 M 50 100 L 350 100 M 50 150 L 350 150 M 50 200 L 350 200 M 50 250 L 350 250 M 50 300 L 350 300 M 50 350 L 350 350" strokeDasharray="2 2" />
+              <path d="M 50 50 L 50 350 M 100 50 L 100 350 M 150 50 L 150 350 M 200 50 L 200 350 M 250 50 L 250 350 M 300 50 L 300 350 M 350 50 L 350 350" strokeDasharray="2 2" />
+              
+              {/* Spinning Radar Background */}
+              <g style={{ transformOrigin: '200px 200px', animation: 'spin-slow 20s linear infinite' }}>
+                <circle cx="200" cy="200" r="120" strokeWidth="0.2" strokeDasharray="5 15" />
+                <line x1="80" y1="200" x2="320" y2="200" strokeWidth="0.2" opacity="0.5" />
+                <line x1="200" y1="80" x2="200" y2="320" strokeWidth="0.2" opacity="0.5" />
+              </g>
+            </g>
+
+            {/* LAYER 2: Main Structural Outline (Static/Base Parallax) */}
+            <g stroke="#D3AE3E" opacity="0.7">
+              <path d="M 100 280 L 100 150 L 220 90 L 320 140 L 320 270 L 200 330 Z" strokeWidth="1.2" />
+              <path d="M 100 150 L 200 200 L 320 140" strokeWidth="0.8" opacity="0.8" strokeDasharray="4 2" />
+              <path d="M 200 200 L 200 330" strokeWidth="0.8" opacity="0.8" strokeDasharray="4 2" />
+            </g>
+
+            {/* LAYER 3: Inner Wireframe & Dimensions (Moves Forward) */}
+            <g stroke="#D3AE3E" style={{ transform: `translate(${mouseX * 12}px, ${mouseY * 12}px)` }}>
+              {/* Inner details */}
+              <path d="M 120 265 L 120 165 L 190 200 L 190 300 Z" strokeWidth="0.4" opacity="0.5" />
+              <path d="M 210 305 L 210 205 L 300 160 L 300 260 Z" strokeWidth="0.4" opacity="0.5" />
+              <path d="M 130 145 L 210 105 L 290 145 L 210 185 Z" strokeWidth="0.4" opacity="0.5" />
+
+              {/* Dimension Lines */}
+              <line x1="80" y1="280" x2="80" y2="150" strokeDasharray="2 2" strokeWidth="0.5" />
+              <line x1="75" y1="280" x2="85" y2="280" strokeWidth="1" />
+              <line x1="75" y1="150" x2="85" y2="150" strokeWidth="1" />
+              <line x1="100" y1="310" x2="200" y2="360" strokeDasharray="2 2" strokeWidth="0.5" />
+              <line x1="95" y1="300" x2="105" y2="320" strokeWidth="1" />
+              <line x1="195" y1="350" x2="205" y2="370" strokeWidth="1" />
+
+              {/* Floating Data Labels */}
+              <g fill="#D3AE3E" fontSize="9" className="font-mono drop-shadow-[0_0_2px_#D3AE3E]" letterSpacing="1">
+                <text x="70" y="225" transform="rotate(-90 70 225)" fontWeight="bold">ELEV: 14.50m</text>
+                <text x="140" y="355" transform="rotate(26.5 140 355)" fontWeight="bold">SPAN: 24.00m</text>
                 
-                const frontLines = [];
-                const depthNodes = [];
+                {/* Data Block Top Left */}
+                <rect x="50" y="30" width="90" height="40" fill="none" stroke="#D3AE3E" strokeWidth="0.4" />
+                <text x="55" y="42" fontWeight="bold">PROJ: L-NEXUS</text>
+                <text x="55" y="52" fontSize="7">VOL: 4,520m³</text>
+                <text x="55" y="60" fontSize="7">AREA: 820m²</text>
+                <text x="55" y="68" fontSize="7">MAT: STEEL/GLASS</text>
+                <line x1="140" y1="50" x2="220" y2="90" strokeWidth="0.3" strokeDasharray="2 2" />
+              </g>
+            </g>
 
-                const yLower = [220, 240, 260, 280, 300];
-                const xLower = [0, 40, 80, 120, 160, 200, 240, 280, 320, 360];
-                yLower.forEach(y => frontLines.push({ x1: 0, y1: y, x2: 360, y2: y, w: (y===220 || y===300) ? 0.8 : 0.15 }));
-                xLower.forEach(x => frontLines.push({ x1: x, y1: 220, x2: x, y2: 300, w: (x===0) ? 0.8 : 0.15 }));
-
-                const yUpper = [140, 160, 180];
-                const xUpper = [80, 120, 160, 200, 240, 280, 320, 360];
-                yUpper.forEach(y => frontLines.push({ x1: 80, y1: y, x2: 360, y2: y, w: (y===140 || y===180) ? 0.8 : 0.15 }));
-                xUpper.forEach(x => frontLines.push({ x1: x, y1: 140, x2: x, y2: 180, w: (x===80) ? 0.8 : 0.15 }));
-
-                // 3. VERTICAL CONNECTORS & X-BRACING (Cột dọc & Hệ giằng chéo không gian)
-                const pillarsX = [120, 160, 200, 240, 280, 320, 360];
-                pillarsX.forEach(x => {
-                  frontLines.push({ x1: x, y1: 180, x2: x, y2: 220, w: 0.5 });
-                  frontLines.push({ x1: x-10, y1: 180, x2: x-10, y2: 220, w: 0.15 }); 
-                });
+            {/* LAYER 4: High-Tech Nodes & Front UI (Moves Fastest, Most Parallax) */}
+            <g style={{ transform: `translate(${mouseX * 25}px, ${mouseY * 25}px)` }}>
+              {/* Measurement Nodes with Glow */}
+              <circle cx="200" cy="200" r="3" fill="#D3AE3E" className="drop-shadow-[0_0_8px_#D3AE3E]" style={{ animation: 'pulse-subtle 2s infinite' }} />
+              <circle cx="220" cy="90" r="2.5" fill="#D3AE3E" className="drop-shadow-[0_0_5px_#D3AE3E]" />
+              <circle cx="320" cy="270" r="2.5" fill="#D3AE3E" className="drop-shadow-[0_0_5px_#D3AE3E]" />
+              <circle cx="100" cy="150" r="2.5" fill="#FFFFFF" className="drop-shadow-[0_0_5px_#FFFFFF]" />
+              
+              <g fill="#D3AE3E" fontSize="9" className="font-mono drop-shadow-[0_0_3px_#D3AE3E]" letterSpacing="1">
+                <text x="90" y="140" fontWeight="bold" fill="#FFFFFF">NODE A1</text>
+                <text x="90" y="150" fontSize="7" opacity="0.8">X:12.4 Y:0.0</text>
                 
-                // --- THÊM NHIỀU CHI TIẾT X-BRACING ---
-                for (let i = 0; i < pillarsX.length - 1; i++) {
-                  const x1 = pillarsX[i];
-                  const x2 = pillarsX[i+1];
-                  // Giằng chéo X giữa 2 dầm ngang
-                  frontLines.push({ x1: x1, y1: 180, x2: x2, y2: 220, w: 0.1 });
-                  frontLines.push({ x1: x1, y1: 220, x2: x2, y2: 180, w: 0.1 });
-                }
-
-                // 4. MAIN PILLAR TOWER & COMPLEX TOWER BRACING
-                const xPillar = [260, 280, 300, 320, 340, 360];
-                xPillar.forEach(x => frontLines.push({ x1: x, y1: 40, x2: x, y2: 540, w: (x===260 || x===360) ? 0.8 : 0.15 }));
-                for(let y=40; y<=540; y+=40) {
-                  frontLines.push({ x1: 260, y1: y, x2: 360, y2: y, w: (y===40 || y===540) ? 0.8 : 0.15 });
-                  
-                  // --- THÊM HỆ GIẰNG CHÉO X CHO THÁP ---
-                  if (y < 540) {
-                    frontLines.push({ x1: 260, y1: y, x2: 360, y2: y+40, w: 0.1 });
-                    frontLines.push({ x1: 260, y1: y+40, x2: 360, y2: y, w: 0.1 });
-                    
-                    // Giằng chéo nhỏ hơn bên trong tháp
-                    frontLines.push({ x1: 280, y1: y, x2: 340, y2: y+40, w: 0.05 });
-                    frontLines.push({ x1: 280, y1: y+40, x2: 340, y2: y, w: 0.05 });
-                  }
-                }
-
-                [40, 120, 200, 280].forEach(x => {
-                  frontLines.push({ x1: x, y1: 300, x2: x, y2: 380, w: 0.15 }); 
-                });
-                [160, 240, 320].forEach(x => {
-                  frontLines.push({ x1: x, y1: 40, x2: x, y2: 140, w: 0.15 }); 
-                });
-
-                yLower.forEach(y => xLower.forEach(x => depthNodes.push([x, y])));
-                yUpper.forEach(y => xUpper.forEach(x => depthNodes.push([x, y])));
-                for(let y=40; y<=540; y+=40) xPillar.forEach(x => depthNodes.push([x, y]));
-
-                const uniqueDepthNodes = Array.from(new Set(depthNodes.map(n => n.join(',')))).map(s => s.split(',').map(Number));
-
-                const outerCorners = new Set([
-                  '0,220', '0,300', 
-                  '80,140', '80,180',
-                  '260,40', '360,40',
-                  '260,540', '360,540'
-                ]);
-
-                return (
-                  <>
-                    {/* --- MẶT SAU (BACK FACE) - Parallax lùi (-15px) tạo 3D Perspective --- */}
-                    <g opacity="0.25" style={{ transform: `translate(${mouseX * -15}px, ${mouseY * -15}px)` }}>
-                      {frontLines.map((l, i) => (
-                        <line key={`bh-${i}`} x1={l.x1 + dx} y1={l.y1 + dy} x2={l.x2 + dx} y2={l.y2 + dy} strokeWidth={l.w * 0.8} />
-                      ))}
-                      
-                      {/* VÒNG CUNG NEO (ARC ANCHORS - MẶT SAU) */}
-                      <path d="M 0 300 Q 130 500 260 540" fill="none" strokeWidth="0.8" />
-                      <path d="M 80 140 Q 170 -20 260 40" fill="none" strokeWidth="0.8" />
-                      {/* Nét đứt trang trí vòm */}
-                      <path d="M 0 300 Q 130 480 260 540" fill="none" strokeWidth="0.3" strokeDasharray="4 4" />
-                    </g>
-
-                    {/* --- LƯỚI CHIỀU SÂU (DEPTH MESH) - Parallax trung gian (0px) --- */}
-                    <g>
-                      {uniqueDepthNodes.map(([x, y], i) => {
-                        const isOuter = outerCorners.has(`${x},${y}`);
-                        return (
-                          <line 
-                            key={`d-${i}`} 
-                            x1={x + (mouseX * 15)} y1={y + (mouseY * 15)} 
-                            x2={x + dx + (mouseX * -15)} y2={y + dy + (mouseY * -15)} 
-                            strokeWidth={isOuter ? 0.6 : 0.15} 
-                            opacity={isOuter ? 0.9 : 0.3} 
-                          />
-                        );
-                      })}
-                    </g>
-
-                    {/* --- MẶT TRƯỚC (FRONT FACE) - Parallax tiến (+15px) --- */}
-                    <g opacity="1" style={{ transform: `translate(${mouseX * 15}px, ${mouseY * 15}px)` }}>
-                      {frontLines.map((l, i) => (
-                        <line key={`fh-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} strokeWidth={l.w} />
-                      ))}
-                      
-                      {/* VÒNG CUNG NEO (ARC ANCHORS - MẶT TRƯỚC) */}
-                      <path d="M 0 300 Q 130 500 260 540" fill="none" strokeWidth="1.2" />
-                      <path d="M 80 140 Q 170 -20 260 40" fill="none" strokeWidth="1.2" />
-                      <path d="M 0 300 Q 130 480 260 540" fill="none" strokeWidth="0.3" strokeDasharray="4 4" />
-                      <path d="M 80 140 Q 170 0 260 40" fill="none" strokeWidth="0.3" strokeDasharray="4 4" />
-                      
-                      {/* Cáp treo (Suspension cables) */}
-                      <line x1="160" y1="220" x2="160" y2="445" strokeWidth="0.15" />
-                      <line x1="80" y1="220" x2="80" y2="385" strokeWidth="0.15" />
-                      <line x1="200" y1="180" x2="200" y2="25" strokeWidth="0.15" />
-                      <line x1="120" y1="180" x2="120" y2="85" strokeWidth="0.15" />
-                    </g>
-                  </>
-                );
-              })()}
-            </g>
-
-            {/* --- DIMENSION LINES & DRAFTING COORDINATES - Lớp ngoài cùng (+25px) --- */}
-            <g stroke="#D3AE3E" fill="#D3AE3E" strokeWidth="0.4" fontSize="9" fontFamily="monospace" opacity="0.8" style={{ transform: `translate(${mouseX * 25}px, ${mouseY * 25}px)` }}>
-              <line x1="0" y1="580" x2="260" y2="580" />
-              <line x1="0" y1="575" x2="0" y2="585" strokeWidth="0.8" />
-              <line x1="260" y1="575" x2="260" y2="585" strokeWidth="0.8" />
-              <text x="130" y="575" textAnchor="middle" fontWeight="bold">W-CANTILEVER: 24.0m</text>
-              <line x1="410" y1="40" x2="410" y2="540" />
-              <line x1="405" y1="40" x2="415" y2="40" strokeWidth="0.8" />
-              <line x1="405" y1="540" x2="415" y2="540" strokeWidth="0.8" />
-              <text x="420" y="290" style={{ writingMode: 'vertical-rl' }} fontWeight="bold">ELEVATION: H-50.0m</text>
-              <g opacity="1">
-                <path d="M -20 220 L 10 220 M 0 205 L 0 235" strokeWidth="0.5" />
-                <text x="-5" y="215" textAnchor="end" fontSize="8" fontWeight="bold">NODE: A-11</text>
-                <text x="-5" y="235" textAnchor="end" fontSize="7" opacity="0.9">X:-24.0 Y:+12.0 Z:0.0</text>
-              </g>
-              <g opacity="1">
-                <path d="M 245 40 L 275 40 M 260 25 L 260 55" strokeWidth="0.5" />
-                <text x="275" y="35" fontSize="8" fontWeight="bold">APEX T-1</text>
-                <text x="275" y="50" fontSize="7" opacity="0.9">ELEV +54.00</text>
-              </g>
-              <g opacity="1">
-                <path d="M 145 180 L 175 180 M 160 165 L 160 195" strokeWidth="0.5" />
-                <text x="175" y="175" fontSize="8" fontWeight="bold">JT-8X</text>
-                <text x="175" y="190" fontSize="7" opacity="0.9">Fz: 450kN</text>
+                <text x="230" y="85" fontWeight="bold">NODE B2</text>
+                <text x="330" y="275" fontWeight="bold">NODE C3</text>
+                
+                <text x="208" y="200" fontWeight="bold" fill="#FFFFFF">CENTER MASS</text>
+                
+                {/* Data Block Bottom Right */}
+                <rect x="270" y="350" width="85" height="45" fill="none" stroke="#D3AE3E" strokeWidth="0.4" />
+                <text x="275" y="362" fontWeight="bold">DATE: 2026</text>
+                <text x="275" y="372" fontSize="7">REV: 04.B</text>
+                <text x="275" y="380" fontSize="7">SCALE: 1:100</text>
+                <text x="275" y="388" fontSize="7">DRW: ARCH-01</text>
+                
+                {/* Small sensor data blocks */}
+                <rect x="330" y="160" width="55" height="40" fill="none" stroke="#D3AE3E" strokeWidth="0.4" />
+                <text x="335" y="172" fontSize="6">S1: 12% ACT</text>
+                <text x="335" y="180" fontSize="6">S2: 45% NOM</text>
+                <text x="335" y="188" fontSize="6">WIND: 15km/h</text>
+                <text x="335" y="196" fontSize="6" fill="#FFFFFF">STR: STABLE</text>
+                <line x1="330" y1="180" x2="320" y2="270" strokeWidth="0.3" strokeDasharray="1 3" stroke="#D3AE3E" />
               </g>
             </g>
 
-            {/* VẼ VÀI ĐIỂM SÁNG NỔI BẬT ĐỂ TẠO KHỐI (GLOWING NODES) - Lớp nổi (+15px) theo Front Face */}
-            <g fill="#FFFFFF" style={{ transform: `translate(${mouseX * 15}px, ${mouseY * 15}px)` }}>
-              <circle cx={260} cy={220} r="3.5" className="drop-shadow-[0_0_8px_#FFFFFF]" style={{ animation: 'pulse-subtle 2s infinite' }} />
-              <circle cx={360} cy={220} r="2.5" className="drop-shadow-[0_0_6px_#D3AE3E]" />
-              <circle cx={0} cy={220} r="2.5" />
-              <circle cx={0} cy={300} r="2" />
-              <circle cx={80} cy={140} r="2.5" className="drop-shadow-[0_0_6px_#FFFFFF]" />
-              <circle cx={80} cy={180} r="2" />
-              <circle cx={360} cy={520} r="3" className="drop-shadow-[0_0_8px_#FFFFFF]" />
-              <circle cx={260} cy={40} r="2" opacity="0.8" />
-              <circle cx={260+50} cy={220-25} r="2.5" fill="#D3AE3E" opacity="0.8" />
-            </g>
           </svg>
         </div>
 

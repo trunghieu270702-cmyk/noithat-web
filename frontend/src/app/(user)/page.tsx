@@ -16,6 +16,7 @@ export default function UserHomePage() {
     <div className="w-full relative overflow-hidden modern-section">
       {/* Ambient Light Blobs for WOW Effect */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Existing Blurs */}
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D3AE3E]/15 blur-[120px]" />
         <div className="absolute top-[40%] right-[-10%] w-[30%] h-[50%] rounded-full bg-[#D3AE3E]/10 blur-[100px]" />
         <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] rounded-full bg-[#D3AE3E]/10 blur-[150px]" />

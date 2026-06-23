@@ -1,272 +1,332 @@
 [
   {
     "name": "Gỗ Trường Thành (TTF)",
-    "category": "Nội + ngoại thất gỗ tổng thể: sofa, bàn ghế sân vườn, tủ bếp, sàn gỗ, cửa",
-    "location": "HCM",
-    "website": "truongthanh.com",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội + ngoại thất gỗ tổng thể: sofa, bàn ghế sân vườn, tủ bếp, sàn gỗ, cửa",
+    "mainLocation": "HCM",
+    "locations": "HCM",
+    "website": "https://www.truongthanh.com/",
     "logo": "https://s3-symbol-logo.tradingview.com/truong-thanh-furniture--600.png",
     "segment": "Cao cấp",
-    "basis": "30+ năm, đối tác Vingroup/Novaland/Sungroup/Vạn Thịnh Phát, xuất khẩu EU/Mỹ/Nhật"
+    "basis": "30+ năm, đối tác Vingroup/Novaland/Sungroup/Vạn Thịnh Phát, xuất khẩu EU/Mỹ/Nhật — báo chí & dự án lớn xác nhận"
   },
   {
     "name": "Furnist (Viet Products Corp)",
-    "category": "Nội + ngoại thất tổng thể: sofa, bàn ghế, xích đu, trang trí",
-    "location": "HCM",
-    "website": "furnist.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội + ngoại thất tổng thể: sofa, bàn ghế, xích đu, trang trí — chuẩn xuất khẩu châu Âu/Mỹ/Canada",
+    "mainLocation": "HCM",
+    "locations": "HCM",
+    "website": "https://furnist.vn/",
     "logo": "https://furnist.vn/wp-content/uploads/2020/04/logo_menu.png",
     "segment": "Cao cấp",
-    "basis": "19 năm xuất khẩu EU/Mỹ/Canada, top 10 siêu thị nội thất HCM"
+    "basis": "19 năm xuất khẩu EU/Mỹ/Canada, top 10 siêu thị nội thất HCM, 16K+ followers Facebook, bảo hành 5 năm"
   },
   {
     "name": "Kenli Furniture",
-    "category": "Sofa da bò nhập khẩu Ý/Đức (Chateau d'Ax, W.Schillig, Gomarco), giường ngủ",
-    "location": "HN, HCM, QN",
-    "website": "noithatkenli.vn",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Sofa da bò nhập khẩu Ý/Đức (Chateau d'Ax, W.Schillig, Gomarco), giường ngủ cao cấp châu Âu",
+    "mainLocation": "HN",
+    "locations": "HN, HCM, QN",
+    "website": "https://noithatkenli.vn/",
     "logo": "https://sofa.noithatkenli.vn/wp-content/uploads/2020/05/Logokenlingang-1024x523.png",
     "segment": "Cao cấp",
-    "basis": "Phân phối độc quyền sofa Ý/Milan chính hãng tại VN"
+    "basis": "Phân phối độc quyền sofa Ý/Milan chính hãng tại VN, showroom lớn cả 2 TP, thường xuyên lên top báo nội thất luxury"
   },
   {
     "name": "Nội Thất Gia Khánh",
-    "category": "Nội thất nhập khẩu 100% cao cấp: sofa, giường, tủ bếp, bàn ăn",
-    "location": "HN",
-    "website": "noithatgiakhanh.com",
-    "logo": "https://logo.clearbit.com/noithatgiakhanh.com",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Nội thất nhập khẩu 100% cao cấp: sofa, giường, tủ bếp, bàn ăn — phong cách Tân Cổ Điển & Hiện Đại",
+    "mainLocation": "HN",
+    "locations": "HN",
+    "website": "https://noithatgiakhanh.com/",
+    "logo": "https://noithatgiakhanh.com/wp-content/uploads/2019/12/logo-gia-khanh-update.png",
     "segment": "Cao cấp",
-    "basis": "10+ năm, showroom 5.000m², top 20 nội thất uy tín HN"
+    "basis": "10+ năm, showroom 5.000m², top 20 nội thất uy tín HN, CEO là Chủ tịch ABI Hà Nội, bảo hành 24 tháng"
   },
   {
     "name": "Hưng Phát Sài Gòn",
-    "category": "Nội thất nhập khẩu tổng thể: phòng khách, phòng ngủ, phòng bếp",
-    "location": "Toàn quốc",
-    "website": "hungphatsaigon.vn",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Nội thất nhập khẩu tổng thể: phòng khách, phòng ngủ, phòng bếp — dự án biệt thự & resort cao cấp",
+    "mainLocation": "HCM",
+    "locations": "Toàn quốc",
+    "website": "https://hungphatsaigon.vn/",
     "logo": "https://hungphatsaigon.vn/wp-content/uploads/2023/04/logo-noi-that-hungphatsaigon-scaled.jpg",
     "segment": "Cao cấp",
-    "basis": "Giải Thương Hiệu Xuất Sắc Châu Á 2025"
+    "basis": "Giải Thương Hiệu Xuất Sắc Châu Á 2025, Hàng Đầu ASEAN 2023, lên VTV3 & HTV9, chuỗi showroom Bắc–Nam"
   },
   {
     "name": "Kohler Vietnam",
-    "category": "Thiết bị phòng tắm & bếp cao cấp: bồn tắm, lavabo, vòi sen thông minh, tủ bếp",
-    "location": "Miền Bắc, Miền Trung",
-    "website": "kohler.com.vn",
-    "logo": "https://logo.clearbit.com/kohler.com.vn",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Thiết bị phòng tắm & bếp cao cấp: bồn tắm, lavabo, vòi sen thông minh, tủ bếp",
+    "mainLocation": "Miền Bắc",
+    "locations": "Miền Bắc, Miền Trung",
+    "website": "https://www.kohler.com.vn/",
+    "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7s0sKgblLIMijANnNtRRINVkx91gO5C30vQ&s",
     "segment": "Cao cấp",
-    "basis": "150+ năm (Mỹ, 1873), đối tác khách sạn 5 sao & biệt thự VN"
+    "basis": "150+ năm (Mỹ, 1873), đối tác khách sạn 5 sao & biệt thự VN, bồn tắm từ 40–80 triệu — phân khúc luxury rõ ràng"
   },
   {
     "name": "Grohe Vietnam",
-    "category": "Sen tắm, vòi nước, thiết bị phòng tắm nhập khẩu Đức",
-    "location": "HCM",
-    "website": "grohe-vietnam.com",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Sen tắm, vòi nước, thiết bị phòng tắm nhập khẩu Đức — công nghệ tiết kiệm nước",
+    "mainLocation": "HCM",
+    "locations": "HCM",
+    "website": "https://grohe-vietnam.com/",
     "logo": "https://truongha.com.vn/upload/elfinder/GROHE/b%C3%A0i%20vi%E1%BA%BFt/Grohe.svg.png",
     "segment": "Cao cấp",
-    "basis": "Thương hiệu Đức hơn 80 năm"
+    "basis": "Thương hiệu Đức hơn 80 năm, có đại lý chính hãng tại VN, thiết kế đoạt giải Red Dot/iF Design Award"
   },
   {
     "name": "JYSK Vietnam",
-    "category": "Nội thất + ngoại thất phong cách Bắc Âu",
-    "location": "HN, HCM",
-    "website": "jysk.vn",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Nội thất + ngoại thất phong cách Bắc Âu: sofa, giường, rèm, đèn, thảm — 2000+ sản phẩm",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://jysk.vn/",
     "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Jysk_logo.svg/1280px-Jysk_logo.svg.png",
     "segment": "Cao cấp",
-    "basis": "Thương hiệu Đan Mạch 40+ năm, 52 quốc gia"
+    "basis": "Thương hiệu Đan Mạch 40+ năm, 52 quốc gia, nhiều chi nhánh Vincom/Aeon/Saigon Centre — chuẩn quốc tế"
   },
   {
     "name": "QuickStep Vietnam",
-    "category": "Sàn gỗ cao cấp nhập khẩu Bỉ",
-    "location": "HN, HCM",
-    "website": "quick-step.com.vn",
+    "category": "Sàn gỗ & Gạch ốp lát",
+    "detailedProducts": "Sàn gỗ cao cấp nhập khẩu Bỉ: dòng Impressive, Eligna, Perspective — tiêu chuẩn châu Âu",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://quick-step.com.vn/",
     "logo": "https://quickstep.com.vn/wp-content/uploads/2025/10/logo-quickstep.svg",
     "segment": "Cao cấp",
-    "basis": "Thương hiệu Bỉ hàng đầu châu Âu"
+    "basis": "Thương hiệu Bỉ hàng đầu châu Âu, phân phối chính hãng tại VN, được top báo sàn gỗ xếp nhóm luxury"
   },
   {
     "name": "ERADO",
-    "category": "Nội thất nhập khẩu tổng thể: sofa da, giường, bàn ăn, tủ",
-    "location": "HN",
-    "website": "erado.vn",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Nội thất nhập khẩu tổng thể: sofa da, giường, bàn ăn, tủ — phong cách châu Âu hiện đại",
+    "mainLocation": "HN",
+    "locations": "HN",
+    "website": "https://erado.vn/",
     "logo": "https://cdn1.vieclam24h.vn/upload/files_cua_nguoi_dung/logo/2018/06/28/1530181380_image.png",
     "segment": "Cao cấp",
-    "basis": "13 năm thương hiệu, 18.000+ khách hàng"
+    "basis": "13 năm thương hiệu, 18.000+ khách hàng, 39 nghệ sĩ nổi tiếng bảo trợ, 600 nhân viên, lên VTV3/HTV9"
   },
   {
     "name": "MOHO (Savimex)",
-    "category": "Nội thất Made in Vietnam chuẩn quốc tế",
-    "location": "HN, HCM",
-    "website": "moho.com.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội thất Made in Vietnam chuẩn quốc tế: sofa, giường, tủ, kệ tivi, bàn ăn — eco-friendly",
+    "mainLocation": "HCM",
+    "locations": "HN, HCM",
+    "website": "https://moho.com.vn/pages/he-thong-cua-hang",
     "logo": "https://file.hstatic.net/200000065946/file/logo-moho-3x2_0479d70c3d814fc0b83750acd51665ed_large.png",
     "segment": "Trung cấp",
-    "basis": "Thuộc Savimex 40 năm xuất khẩu EU/Mỹ/Nhật"
+    "basis": "Thuộc Savimex 40 năm xuất khẩu EU/Mỹ/Nhật, ra đời 2020 đã vào top 10 nội thất HN & HCM, vật liệu chuẩn EU"
   },
   {
     "name": "Nội Thất Phố Xinh",
-    "category": "Nội + ngoại thất gia đình & văn phòng tổng thể",
-    "location": "HN, HCM, ĐN",
-    "website": "phoxinh.com.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội + ngoại thất gia đình & văn phòng tổng thể, phụ kiện trang trí, sofa nhập khẩu",
+    "mainLocation": "HCM",
+    "locations": "HN, HCM, ĐN, Nha Trang",
+    "website": "https://phoxinh.com.vn/",
     "logo": "https://file.hstatic.net/1000406288/file/logo-px-moi-web_6bbd04c4a30041b7ba74977cc4002a50.png",
     "segment": "Trung cấp",
-    "basis": "Showroom 200.000m², 800 nhân viên"
+    "basis": "Showroom 200.000m², 800 nhân viên, 4 TP lớn (HN–ĐN–HCM–Nha Trang) — quy mô dẫn đầu ngành"
   },
   {
     "name": "Nhà Xinh",
-    "category": "Nội thất gia đình tổng thể: sofa, armchair, bàn ăn",
-    "location": "HN, HCM",
-    "website": "nhaxinh.com",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội thất gia đình tổng thể: sofa, armchair, bàn ăn, tủ ly, kệ trưng bày, bàn console",
+    "mainLocation": "HCM",
+    "locations": "HN, HCM",
+    "website": "https://nhaxinh.com/",
     "logo": "https://nhaxinh.com/wp-content/uploads/2025/07/logo-NX-moi.webp",
     "segment": "Trung cấp",
-    "basis": "Thương hiệu Việt lâu năm, top 10 nội thất uy tín"
+    "basis": "Thương hiệu Việt lâu năm, top 10 nội thất uy tín HN & HCM, thiết kế sản xuất trong nước, cập nhật xu hướng liên tục"
   },
   {
     "name": "BAYA",
-    "category": "Nội thất gia đình tổng thể: sofa, giường, bàn ăn",
-    "location": "HN, HCM",
-    "website": "baya.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội thất gia đình tổng thể: sofa, giường, bàn ăn, tủ, kệ tivi, phụ kiện trang trí — thiết kế tối giản Bắc Âu",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://baya.vn",
     "logo": "https://vieclam43.net/uploads/176801-03-2020_020443.jpg",
     "segment": "Trung cấp",
-    "basis": "Được top 10 siêu thị nội thất HN & HCM ghi nhận"
+    "basis": "Được top 10 siêu thị nội thất HN & HCM ghi nhận nhiều năm liền, chuyên tối ưu công năng cho căn hộ đô thị diện tích nhỏ"
   },
   {
     "name": "American Standard VN",
-    "category": "Thiết bị phòng tắm & bếp: bồn cầu, chậu rửa, sen tắm",
-    "location": "HN, HCM",
-    "website": "americanstandard.com.vn",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Thiết bị phòng tắm & bếp: bồn cầu, chậu rửa, sen tắm — thiết kế Mỹ, dễ bảo trì",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://www.americanstandard.com.vn/vi/",
     "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e1/American_Standard_logo.png",
     "segment": "Trung cấp",
-    "basis": "Thương hiệu Mỹ uy tín, top 10 thiết bị vệ sinh bán chạy VN"
+    "basis": "Thương hiệu Mỹ uy tín, top 10 thiết bị vệ sinh bán chạy VN, phù hợp nhà phố & căn hộ chung cư"
   },
   {
     "name": "TOTO Vietnam",
-    "category": "Thiết bị vệ sinh Nhật: bồn cầu, lavabo, bồn tắm",
-    "location": "HN, HCM",
-    "website": "vn.toto.com",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Thiết bị vệ sinh Nhật: bồn cầu, lavabo, bồn tắm, sen tắm — bền bỉ, tiết kiệm nước",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://vn.toto.com/",
     "logo": "https://images.seeklogo.com/logo-png/21/2/toto-logo-png_seeklogo-213037.png",
     "segment": "Trung cấp",
-    "basis": "100+ năm (Nhật), top 1 thiết bị vệ sinh bán chạy VN"
+    "basis": "100+ năm (Nhật), top 1 thiết bị vệ sinh bán chạy VN nhiều năm liền, hệ thống bảo hành phủ toàn quốc"
   },
   {
     "name": "Inax Vietnam",
-    "category": "Thiết bị vệ sinh Nhật: bồn cầu, chậu rửa, bồn tắm",
-    "location": "HN, HCM",
-    "website": "inax.com.vn",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Thiết bị vệ sinh Nhật: bồn cầu, chậu rửa, bồn tắm, gạch ceramic — phổ biến dự án chung cư",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://www.inax.com.vn/vi/",
     "logo": "https://www.inax.com.vn/wp-content/uploads/72688078_2489464121168089_283090275255975936_n.jpg",
     "segment": "Trung cấp",
-    "basis": "Thương hiệu Nhật, đại lý phủ toàn quốc"
+    "basis": "Thương hiệu Nhật, đại lý phủ toàn quốc, đặc biệt phổ biến trong dự án nhà ở thương mại và chung cư"
   },
   {
     "name": "Inovar Vietnam",
-    "category": "Sàn gỗ công nghiệp Malaysia",
-    "location": "HN",
-    "website": "inovarvietnam.com",
+    "category": "Sàn gỗ & Gạch ốp lát",
+    "detailedProducts": "Sàn gỗ công nghiệp Malaysia: đa dạng mẫu, độ bền cao, phù hợp nhà phố & chung cư",
+    "mainLocation": "HN",
+    "locations": "HN",
+    "website": "https://inovarvietnam.com/",
     "logo": "https://inovarfloor.vn/wp-content/uploads/2019/07/Test.jpg",
     "segment": "Trung cấp",
-    "basis": "Giải Thương hiệu Sàn gỗ Châu Á lần 7"
+    "basis": "Giải Thương hiệu Sàn gỗ Châu Á lần 7, số 1 tại Nhật, top 1 sàn gỗ nhập khẩu bán chạy VN"
   },
   {
     "name": "COZY Italian sofas",
-    "category": "Sofa & nội thất nhập khẩu Ý/Đức/Nhật",
-    "location": "HN, HCM",
-    "website": "cozyliving.com.vn",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Sofa & nội thất nhập khẩu Ý/Đức/Nhật: sofa da, sofa vải, bàn ăn, ghế — thiết kế đương đại",
+    "mainLocation": "HCM",
+    "locations": "HN, HCM",
+    "website": "https://cozyliving.com.vn/",
     "logo": "https://cozyliving.com.vn/cdn/shop/files/LOGO_COZY_1_569x330_afe5176a-c793-41c3-9075-afb99c972370.svg?v=1685772380&width=760",
     "segment": "Trung cấp",
-    "basis": "Trực thuộc tập đoàn Cozy International (Úc)"
+    "basis": "Trực thuộc tập đoàn Cozy International (Úc), đối tác chiến lược với thương hiệu nội thất Ý/Châu Âu"
   },
   {
     "name": "Cotto Vietnam",
-    "category": "Gạch ốp lát + thiết bị vệ sinh tầm trung-cao",
-    "location": "HN, HCM",
-    "website": "cotto.vn",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Gạch ốp lát + thiết bị vệ sinh tầm trung-cao: bồn cầu, lavabo, sen tắm — thương hiệu Thái",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://cotto.vn/",
     "logo": "https://bizweb.dktcdn.net/100/453/883/themes/860229/assets/logo.png?1751605240711",
     "segment": "Trung cấp",
-    "basis": "Thương hiệu Thái 40+ năm"
+    "basis": "Thương hiệu Thái 40+ năm, top 10 thiết bị vệ sinh bán chạy VN, ưa chuộng trong phân khúc trung-cao"
   },
   {
     "name": "Nội Thất Hòa Phát",
-    "category": "Nội thất gia đình & văn phòng: bàn ghế, tủ kệ",
-    "location": "HN, HCM",
-    "website": "noithathoaphat.com.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội thất gia đình & văn phòng: bàn ghế, tủ kệ, giường — phổ thông, phủ toàn quốc",
+    "mainLocation": "HN",
+    "locations": "HN, HCM, Toàn quốc",
+    "website": "https://noithathoaphat.com.vn/",
     "logo": "https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Hoa-Phat-HPG-Ori.png",
     "segment": "Cơ bản",
-    "basis": "Tập đoàn Hòa Phát 20+ năm"
+    "basis": "Tập đoàn Hòa Phát 20+ năm, Hàng VN Chất Lượng Cao nhiều năm liền, mạng lưới đại lý phủ toàn quốc"
   },
   {
     "name": "Nội Thất Tân Á",
-    "category": "Sofa, bàn ghế ăn, giường ngủ, tủ áo — sản xuất nội địa",
-    "location": "HCM",
-    "website": "noithattana.net",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Sofa, bàn ghế ăn, giường ngủ, tủ áo — sản xuất nội địa, đa dạng mẫu mã, giá bình dân",
+    "mainLocation": "HCM",
+    "locations": "HCM",
+    "website": "https://noithattana.net",
     "logo": "https://noithattana.vn/wp-content/uploads/2020/11/Logo-Noi-That-Tan-A.png",
     "segment": "Cơ bản",
-    "basis": "Xuất hiện trong nhiều top sofa uy tín HCM"
+    "basis": "Xuất hiện trong nhiều top sofa uy tín HCM, showroom tại Gò Vấp, sản xuất nội địa giúp giá tốt"
   },
   {
     "name": "Toàn Phú Furniture",
-    "category": "Nội thất gia đình phổ thông",
-    "location": "HCM",
-    "website": "toanphu.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội thất gia đình phổ thông: phòng khách, phòng ngủ, phòng bếp — thiết kế & sản xuất tại VN",
+    "mainLocation": "HCM",
+    "locations": "HCM",
+    "website": "https://toanphu.vn/",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN0mKo7KGJprIMGpDvXJXcMpwpODIHXcc4mmPUycBVQCDtfYA8dLysGOPn&s=10",
     "segment": "Cơ bản",
-    "basis": "Xưởng sản xuất nội địa lâu năm tại HCM"
+    "basis": "Xưởng sản xuất nội địa lâu năm tại HCM, phổ biến trong dự án nhà ở thương mại, giá tốt nhất phân khúc"
   },
   {
     "name": "Viglacera",
-    "category": "Gạch ốp lát + thiết bị vệ sinh nội địa hàng đầu",
-    "location": "HN, HCM",
-    "website": "viglacera.com.vn",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Gạch ốp lát + thiết bị vệ sinh nội địa hàng đầu: bồn cầu, lavabo, gạch ceramic — DNNN",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "http://viglacera.com.vn/",
     "logo": "https://speedmaint.com/wp-content/uploads/2021/08/logo-viglacera.png",
     "segment": "Cơ bản",
-    "basis": "DNNN hàng đầu VN, phủ toàn quốc"
+    "basis": "DNNN hàng đầu VN, phủ toàn quốc, top 10 thiết bị vệ sinh bán chạy, giá cạnh tranh nhất thị trường"
   },
   {
     "name": "Caesar Vietnam",
-    "category": "Thiết bị vệ sinh Đài Loan",
-    "location": "HN, HCM",
-    "website": "caesar.com.vn",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Thiết bị vệ sinh Đài Loan: bồn cầu, lavabo, bồn tắm — 20+ năm tại VN, linh kiện dễ thay",
+    "mainLocation": "HCM",
+    "locations": "HN, HCM",
+    "website": "https://caesar.com.vn/",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcoSmRGtW3tfXx9XhC4R2FPTehWVXvjMLATlZVoUyXgvOk1X0vWbXP5Ac&s=10",
     "segment": "Cơ bản",
-    "basis": "20+ năm tại VN, mạng lưới đại lý rộng khắp"
+    "basis": "20+ năm tại VN, mạng lưới đại lý rộng khắp, linh kiện dễ thay, phổ biến dự án nhà ở đại trà"
   },
   {
     "name": "SETO Vietnam",
-    "category": "Thiết bị vệ sinh chuẩn Nhật sản xuất tại VN",
-    "location": "HN, HCM",
-    "website": "setovietnam.com",
+    "category": "Thiết bị vệ sinh & Phòng tắm",
+    "detailedProducts": "Thiết bị vệ sinh chuẩn Nhật sản xuất tại VN: bồn cầu, lavabo, bồn tắm — giá nội địa",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://setovietnam.com/",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl6XpT1QviubDYkZfI4rMLiERs1Sfszy7DWIqtNmd3Kj57EQlPRz_xBck&s=10",
     "segment": "Cơ bản",
-    "basis": "Sản xuất theo chuẩn Nhật nhưng giá nội địa"
+    "basis": "Nổi bật những năm gần đây, sản xuất theo chuẩn Nhật nhưng giá nội địa, top 10 thiết bị vệ sinh bán chạy"
   },
   {
     "name": "Nội Thất Xuân Hòa",
-    "category": "Bàn ghế ăn, nội thất trường học & văn phòng",
-    "location": "HN",
-    "website": "xuanhoa.net.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Bàn ghế ăn, bàn ghế học sinh, tủ quần áo, giường ngủ, nội thất gia đình & trường học & văn phòng",
+    "mainLocation": "HN",
+    "locations": "HN, Toàn quốc",
+    "website": "https://xuanhoa.net.vn",
     "logo": "https://cdn-img-v2.mybota.vn/uploadv2/web/84/8482/menutop/2024/10/09/02/30/1728460149_slogan.png?v=4",
     "segment": "Cơ bản",
-    "basis": "Thương hiệu Việt lâu đời"
+    "basis": "Thương hiệu Việt lâu đời, nội thất gia đình/trường học/văn phòng giá phải chăng, phủ rộng toàn quốc"
   },
   {
     "name": "Dongwha Vietnam",
-    "category": "Sàn gỗ Hàn Quốc sản xuất tại VN",
-    "location": "HN, Thái Nguyên",
-    "website": "dongwhavietnam.com",
+    "category": "Sàn gỗ & Gạch ốp lát",
+    "detailedProducts": "Sàn gỗ Hàn Quốc sản xuất tại VN: nhà máy nội địa giúp giá tốt, chứng nhận quốc tế",
+    "mainLocation": "Thái Nguyên",
+    "locations": "HN, Thái Nguyên",
+    "website": "https://www.dongwhavietnam.com/vn",
     "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpL_poDiXeIyNeJEhk-HjXlxfDMWGQ7hxmXrNcv348X08lLDmJ48Lh_Ec8&s=10",
     "segment": "Cơ bản",
-    "basis": "Nhà máy sàn gỗ ép lớn nhất Hàn Quốc đặt tại VN"
+    "basis": "Nhà máy sàn gỗ ép lớn nhất Hàn Quốc đặt tại VN, dùng nguyên liệu local — giá thấp nhưng chứng nhận quốc tế"
   },
   {
     "name": "Vương Quốc Nội Thất",
-    "category": "Nội thất nhập khẩu 100%: cổ điển & hiện đại",
-    "location": "HN, HCM",
-    "website": "vuongquocnoithat.vn",
-    "logo": "https://logo.clearbit.com/vuongquocnoithat.vn",
+    "category": "Nội thất nhập khẩu cao cấp",
+    "detailedProducts": "Nội thất nhập khẩu 100%: cổ điển & hiện đại, sofa, phòng ngủ, phòng ăn — giá rẻ hơn 30% thị trường",
+    "mainLocation": "HN",
+    "locations": "HN, HCM",
+    "website": "https://vuongquocnoithat.vn/",
+    "logo": "https://vuongquocnoithat.vn/themes/images/vuongquocnoithat.jpg",
     "segment": "Cơ bản",
-    "basis": "Nhập khẩu 100% có chứng từ, cam kết giá rẻ"
+    "basis": "Nhập khẩu 100% có chứng từ, cam kết giá rẻ hơn 30% thị trường, showroom lớn tại Hà Nội, BH 2 năm"
   },
   {
     "name": "Gỗ Trang Trí",
-    "category": "Nội thất gia đình & văn phòng theo yêu cầu",
-    "location": "HN, HCM, Đà Nẵng",
-    "website": "gotrangtri.vn",
-    "logo": "https://logo.clearbit.com/gotrangtri.vn",
+    "category": "Nội thất tổng thể & Sản xuất nội địa",
+    "detailedProducts": "Nội thất gia đình & văn phòng theo yêu cầu: tủ bếp, kệ tivi, giường, bàn làm việc — tùy chỉnh kích thước & màu sắc",
+    "mainLocation": "HN",
+    "locations": "HN, HCM, Đà Nẵng",
+    "website": "https://gotrangtri.vn/",
+    "logo": "https://gotrangtri.vn/wp-content/uploads/2024/03/logo-gtt-600x120.png",
     "segment": "Cơ bản",
-    "basis": "Xưởng sản xuất tại 3 TP lớn, giao hàng toàn quốc"
+    "basis": "Xưởng sản xuất tại 3 TP lớn, giao hàng lắp đặt toàn quốc bằng xe tải riêng, công nghệ Xanh chuẩn châu Âu"
   }
 ]
