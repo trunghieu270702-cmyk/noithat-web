@@ -9,6 +9,7 @@ import Section9ProcessShort from './_components/Section9ProcessShort';
 import Portfolio from './_components/Portfolio';
 import Blog from './_components/Blog';
 import Section10CTA from './_components/Section10CTA';
+import BackgroundVisuals from './_components/BackgroundVisuals';
 
 export default function UserHomePage() {
   return (

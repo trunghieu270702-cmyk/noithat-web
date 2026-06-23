@@ -26,7 +26,7 @@ function CustomSelect({ label, options, value, onChange }: { label: string, opti
       <label className="block text-sm text-gray-400 dark:text-white/50 mb-2 font-medium">{label}</label>
       <div className="relative">
         <div
-          className={`modern-section border ${isOpen ? 'border-[#C7A25C]' : 'border-[#ECE7DE] dark:border-white/20'} text-[#1F1F1F] dark:text-white p-3 rounded-[2px] cursor-pointer flex justify-between items-center transition-colors hover:border-[#C7A25C]/50`}
+          className={`bg-white dark:bg-[#1c1c1c] border ${isOpen ? 'border-[#C7A25C]' : 'border-[#ECE7DE] dark:border-white/20'} text-[#1F1F1F] dark:text-white p-3 rounded-[2px] cursor-pointer flex justify-between items-center transition-colors hover:border-[#C7A25C]/50`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="text-sm">{selectedLabel}</span>
@@ -34,11 +34,11 @@ function CustomSelect({ label, options, value, onChange }: { label: string, opti
         </div>
 
         {isOpen && (
-          <div className="absolute z-50 w-full mt-2 modern-section shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[2px] py-2 animate-fadeInDown">
+          <div className="absolute z-50 w-full mt-2 bg-white dark:bg-[#1c1c1c] shadow-lg dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[2px] py-2 animate-fadeInDown">
             {options.map((opt) => (
               <div
                 key={opt.value}
-                className={`px-4 py-2 text-sm cursor-pointer transition-colors ${value === opt.value ? 'bg-[#C7A25C]/20 text-[#C7A25C]' : 'text-[#1F1F1F]/80 dark:text-white/80 hover:bg-[#F8F6F2] dark:hover:bg-white/5 hover:text-[#1F1F1F] dark:hover:text-white'}`}
+                className={`px-4 py-2 text-sm cursor-pointer transition-colors ${value === opt.value ? 'bg-[#C7A25C]/10 text-[#C7A25C] font-medium' : 'text-[#1F1F1F] dark:text-white/80 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-[#C7A25C] dark:hover:text-[#C7A25C]'}`}
                 onClick={() => {
                   onChange(opt.value);
                   setIsOpen(false);

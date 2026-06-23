@@ -28,8 +28,22 @@ export default function SectionHotProducts() {
 
   return (
     <section className="py-24 bg-transparent dark:bg-transparent modern-section relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full bg-[#C7A25C]/5 blur-[150px] pointer-events-none" />
+      {/* Texture & Lighting Effects */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        {/* Spotlight Effect */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[100%] h-[80%] bg-[radial-gradient(ellipse_at_top,rgba(199,162,92,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(199,162,92,0.2)_0%,transparent_70%)]" />
+        
+        {/* Subtle Background Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full bg-[#C7A25C]/5 blur-[150px]" />
+        
+        {/* Premium Noise/Material Texture Overlay */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.04] mix-blend-overlay">
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+        </svg>
+      </div>
 
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         {/* Section Header */}

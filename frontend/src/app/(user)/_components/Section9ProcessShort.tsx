@@ -16,10 +16,20 @@ const PROCESS_STEPS = [
 export default function Section9ProcessShort() {
   return (
     <section className="relative py-24 bg-transparent dark:bg-transparent modern-section overflow-hidden">
-      <ArchitecturalAccent variant="overlapping-rectangles" className="top-10 right-10 w-64 h-64 opacity-20" />
+      {/* Cinematic Lighting: Window Blind Shadows */}
+      <div className="absolute inset-0 pointer-events-none z-[1] opacity-20 dark:opacity-30 mix-blend-multiply dark:mix-blend-overlay"
+           style={{
+             backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(0,0,0,0.15) 40px, rgba(0,0,0,0.15) 50px)'
+           }}
+      />
+      
+      {/* Sun Light Overlay for the shadows */}
+      <div className="absolute top-0 right-0 w-[80%] h-[100%] bg-[radial-gradient(ellipse_at_top_right,rgba(255,250,235,0.4)_0%,transparent_70%)] dark:bg-[radial-gradient(ellipse_at_top_right,rgba(211,174,62,0.15)_0%,transparent_70%)] pointer-events-none z-[0]" />
+
+      <ArchitecturalAccent variant="overlapping-rectangles" className="top-10 right-10 w-64 h-64 opacity-20 z-[2]" />
       
       {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full bg-[#C7A25C]/5 blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full bg-[#C7A25C]/5 blur-[150px] pointer-events-none z-[0]" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 

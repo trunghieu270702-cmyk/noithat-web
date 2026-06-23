@@ -6,12 +6,16 @@ import ScrollReveal from './ScrollReveal';
 export default function Section10CTA() {
   return (
     <section className="relative py-32 bg-[#F8F5F0] dark:bg-[#1a1a1a] shadow-sm dark:shadow-none border border-gray-100 dark:border-white/10 flex items-center justify-center overflow-hidden border-y border-gray-200 dark:border-white/20">
-      {/* Background Image & Overlay */}
+      {/* Blurred Interior Scenery & Parallax */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-fixed opacity-15 dark:opacity-30 luxury-image-filter"
-        style={{ backgroundImage: 'url(/images/main/banner_d1.jpg)' }}
+        className="absolute inset-0 bg-cover bg-center bg-fixed opacity-20 dark:opacity-40 transition-transform duration-1000"
+        style={{ 
+          backgroundImage: 'url(/images/main/banner_d1.jpg)',
+          filter: 'blur(12px)',
+          transform: 'scale(1.1)'
+        }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F8F6F2] via-[#F8F6F2]/90 dark:from-[#0a0a0a] dark:via-[#1a1a1a]/80 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F8F6F2] via-[#F8F6F2]/80 dark:from-[#0a0a0a] dark:via-[#1a1a1a]/70 to-transparent mix-blend-multiply dark:mix-blend-normal" />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 text-center">
         <ScrollReveal animation="fade-up" delay={50}>

@@ -3,19 +3,21 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import BackgroundVisuals from './BackgroundVisuals';
 
 /* ── Slide data ── */
 const SLIDES = [
   {
+    videoUrl: '', // TODO: Điền link video mp4 nội thất sang trọng vào đây (VD: '/videos/luxury-interior.mp4')
     bgLight: '/images/main/banner-l1.jpg',
-    bgDark: '/images/main/banner_d2.jpg',
+    bgDark: '/images/main/banner_d1.jpg',
     subtitle: 'ARCViet Living Nexus',
     titleNormal: 'Một kết nối -',
     titleBold: 'Vạn giá trị',
     titleLine2: 'Hệ sinh thái nội thất toàn diện',
     text: 'ArcViet Living Nexus mang đến giải pháp kết nối hoàn hảo giữa khách hàng và các đối tác thiết kế thi công hàng đầu.',
-    btn1: { label: 'Tìm hiểu hệ sinh thái', href: '/he-sinh-thai' },
-    btn2: { label: 'Nhận tư vấn', href: '/tu-van' },
+    btn1: { label: 'Khám phá hệ sinh thái', href: '/he-sinh-thai' },
+    btn2: { label: 'Đặt lịch tư vấn riêng', href: '/tu-van' },
   },
   {
     bgLight: '/images/main/banner-l2.jpg',
@@ -25,8 +27,8 @@ const SLIDES = [
     titleBold: 'Đơn vị nội thất',
     titleLine2: 'Trước khi bắt đầu công trình',
     text: 'Hệ sinh thái hơn 30 đơn vị thiết kế – thi công đã được phân loại, giúp khách hàng kết nối đúng bên phù hợp, tiết kiệm 5% và có thêm giải pháp giám sát thi công khi cần.',
-    btn1: { label: 'Nhận tư vấn phù hợp', href: '/tu-van' },
-    btn2: { label: 'Xem hệ sinh thái', href: '/he-sinh-thai' },
+    btn1: { label: 'Khám phá hệ sinh thái', href: '/he-sinh-thai' },
+    btn2: { label: 'Đặt lịch tư vấn riêng', href: '/tu-van' },
   },
   {
     bgLight: '/images/main/banner-l3.jpg',
@@ -36,8 +38,8 @@ const SLIDES = [
     titleBold: 'Chất lượng',
     titleLine2: 'Tiến độ & Rủi ro',
     text: 'Dành cho khách hàng muốn có thêm một bên độc lập hỗ trợ kiểm tra quá trình thi công, hạn chế lỗi phát sinh và đảm bảo công trình được triển khai đúng theo kế hoạch.',
-    btn1: { label: 'Dịch vụ giám sát', href: '/giam-sat' },
-    btn2: { label: 'Quy trình làm việc', href: '/quy-trinh' },
+    btn1: { label: 'Khám phá hệ sinh thái', href: '/he-sinh-thai' },
+    btn2: { label: 'Đặt lịch tư vấn riêng', href: '/tu-van' },
   },
   {
     bgLight: '/images/main/banner-l4.jpg',
@@ -47,22 +49,37 @@ const SLIDES = [
     titleBold: 'Không gian',
     titleLine2: 'Đẳng cấp & Sang trọng',
     text: 'Mang đến những trải nghiệm sống đỉnh cao với sự tinh tế trong từng đường nét thiết kế, đáp ứng hoàn hảo mọi nhu cầu của khách hàng.',
-    btn1: { label: 'Xem dự án', href: '/du-an' },
-    btn2: { label: 'Liên hệ ngay', href: '/lien-he' },
+    btn1: { label: 'Khám phá hệ sinh thái', href: '/he-sinh-thai' },
+    btn2: { label: 'Đặt lịch tư vấn riêng', href: '/tu-van' },
   }
 ];
 
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const rafRef = React.useRef<number | null>(null);
   const total = SLIDES.length;
 
   const next = useCallback(() => setCurrent((prev) => (prev + 1) % total), [total]);
-  const prev = useCallback(() => setCurrent((prev) => (prev - 1 + total) % total), [total]);
 
   useEffect(() => {
     const id = setInterval(next, 8000);
     return () => clearInterval(id);
   }, [next]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    
+    rafRef.current = requestAnimationFrame(() => {
+      const x = (clientX / window.innerWidth - 0.5) * 2;
+      const y = (clientY / window.innerHeight - 0.5) * 2;
+      setMousePos({ x, y });
+    });
+  }, []);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -82,7 +99,15 @@ export default function HeroSlider() {
   };
 
   return (
-    <section className="relative w-full h-screen min-h-[620px] bg-[#050505] overflow-hidden">
+    <section 
+      className="relative w-full h-screen min-h-[620px] bg-[#050505] overflow-hidden"
+      onMouseMove={handleMouseMove}
+    >
+      
+      {/* ── Subtle Luxury Architectural Background ── */}
+      <div className="absolute inset-0 z-[5] pointer-events-none">
+        <BackgroundVisuals mouseX={mousePos.x} mouseY={mousePos.y} />
+      </div>
 
       {/* ── Slider Track ── */}
       <AnimatePresence initial={false}>
@@ -96,30 +121,45 @@ export default function HeroSlider() {
         >
           {/* Light Mode Banner */}
           <div className="absolute inset-0 dark:hidden">
-            <img
-              src={SLIDES[current].bgLight}
-              alt="Banner"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            {/* Cinematic dark overlay to make white text pop without looking milky */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
+            {SLIDES[current].videoUrl ? (
+              <video
+                src={SLIDES[current].videoUrl}
+                autoPlay loop muted playsInline
+                poster={SLIDES[current].bgLight}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={SLIDES[current].bgLight}
+                alt="Banner"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50 mix-blend-multiply" />
           </div>
           {/* Dark Mode Banner */}
           <div className="absolute inset-0 hidden dark:block">
-            <img
-              src={SLIDES[current].bgDark}
-              alt="Banner Dark"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
+            {SLIDES[current].videoUrl ? (
+              <video
+                src={SLIDES[current].videoUrl}
+                autoPlay loop muted playsInline
+                poster={SLIDES[current].bgDark}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={SLIDES[current].bgDark}
+                alt="Banner Dark"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80 mix-blend-multiply" />
           </div>
         </motion.div>
       </AnimatePresence>
 
-
-
       {/* ── Caption Content (Centered) ── */}
-      <div className="absolute inset-0 z-20 flex items-center justify-center">
+      <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
         <div className="container mx-auto px-6 md:px-20 max-w-[1400px]">
           <AnimatePresence mode="wait">
             <motion.div
@@ -128,10 +168,8 @@ export default function HeroSlider() {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="max-w-[1400px] mx-auto text-center flex flex-col items-center justify-center"
+              className="max-w-[1400px] mx-auto text-center flex flex-col items-center justify-center pointer-events-auto"
             >
-
-              {/* Badge removed as requested */}
 
               <motion.p variants={itemVariants} className="text-[#D3AE3E] text-[12px] md:text-[14px] font-bold tracking-[0.3em] uppercase mb-6 drop-shadow-md">
                 {SLIDES[current].subtitle}
@@ -142,7 +180,7 @@ export default function HeroSlider() {
                   <span className="font-bold text-white mr-4">
                     {SLIDES[current].titleNormal}
                   </span>
-                  <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-[#D3AE3E] via-[#f1be6d] to-[#D3AE3E]">
+                  <span className="font-black text-gold-shimmer drop-shadow-2xl">
                     {SLIDES[current].titleBold}
                   </span>
                   <br />
@@ -161,17 +199,16 @@ export default function HeroSlider() {
               <motion.div variants={itemVariants} className="flex flex-wrap justify-center items-center gap-6">
                 <Link
                   href={SLIDES[current].btn1.href}
-                  className="relative overflow-hidden group bg-[#D3AE3E] text-white font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[2px] hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(211,174,62,0.4)]"
+                  className="btn-luxury-primary font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[2px]"
                 >
-                  <span className="relative z-10">{SLIDES[current].btn1.label}</span>
-                  <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-shimmer" />
+                  {SLIDES[current].btn1.label}
                 </Link>
 
                 <Link
                   href={SLIDES[current].btn2.href}
-                  className="relative overflow-hidden group bg-transparent text-white border border-white/50 font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[2px] hover:bg-white hover:text-[#131313] transition-all duration-300"
+                  className="btn-luxury-secondary font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[2px]"
                 >
-                  <span className="relative z-10">{SLIDES[current].btn2.label}</span>
+                  {SLIDES[current].btn2.label}
                 </Link>
               </motion.div>
 
@@ -179,8 +216,6 @@ export default function HeroSlider() {
           </AnimatePresence>
         </div>
       </div>
-
-
 
       {/* ── Social Icons ── */}
       <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 z-[35] flex-col items-center gap-5">
