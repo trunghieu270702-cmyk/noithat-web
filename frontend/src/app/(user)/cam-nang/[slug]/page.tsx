@@ -116,6 +116,8 @@ export default function ArticleDetail() {
         <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] rounded-full bg-[#D3AE3E]/10 blur-[150px]" />
       </div>
 
+      <SectionStarryMotif position="random-corner" />
+
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
         {/* Breadcrumb */}

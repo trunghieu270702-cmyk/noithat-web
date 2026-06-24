@@ -586,10 +586,15 @@
 
 .luxury-particle {
   position: absolute;
-  background: radial-gradient(circle, #ffffff 0%, #D3AE3E 40%, transparent 100%);
+  background: radial-gradient(circle, #ce9e51 0%, rgba(206,158,81,0.5) 40%, transparent 100%);
   border-radius: 50%;
   pointer-events: none;
-  filter: drop-shadow(0 0 4px #D3AE3E);
+  filter: drop-shadow(0 0 3px rgba(206,158,81,0.5));
   animation: float-particle var(--duration) linear infinite;
   animation-delay: var(--delay);
+}
+
+.dark .luxury-particle {
+  background: radial-gradient(circle, #ffffff 0%, #D3AE3E 40%, transparent 100%);
+  filter: drop-shadow(0 0 4px #D3AE3E);
 }

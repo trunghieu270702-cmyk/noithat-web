@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
+import SectionStarryMotif from '../_components/SectionStarryMotif';
 
 export default function CamNangPage() {
   const [articles, setArticles] = useState<any[]>([]);
@@ -111,6 +112,8 @@ export default function CamNangPage() {
         <div className="absolute top-[40%] right-[-10%] w-[30%] h-[50%] rounded-full bg-[#D3AE3E]/10 blur-[100px]" />
         <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] rounded-full bg-[#D3AE3E]/10 blur-[150px]" />
       </div>
+
+      <SectionStarryMotif position="random-corner" />
 
       <div className="relative z-10 container mx-auto px-6 max-w-[1400px]">
         {/* Page Header */}

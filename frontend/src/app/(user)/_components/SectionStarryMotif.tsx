@@ -111,11 +111,11 @@ const CONSTELLATIONS = [
   </g>
 ];
 
-export default function SectionStarryMotif({ variant, position = 'full' }: { variant?: number, position?: 'full' | 'top-left' | 'top-right' | 'random-corner' }) {
+export default function SectionStarryMotif({ variant, position = 'full', particleCount }: { variant?: number, position?: 'full' | 'top-left' | 'top-right' | 'random-corner', particleCount?: number }) {
   const [mounted, setMounted] = useState(false);
   const [constellationIndex, setConstellationIndex] = useState(0);
   const [actualPosition, setActualPosition] = useState<'full' | 'top-left' | 'top-right'>('full');
-  
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -151,7 +151,8 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
   // Sinh random particles giống banner (BackgroundVisuals)
   const particles = useMemo(() => {
     if (!mounted) return [];
-    return Array.from({ length: 50 }).map((_, i) => ({
+    const count = particleCount || (position === 'random-corner' ? 150 : 50);
+    return Array.from({ length: count }).map((_, i) => ({
       id: i,
       tx: `${(Math.random() - 0.5) * 150}px`,
       ty: `${(Math.random() - 0.5) * 150 - 50}px`,
@@ -163,21 +164,21 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
       parallaxZ: Math.random() * 60 + 10,
       opacity: Math.random() * 0.6 + 0.2,
     }));
-  }, [mounted]);
+  }, [mounted, particleCount, position]);
 
   if (!mounted) return null;
 
   return (
-    <motion.div 
+    <motion.div
       style={{ '--mx': smoothX, '--my': smoothY } as any}
-      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-90 transition-opacity duration-1000 text-[#C7A25C] dark:text-[#D3AE3E] [--star-white:#A67C00] dark:[--star-white:#ffffff]"
+      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-100 dark:opacity-90 transition-opacity duration-1000 text-[#C7A25C] dark:text-[#D3AE3E] [--star-white:#ce9e51] dark:[--star-white:#ffffff]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-currentColor/10 dark:from-currentColor/15 via-transparent to-transparent opacity-100 dark:opacity-80"></div>
 
       {/* LAYER 1: Luxury Particles with High-Performance CSS Parallax */}
       <div className="absolute inset-0 pointer-events-none">
         {particles.map((p) => (
-          <div 
+          <div
             key={p.id}
             className="absolute"
             style={{
@@ -187,7 +188,7 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
               transform: `translate(calc(var(--mx) * ${p.parallaxZ}px), calc(var(--my) * ${p.parallaxZ}px))`
             }}
           >
-            <div 
+            <div
               className="luxury-particle !relative !left-0 !top-0"
               style={{
                 width: `${p.size}px`,
@@ -203,15 +204,14 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
       </div>
 
       {/* LAYER 2: Enhanced Constellation Motif */}
-      <div 
+      <div
         style={{
           transform: `translate(calc(var(--mx) * -20px), calc(var(--my) * -20px))`
         }}
-        className={`absolute ${
-          actualPosition === 'top-left' ? 'top-[-5%] left-[-5%] w-[400px] h-[400px] opacity-90' : 
-          actualPosition === 'top-right' ? 'top-[-5%] right-[-5%] w-[400px] h-[400px] opacity-90' : 
-          'inset-[-5%] w-[110%] h-[110%]'
-        }`}
+        className={`absolute mix-blend-multiply dark:mix-blend-normal ${actualPosition === 'top-left' ? 'top-[-5%] left-[-5%] w-[400px] h-[400px] opacity-90' :
+            actualPosition === 'top-right' ? 'top-[-5%] right-[-5%] w-[400px] h-[400px] opacity-90' :
+              'inset-[-5%] w-[110%] h-[110%]'
+          }`}
       >
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_8px_rgba(211,174,62,0.4)]">
           {CONSTELLATIONS[constellationIndex]}
@@ -220,7 +220,7 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
 
       {/* LAYER 3: Architectural Compass Node (Adds Luxury Tech Vibe) */}
       {actualPosition === 'full' && (
-        <div 
+        <div
           className="absolute top-[10%] right-[10%] w-[180px] h-[180px] opacity-30"
           style={{
             transform: `translate(calc(var(--mx) * 30px), calc(var(--my) * 30px))`,
