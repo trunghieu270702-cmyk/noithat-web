@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 const CONSTELLATIONS = [
@@ -115,6 +115,7 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
   const [mounted, setMounted] = useState(false);
   const [constellationIndex, setConstellationIndex] = useState(0);
   const [actualPosition, setActualPosition] = useState<'full' | 'top-left' | 'top-right'>('full');
+  
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -124,7 +125,6 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
 
   useEffect(() => {
     setMounted(true);
-    // Pick constellation randomly if not provided
     if (variant !== undefined && variant >= 1 && variant <= 7) {
       setConstellationIndex(variant - 1);
     } else {
@@ -138,58 +138,104 @@ export default function SectionStarryMotif({ variant, position = 'full' }: { var
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
       mouseX.set(x);
       mouseY.set(y);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY, variant]);
+  }, [mouseX, mouseY, variant, position]);
 
-  const layer1X = useTransform(smoothX, [-1, 1], [-5, 5]);
-  const layer1Y = useTransform(smoothY, [-1, 1], [-5, 5]);
-  
-  const layer2X = useTransform(smoothX, [-1, 1], [-15, 15]);
-  const layer2Y = useTransform(smoothY, [-1, 1], [-15, 15]);
+  // Sinh random particles giống banner (BackgroundVisuals)
+  const particles = useMemo(() => {
+    if (!mounted) return [];
+    return Array.from({ length: 50 }).map((_, i) => ({
+      id: i,
+      tx: `${(Math.random() - 0.5) * 150}px`,
+      ty: `${(Math.random() - 0.5) * 150 - 50}px`,
+      size: Math.random() * 3 + 1,
+      duration: `${Math.random() * 20 + 20}s`,
+      delay: `-${Math.random() * 20}s`,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      parallaxZ: Math.random() * 60 + 10,
+      opacity: Math.random() * 0.6 + 0.2,
+    }));
+  }, [mounted]);
 
   if (!mounted) return null;
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-80 dark:opacity-40 transition-opacity duration-1000 mix-blend-multiply dark:mix-blend-screen text-[#C7A25C] dark:text-[#D3AE3E] [--star-white:#A67C00] dark:[--star-white:#ffffff]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-currentColor/5 dark:from-currentColor/10 via-transparent to-transparent opacity-100 dark:opacity-60"></div>
+    <motion.div 
+      style={{ '--mx': smoothX, '--my': smoothY } as any}
+      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-90 transition-opacity duration-1000 text-[#C7A25C] dark:text-[#D3AE3E] [--star-white:#A67C00] dark:[--star-white:#ffffff]"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-currentColor/10 dark:from-currentColor/15 via-transparent to-transparent opacity-100 dark:opacity-80"></div>
 
-      {/* LAYER 1: Very subtle scattered stars */}
-      <motion.div 
-        style={{ x: layer1X, y: layer1Y }}
-        className="absolute inset-[-5%] w-[110%] h-[110%]"
-      >
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="section-star-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-              <circle cx="40" cy="40" r="1" fill="currentColor" opacity="0.5" />
-              <circle cx="160" cy="120" r="1.5" fill="currentColor" opacity="0.3" />
-              <circle cx="90" cy="180" r="1" fill="var(--star-white)" opacity="0.4" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#section-star-pattern)" />
-        </svg>
-      </motion.div>
+      {/* LAYER 1: Luxury Particles with High-Performance CSS Parallax */}
+      <div className="absolute inset-0 pointer-events-none">
+        {particles.map((p) => (
+          <div 
+            key={p.id}
+            className="absolute"
+            style={{
+              left: p.left,
+              top: p.top,
+              opacity: p.opacity,
+              transform: `translate(calc(var(--mx) * ${p.parallaxZ}px), calc(var(--my) * ${p.parallaxZ}px))`
+            }}
+          >
+            <div 
+              className="luxury-particle !relative !left-0 !top-0"
+              style={{
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+                '--tx': p.tx,
+                '--ty': p.ty,
+                '--duration': p.duration,
+                '--delay': p.delay,
+              } as React.CSSProperties}
+            />
+          </div>
+        ))}
+      </div>
 
-      {/* LAYER 2: Constellation Motif (1 of 7 variants) */}
-      <motion.div 
-        style={{ x: layer2X, y: layer2Y }}
+      {/* LAYER 2: Enhanced Constellation Motif */}
+      <div 
+        style={{
+          transform: `translate(calc(var(--mx) * -20px), calc(var(--my) * -20px))`
+        }}
         className={`absolute ${
-          actualPosition === 'top-left' ? 'top-[-5%] left-[-5%] w-[400px] h-[400px] opacity-80' : 
-          actualPosition === 'top-right' ? 'top-[-5%] right-[-5%] w-[400px] h-[400px] opacity-80' : 
+          actualPosition === 'top-left' ? 'top-[-5%] left-[-5%] w-[400px] h-[400px] opacity-90' : 
+          actualPosition === 'top-right' ? 'top-[-5%] right-[-5%] w-[400px] h-[400px] opacity-90' : 
           'inset-[-5%] w-[110%] h-[110%]'
         }`}
       >
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_8px_rgba(211,174,62,0.4)]">
           {CONSTELLATIONS[constellationIndex]}
         </svg>
-      </motion.div>
-    </div>
+      </div>
+
+      {/* LAYER 3: Architectural Compass Node (Adds Luxury Tech Vibe) */}
+      {actualPosition === 'full' && (
+        <div 
+          className="absolute top-[10%] right-[10%] w-[180px] h-[180px] opacity-30"
+          style={{
+            transform: `translate(calc(var(--mx) * 30px), calc(var(--my) * 30px))`,
+            animation: 'spin-slow 60s linear infinite'
+          }}
+        >
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 6" />
+            <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="0.2" opacity="0.5" />
+            <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="0.2" strokeDasharray="1 4" />
+            <line x1="100" y1="10" x2="100" y2="190" stroke="currentColor" strokeWidth="0.2" opacity="0.4" />
+            <line x1="10" y1="100" x2="190" y2="100" stroke="currentColor" strokeWidth="0.2" opacity="0.4" />
+          </svg>
+        </div>
+      )}
+    </motion.div>
   );
 }
