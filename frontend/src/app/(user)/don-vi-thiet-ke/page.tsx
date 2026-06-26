@@ -78,6 +78,7 @@ export default function DonViThietKePage() {
   const [segment, setSegment] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [style, setStyle] = useState('');
+  const [projectType, setProjectType] = useState('');
   
   const [allUnits, setAllUnits] = useState<any[]>([]);
   const [filteredUnits, setFilteredUnits] = useState<any[]>([]);
@@ -153,14 +154,20 @@ export default function DonViThietKePage() {
       return [{ value: '', label: 'Tất cả phân khúc' }, ...segments.map(s => ({ value: s, label: s }))];
     }, [allUnits]);
   
+    const projectTypeOptions = useMemo(() => {
+      const types = Array.from(new Set(allUnits.map(u => u.strengths))).filter(Boolean);
+      return [{ value: '', label: 'Tất cả hạng mục' }, ...types.map(t => ({ value: t, label: t }))];
+    }, [allUnits]);
+
     const styleOptions = useMemo(() => {
       const styles = Array.from(new Set(allUnits.map(u => u.style))).filter(Boolean);
-      return [{ value: '', label: 'Tất cả phong cách' }, ...styles.map(s => ({ value: s, label: s }))];
+      return [{ value: '', label: 'Tất cả lĩnh vực' }, ...styles.map(s => ({ value: s, label: s }))];
     }, [allUnits]);
   
     const handleFilter = () => {
       let result = [...allUnits];
       if (segment) result = result.filter(u => u.category === segment);
+      if (projectType) result = result.filter(u => u.strengths === projectType);
       if (style) result = result.filter(u => u.style === style);
       if (searchQuery) {
         const lowerQ = searchQuery.toLowerCase();
@@ -176,8 +183,8 @@ export default function DonViThietKePage() {
     <div className="modern-section min-h-screen pt-[120px] pb-20 relative">
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Header */}
+        <SectionStarryMotif position="random-corner" />
         <div className="text-center mb-16 relative overflow-hidden p-10 rounded-[4px] bg-[#f9f9f9] dark:bg-[#1a1a1a] border border-[#ECE7DE] dark:border-white/10 shadow-sm">
-          <SectionStarryMotif position="random-corner" />
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-[2px] bg-gradient-to-r from-[#C7A25C]/20 to-transparent border-l-2 border-[#C7A25C] text-[#A67C00] dark:text-[#FFD700] text-[11px] font-bold uppercase tracking-widest mb-4 luxury-glow">
               Đơn vị thiết kế
@@ -195,6 +202,12 @@ export default function DonViThietKePage() {
             onChange={setSegment}
             options={segmentOptions}
           />
+          <CustomSelect
+            label="Hạng mục"
+            value={projectType}
+            onChange={setProjectType}
+            options={projectTypeOptions}
+          />
           <div className="flex-1 min-w-[200px]">
             <label className="block text-sm text-gray-400 dark:text-white/50 mb-2 font-medium">Tìm kiếm</label>
             <div className="relative">
@@ -210,7 +223,7 @@ export default function DonViThietKePage() {
             </div>
           </div>
           <CustomSelect
-            label="Phong cách"
+            label="Lĩnh vực hoạt động"
             value={style}
             onChange={setStyle}
             options={styleOptions}
@@ -265,16 +278,16 @@ export default function DonViThietKePage() {
                 <div className="mb-2">
                   <h3 className="font-heading text-2xl font-bold text-[#1F1F1F] dark:text-white mb-2">{unit.name}</h3>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-white/60 mb-4 line-clamp-2">{unit.description}</p>
+                <div className="text-sm text-gray-500 dark:text-white/60 mb-4 line-clamp-2" dangerouslySetInnerHTML={{ __html: unit.description }} />
 
                 <div className="space-y-2 mb-6 text-sm text-gray-700 dark:text-white/80">
                   <div className="flex items-start">
                     <i className="fa fa-building mt-1 w-5 text-[#C7A25C]"></i>
-                    <span><strong>Thế mạnh:</strong> {unit.strengths}</span>
+                    <span><strong>Hạng mục:</strong> {unit.strengths}</span>
                   </div>
                   <div className="flex items-start">
                     <i className="fa fa-paint-brush mt-1 w-5 text-[#C7A25C]"></i>
-                    <span><strong>Phong cách:</strong> {unit.style}</span>
+                    <span><strong>Lĩnh vực:</strong> {unit.style}</span>
                   </div>
                   <div className="flex items-start">
                     <i className="fa fa-map-marker-alt mt-1 w-5 text-[#C7A25C]"></i>

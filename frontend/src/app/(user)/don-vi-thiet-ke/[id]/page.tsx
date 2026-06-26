@@ -93,7 +93,8 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
   }
 
   return (
-    <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white">
+    <div className="pt-[120px] pb-20 modern-section min-h-screen text-[#1F1F1F] dark:text-white relative">
+      <SectionStarryMotif position="random-corner" />
       {/* Local Background wrapper to fix flatness without touching global CSS */}
       <div className="absolute top-0 left-0 right-0 h-[600px] bg-[radial-gradient(circle_at_top_right,rgba(199,162,92,0.1),transparent_50%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(199,162,92,0.05),transparent_50%)] pointer-events-none z-0"></div>
       
@@ -149,7 +150,7 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
                 </div>
               </div>
 
-              <p className="text-[#1F1F1F]/70 dark:text-white/70 text-lg mb-10 leading-relaxed max-w-2xl font-medium">{unit.description}</p>
+              <div className="text-[#1F1F1F]/70 dark:text-white/70 text-lg mb-10 leading-relaxed max-w-2xl font-medium prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: unit.description }} />
 
               {/* CTA Hierarchy */}
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4">

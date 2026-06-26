@@ -37,13 +37,13 @@ const navigation = [
   
   // 2. Ecosystem Entities
   { name: 'Đơn vị đối tác', href: '/admin/units', icon: Building2 },
-  { name: 'Dự án', href: '/admin/projects', icon: FolderKanban },
+  { name: 'Sản phẩm', href: '/admin/products', icon: Star },
+  // { name: 'Quản lý dự án', href: '/admin/projects', icon: FolderKanban },
   { name: 'Giám sát thi công', href: '/admin/supervisions', icon: ShieldCheck },
   
   // 3. Content & Marketing
   { name: 'Cẩm nang nội thất', href: '/admin/articles', icon: FileText },
   // { name: 'Trang SEO tĩnh', href: '/admin/seo', icon: FileSearch },
-  { name: 'Đánh giá & Review', href: '/admin/testimonials', icon: Star },
   { name: 'Thư viện Media', href: '/admin/media', icon: ImageIcon },
   
   // 4. Configuration
@@ -78,7 +78,7 @@ export default function AppLayout({ children }: { children?: React.ReactNode }) 
     (n) => location.pathname === n.href || location.pathname.startsWith(`${n.href}/`)
   );
 
-  const noScrollPages = ['/admin/units', '/admin/projects', '/admin/leads', '/admin/supervisions', '/admin/articles', '/admin/seo', '/admin/categories', '/admin/testimonials', '/admin/customers', '/admin/operations'];
+  const noScrollPages = ['/admin/units', '/admin/products', '/admin/projects', '/admin/leads', '/admin/supervisions', '/admin/articles', '/admin/seo', '/admin/categories', '/admin/testimonials', '/admin/customers', '/admin/operations'];
   const isNoScroll = noScrollPages.includes(location.pathname);
 
   return (

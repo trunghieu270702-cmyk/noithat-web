@@ -28,9 +28,10 @@ interface MediaPickerModalProps {
   onOpenChange: (open: boolean) => void;
   onSelect: (urls: string[]) => void;
   maxFiles?: number;
+  initialSelectedUrls?: string[];
 }
 
-export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10 }: MediaPickerModalProps) {
+export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10, initialSelectedUrls = [] }: MediaPickerModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
   const [selectedUrls, setSelectedUrls] = useState<string[]>([]);
@@ -52,7 +53,7 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10 }
   useEffect(() => {
     if (open) {
       fetchMedia();
-      setSelectedUrls([]);
+      setSelectedUrls(initialSelectedUrls);
       setSearchTerm('');
     }
   }, [open]);
@@ -85,10 +86,10 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10 }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent style={{ fontFamily: 'Roboto, sans-serif' }} className="sm:max-w-[1000px] w-[95vw] h-[85vh] !p-0 flex flex-col bg-white dark:bg-[#1e1e20] border border-gray-200 dark:border-gray-800 rounded-[8px] overflow-hidden shadow-xl">
-        <DialogHeader className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#1e1e20] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <DialogContent style={{ fontFamily: 'Roboto, sans-serif' }} className="sm:max-w-[1000px] w-[95vw] h-[85vh] !p-0 flex flex-col bg-white dark:bg-[#14151a] border border-gray-200 dark:border-gray-800 rounded-[8px] overflow-hidden shadow-xl !outline-none focus:outline-none ring-0">
+        <DialogHeader className="px-6 py-4 border-b border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#14151a] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full">
-            <DialogTitle className="text-base font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">
+            <DialogTitle className="text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
               Chọn ảnh từ thư viện
             </DialogTitle>
             <div className="relative flex-1 max-w-sm">
@@ -98,13 +99,13 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10 }
                 placeholder="Tìm kiếm tên file..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 bg-white dark:bg-[#252628] border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 rounded-[6px] text-sm focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600 text-gray-900 dark:text-gray-200 transition-colors shadow-none"
+                className="w-full pl-9 pr-3 py-1.5 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23]"
               />
             </div>
           </div>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-[#f9f9fa] dark:bg-[#161618]">
+        <div className="flex-1 overflow-y-auto p-6 custom-scrollbar bg-gray-50 dark:bg-[#0b0c10]">
           {isLoading ? (
             <div className="flex items-center justify-center h-full">
               <Loader2 className="w-6 h-6 text-gray-400 animate-spin" />
@@ -117,8 +118,8 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10 }
                   <div
                     key={file.id}
                     onClick={() => toggleSelect(file.url)}
-                    className={`relative aspect-square rounded-[6px] overflow-hidden cursor-pointer border transition-all group ${
-                      isSelected ? 'border-[#5865f2] ring-1 ring-[#5865f2]' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 bg-white dark:bg-[#1e1e20]'
+                    className={`relative aspect-square rounded-[4px] overflow-hidden cursor-pointer border transition-all group ${
+                      isSelected ? 'border-[#5865f2] ring-[3px] ring-[#5865f2]/20' : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 bg-white dark:bg-[#14151a]'
                     }`}
                   >
                     <img
@@ -144,20 +145,23 @@ export function MediaPickerModal({ open, onOpenChange, onSelect, maxFiles = 10 }
           )}
         </div>
 
-        <DialogFooter className="m-0 px-6 py-4 border-t border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#1e1e20] flex flex-row items-center justify-between">
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            Đã chọn: <strong className="font-medium text-gray-900 dark:text-gray-100">{selectedUrls.length}</strong>/{maxFiles}
-          </span>
+        <DialogFooter className="m-0 px-6 py-4 border-t border-gray-200 dark:border-gray-800 shrink-0 bg-white dark:bg-[#14151a] flex flex-row items-center justify-between">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#5865f2]/10 rounded-[4px] border border-[#5865f2]/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
+            <span className="text-sm font-medium text-[#5865f2]">
+              Đã chọn: {selectedUrls.length}/{maxFiles}
+            </span>
+          </div>
           <div className="flex items-center gap-3">
             <DialogClose render={
-              <Button variant="outline" className="h-10 px-5 text-sm font-medium rounded-[6px] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white shadow-none transition-colors flex items-center gap-2">
+              <Button variant="outline" className="h-10 px-5 text-sm font-medium rounded-[4px] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-[#1a1b23] hover:text-gray-900 dark:hover:text-white shadow-none transition-colors flex items-center gap-2">
                 <X className="w-4 h-4" /> Hủy
               </Button>
             } />
             <Button
               onClick={handleConfirm}
               disabled={selectedUrls.length === 0}
-              className="h-10 px-5 text-sm font-medium rounded-[6px] bg-[#5865f2] hover:bg-[#4752c4] text-white disabled:opacity-50 shadow-none transition-colors flex items-center gap-2"
+              className="h-10 px-5 text-sm font-medium rounded-[4px] bg-[#5865f2] hover:bg-[#4752c4] text-white disabled:opacity-50 shadow-none transition-colors flex items-center gap-2"
             >
               <Check className="w-4 h-4" /> Chèn ảnh
             </Button>

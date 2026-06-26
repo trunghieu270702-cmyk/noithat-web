@@ -19,6 +19,7 @@ import { SettingsModule } from './settings/settings.module';
 import { CategoriesModule } from './categories/categories.module';
 import { MediaModule } from './media/media.module';
 import { OperationsModule } from './operations/operations.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { OperationsModule } from './operations/operations.module';
     CategoriesModule,
     MediaModule,
     OperationsModule,
+    ProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

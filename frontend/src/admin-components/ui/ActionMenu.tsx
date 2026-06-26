@@ -31,12 +31,12 @@ export function ActionMenu({ items }: ActionMenuProps) {
       <DropdownMenuContent align="end" className="min-w-[220px] w-auto p-1 rounded-[10px] bg-white dark:bg-[#1c1c1f] border border-[#e5e7eb] dark:border-[#2b2b30] shadow-[0px_4px_16px_rgba(17,17,26,0.05),_0px_8px_24px_rgba(17,17,26,0.05)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] animate-in fade-in-80 zoom-in-95 duration-100 font-asana">
         {items.map((item, idx) => {
           const colorClass =
-            item.variant === "danger" ? "!text-[#dc2626] focus:!bg-[#fef2f2] focus:!ring-1 focus:!ring-[#fecaca] focus:!text-[#dc2626]" :
-              item.variant === "warning" ? "!text-[#d97706] focus:!bg-[#fffbeb] focus:!ring-1 focus:!ring-[#fde68a] focus:!text-[#d97706]" :
-                item.variant === "success" ? "!text-[#059669] focus:!bg-[#ecfdf5] focus:!ring-1 focus:!ring-[#a7f3d0] focus:!text-[#059669]" :
-                  "!text-[#1f2937] dark:!text-[#e5e7eb] focus:!bg-[#f4f4fe] dark:focus:!bg-[#2b2b36] focus:!ring-1 focus:!ring-[#e0e0fc] dark:focus:!ring-[#3f3f4e] focus:!text-[#4f39f6] dark:focus:!text-[#a59ffd]";
+            item.variant === "danger" ? "!text-red-600 dark:!text-red-400 focus:!bg-red-50 dark:focus:!bg-red-500/10 focus:!text-red-700 dark:focus:!text-red-300" :
+              item.variant === "warning" ? "!text-amber-600 dark:!text-amber-400 focus:!bg-amber-50 dark:focus:!bg-amber-500/10 focus:!text-amber-700 dark:focus:!text-amber-300" :
+                item.variant === "success" ? "!text-emerald-600 dark:!text-emerald-400 focus:!bg-emerald-50 dark:focus:!bg-emerald-500/10 focus:!text-emerald-700 dark:focus:!text-emerald-300" :
+                  "!text-gray-700 dark:!text-gray-300 focus:!bg-gray-100 dark:focus:!bg-[#262930] focus:!text-gray-900 dark:focus:!text-white";
 
-          const iconColorClass = item.variant ? "" : "!text-[#4b5563] dark:!text-[#9ca3af] group-focus:!text-[#4f39f6] dark:group-focus:!text-[#a59ffd]";
+          const iconColorClass = "!text-current opacity-70 group-focus:opacity-100";
 
           return (
             <React.Fragment key={idx}>

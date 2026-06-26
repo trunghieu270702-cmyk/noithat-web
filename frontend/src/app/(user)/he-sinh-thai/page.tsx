@@ -32,10 +32,10 @@ export default function HeSinhThaiPage() {
           </p>
           <Link
             href="/don-vi-thiet-ke"
-            className="inline-flex items-center gap-2 bg-[#C7A25C] text-white px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#1F1F1F] dark:hover:bg-white dark:hover:text-white transition-colors rounded-[2px]"
+            className="inline-flex items-center justify-center gap-2 btn-luxury-primary font-bold text-[13px] uppercase tracking-[2px] py-4 px-8 rounded-[2px]"
           >
             Xem danh sách đơn vị thiết kế
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
             </svg>
           </Link>

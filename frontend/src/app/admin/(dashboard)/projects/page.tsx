@@ -7,11 +7,12 @@ import { format } from 'date-fns';
 import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { ActionMenu } from '@/admin-components/ui/ActionMenu';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
+import TiptapEditor from '@/admin-components/ui/TiptapEditor';
 import { toast } from 'sonner';
 
 const STATUS_MAP: Record<string, string> = {
-  'IN_PROGRESS': 'Đang thi công',
-  'COMPLETED': 'Hoàn thành'
+  'IN_PROGRESS': 'Hoạt động',
+  'COMPLETED': 'Tạm khóa'
 };
 
 
@@ -77,6 +78,15 @@ export default function ProjectsPage() {
     status: 'IN_PROGRESS' as 'IN_PROGRESS' | 'COMPLETED',
     startDate: new Date().toISOString().split('T')[0],
     images: [] as string[],
+    summary: '',
+    tags: '',
+    content: '',
+    isFeatured: false,
+    technicalInfo: [
+      { key: 'Chất liệu', value: '' },
+      { key: 'Kích thước', value: '' },
+      { key: 'Màu sắc', value: '' }
+    ] as { key: string; value: string }[],
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -141,7 +151,7 @@ export default function ProjectsPage() {
 
     // Validation
     const newErrors: Record<string, string> = {};
-    if (!formData.name?.trim()) newErrors.name = 'Tên dự án không được để trống';
+    if (!formData.name?.trim()) newErrors.name = 'Tên sản phẩm không được để trống';
     if (!formData.unitId) newErrors.unitId = 'Vui lòng chọn đơn vị phụ trách';
 
     if (Object.keys(newErrors).length > 0) {
@@ -160,6 +170,8 @@ export default function ProjectsPage() {
           ...createData,
           unitId: formData.unitId,
           gallery: images,
+          summary: formData.summary,
+          tags: formData.tags,
           unitName
         });
       } else {
@@ -168,6 +180,8 @@ export default function ProjectsPage() {
           ...updateData,
           unitId: formData.unitId,
           gallery: images,
+          summary: formData.summary,
+          tags: formData.tags,
           unitName
         });
       }
@@ -179,7 +193,7 @@ export default function ProjectsPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Bạn có chắc chắn muốn xóa dự án này?')) return;
+    if (!confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) return;
     try {
       await apiClient.delete(`/projects/${id}`);
       fetchProjectsData();
@@ -211,7 +225,7 @@ export default function ProjectsPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
-                placeholder="Tìm Tên Dự án, Đơn vị phụ trách..."
+                placeholder="Tìm Tên Sản phẩm, Đơn vị phụ trách..."
                 className="pl-9 pr-4 py-2 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 w-full text-gray-900 dark:text-gray-100 placeholder-gray-500 transition-all"
               />
             </div>
@@ -220,7 +234,7 @@ export default function ProjectsPage() {
               onClick={() => setIsFiltersExpanded(!isFiltersExpanded)}
               className={`flex items-center gap-2 px-3 h-[38px] rounded-[4px] text-sm font-medium transition-all border cursor-pointer ${isFiltersExpanded
                 ? 'bg-[#5865f2]/10 text-[#5865f2] border-[#5865f2]/50 font-medium'
-                : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#262930]'
+                : 'bg-white dark:bg-[#1a1b23] border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] dark:hover:bg-[#262930]'
                 }`}
             >
               <Filter className="w-4 h-4" />
@@ -241,6 +255,11 @@ export default function ProjectsPage() {
                   id: '', name: '', unitId: unitOptions.length > 0 ? unitOptions[0].value : '',
                   projectType: 'Chung cư', budget: '', area: 0, status: 'IN_PROGRESS',
                   startDate: new Date().toISOString().split('T')[0], images: [],
+                  summary: '', tags: '', content: '', isFeatured: false, technicalInfo: [
+                    { key: 'Chất liệu', value: '' },
+                    { key: 'Kích thước', value: '' },
+                    { key: 'Màu sắc', value: '' }
+                  ]
                 });
                 setErrors({});
                 setIsDrawerOpen(true);
@@ -248,7 +267,7 @@ export default function ProjectsPage() {
               className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              Tạo Dự Án
+              Thêm Sản Phẩm
             </button>
           </div>
         </div>
@@ -256,10 +275,10 @@ export default function ProjectsPage() {
         {isFiltersExpanded && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-[#14151a]/50 border border-gray-200 dark:border-gray-800 rounded-[4px] animate-in slide-in-from-top-2 duration-200">
             <div className="flex flex-col gap-1.5 relative">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Trạng thái</span>
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-200">Trạng thái</span>
               <button onClick={() => setOpenStatusPopover(!openStatusPopover)} className="flex items-center justify-between w-full h-9 px-3 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] transition-colors">
                 <span className="truncate">{statusFilter.length === 0 ? "Tất cả trạng thái" : statusFilter.map(s => STATUS_MAP[s]).join(', ')}</span>
-                <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
+                <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-200 shrink-0 ml-2" />
               </button>
               {openStatusPopover && (
                 <>
@@ -287,10 +306,10 @@ export default function ProjectsPage() {
             </div>
 
             <div className="flex flex-col gap-1.5 relative">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Loại công trình</span>
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-200">Danh mục sản phẩm</span>
               <button onClick={() => setOpenTypePopover(!openTypePopover)} className="flex items-center justify-between w-full h-9 px-3 bg-white dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-[#262930] dark:bg-[#1a1b23] transition-colors">
                 <span className="truncate">{typeFilter.length === 0 ? "Tất cả loại hình" : typeFilter.join(', ')}</span>
-                <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0 ml-2" />
+                <ChevronDown className="w-4 h-4 text-gray-500 dark:text-gray-200 shrink-0 ml-2" />
               </button>
               {openTypePopover && (
                 <>
@@ -321,7 +340,7 @@ export default function ProjectsPage() {
 
         {/* Active tags */}
         <div className="flex flex-wrap items-center gap-2 mt-1">
-          {hasActiveFilter && <span className="text-sm text-gray-500 dark:text-gray-400 font-medium mr-1">Đang lọc:</span>}
+          {hasActiveFilter && <span className="text-sm text-gray-500 dark:text-gray-200 font-medium mr-1">Đang lọc:</span>}
           {statusFilter.length > 0 && (
             <div className="flex items-center gap-1.5 pl-2.5 pr-1 py-1 bg-[#5865f2]/10 text-[#5865f2] border border-[#5865f2]/20 rounded-[4px] text-sm font-medium">
               Trạng thái: {statusFilter.map(s => STATUS_MAP[s]).join(', ')}
@@ -345,15 +364,15 @@ export default function ProjectsPage() {
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Dự Án</h3>
-              {!isSummaryCollapsed && <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} dự án</span>}
+              <h3 className=" font-medium text-gray-900 dark:!text-white text-sm">Tổng Quan Sản Phẩm</h3>
+              {!isSummaryCollapsed && <span className="text-xs text-gray-500 dark:text-gray-200">{summary.totalItems} sản phẩm</span>}
             </div>
 
             {isSummaryCollapsed && (
               <div className="flex-1 flex items-center justify-end px-6 gap-5">
                 <div className="flex items-center gap-3 text-sm font-medium">
-                  <span className="text-blue-600 dark:text-blue-400">{summary.inProgressCount} Đang thi công</span>
-                  <span className="text-emerald-600">{summary.completedCount} Hoàn thành</span>
+                  <span className="text-blue-600 dark:text-blue-400">{summary.inProgressCount} Còn hàng</span>
+                  <span className="text-emerald-600">{summary.completedCount} Hết hàng</span>
                 </div>
               </div>
             )}
@@ -369,7 +388,7 @@ export default function ProjectsPage() {
               <div className="p-3.5 rounded-[4px] border border-blue-100 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-blue-500 rounded-[4px]"></div>
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Đang Thi Công</span>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Hoạt động</span>
                 </div>
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.inProgressCount}</div>
               </div>
@@ -377,7 +396,7 @@ export default function ProjectsPage() {
               <div className="p-3.5 rounded-[4px] border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
                   <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-[4px]"></div>
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Hoàn Thành</span>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Tạm khóa</span>
                 </div>
                 <div className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">{summary.completedCount}</div>
               </div>
@@ -392,7 +411,7 @@ export default function ProjectsPage() {
           <table className="w-full text-left border-collapse min-w-max">
             <thead className="sticky top-0 z-10 bg-gray-50 dark:bg-[#1a1b23] border-b border-gray-200 dark:border-gray-800">
               <tr>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs">
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-200 text-xs">
                   <div className="flex items-center gap-4">
                     <div
                       className={`w-4 h-4 rounded-[4px] border flex items-center justify-center cursor-pointer transition-colors ${selectedIds.length === currentData.length && currentData.length > 0 ? 'bg-[#5865f2] border-[#5865f2]' : 'border-gray-300'
@@ -402,53 +421,58 @@ export default function ProjectsPage() {
                       {selectedIds.length === currentData.length && currentData.length > 0 && <Check className="w-3 h-3 text-white" />}
                     </div>
                     <div className="flex items-center cursor-pointer select-none uppercase tracking-wide" onClick={() => handleSort('name')}>
-                      Tên Dự Án <SortIcon columnKey="name" />
+                      Tên Sản Phẩm <SortIcon columnKey="name" />
                     </div>
                   </div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('unitName')}>
-                  <div className="flex items-center cursor-pointer">Đơn vị phụ trách <SortIcon columnKey="unitName" /></div>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-200 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('unitName')}>
+                  <div className="flex items-center cursor-pointer">Đơn vị cung cấp <SortIcon columnKey="unitName" /></div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('projectType')}>
-                  <div className="flex items-center cursor-pointer">Loại công trình <SortIcon columnKey="projectType" /></div>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-200 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('projectType')}>
+                  <div className="flex items-center cursor-pointer">Danh mục sản phẩm <SortIcon columnKey="projectType" /></div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase">Ngân sách</th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('status')}>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-200 text-xs border-l border-gray-200 dark:border-gray-800 uppercase">Giá Bán</th>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-200 text-xs border-l border-gray-200 dark:border-gray-800 uppercase" onClick={() => handleSort('status')}>
                   <div className="flex items-center cursor-pointer">Trạng Thái <SortIcon columnKey="status" /></div>
                 </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 text-center w-24">Thao tác</th>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-200 text-xs border-l border-gray-200 dark:border-gray-800 text-center w-24">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
                 <tr>
                   <td colSpan={6} className="px-5 py-24 text-center">
-                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-200">
                       <Loader2 className="w-8 h-8 animate-spin text-[#5865f2] mb-4" />
-                      <h3 className="text-sm font-medium text-gray-900 dark:text-white">Đang tải dữ liệu...</h3>
+                      <h3 className="text-sm font-medium text-gray-900 dark:!text-white">Đang tải dữ liệu...</h3>
                     </div>
                   </td>
                 </tr>
               ) : currentData.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-5 py-24 text-center animate-in fade-in zoom-in-95 duration-500">
-                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
+                    <div className="flex flex-col items-center justify-center text-gray-500 dark:text-gray-200">
                       <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
                         <FolderOpen className="w-8 h-8 text-gray-400" />
                       </div>
-                      <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Không có dữ liệu</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có dự án nào được tạo. Hãy tạo dự án đầu tiên của bạn.</p>
+                      <h3 className="text-base font-medium text-gray-900 dark:!text-white mb-1">Không có dữ liệu</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-200 mb-6">Chưa có sản phẩm nào được tạo. Hãy thêm sản phẩm đầu tiên của bạn.</p>
                       <button onClick={() => {
                         setModalMode('add');
                         setFormData({
                           id: '', name: '', unitId: unitOptions.length > 0 ? unitOptions[0].value : '',
                           projectType: PROJECT_TYPES.length > 0 ? PROJECT_TYPES[0].value : '', budget: '', area: 0, status: 'IN_PROGRESS',
                           startDate: new Date().toISOString().split('T')[0], images: [],
+                          summary: '', tags: '', content: '', isFeatured: false, technicalInfo: [
+                            { key: 'Chất liệu', value: '' },
+                            { key: 'Kích thước', value: '' },
+                            { key: 'Màu sắc', value: '' }
+                          ]
                         });
                         setErrors({});
                         setIsDrawerOpen(true);
                       }} className="flex items-center gap-2 px-5 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors">
-                        <Plus className="w-4 h-4" /> Tạo Dự Án Mới
+                        <Plus className="w-4 h-4" /> Thêm Sản Phẩm Mới
                       </button>
                     </div>
                   </td>
@@ -466,8 +490,8 @@ export default function ProjectsPage() {
                           {selectedIds.includes(project.id.toString()) && <Check className="w-3 h-3 text-white" />}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">{project.name}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Khởi công: {format(new Date(project.startDate), 'dd/MM/yyyy')}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:!text-white">{project.name}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-200 mt-0.5">Thời gian tạo: {format(new Date(project.createdAt || project.startDate || Date.now()), 'dd/MM/yyyy')}</div>
                         </div>
                       </div>
                     </td>
@@ -475,14 +499,14 @@ export default function ProjectsPage() {
                       <div className="text-sm font-medium text-[#5865f2] truncate max-w-[180px]">{project.unitName}</div>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <div className="text-sm text-gray-900 dark:text-white">{project.projectType}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{project.area}m²</div>
+                      <div className="text-sm text-gray-900 dark:!text-white">{project.projectType}</div>
+                      {project.area ? <div className="text-xs text-gray-500 dark:text-gray-200 mt-0.5">{project.area}m²</div> : null}
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">{project.budget}</span>
+                      <span className="text-sm font-medium text-gray-900 dark:!text-white">{project.budget}</span>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-xs font-medium ${project.status === 'COMPLETED' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20' : 'bg-blue-50 text-blue-700 dark:text-blue-400 border border-blue-200'
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-xs font-medium ${project.status === 'COMPLETED' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20' : 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20'
                         }`}>
                         {STATUS_MAP[project.status] || project.status}
                       </span>
@@ -491,15 +515,22 @@ export default function ProjectsPage() {
                       <div className="flex items-center justify-center">
                         <ActionMenu
                           items={[
-                            { label: 'Hoàn thành', icon: CheckCircle2, onClick: () => handleToggleStatus(project), variant: 'success' },
+                            { label: project.status === 'COMPLETED' ? 'Mở khóa' : 'Tạm khóa', icon: CheckCircle2, onClick: () => handleToggleStatus(project), variant: 'success' },
                             {
                               label: 'Chỉnh sửa', icon: Edit, onClick: () => {
                                 setModalMode('edit');
                                 setFormData({
                                   ...project,
-                                  unitId: project.unitId.toString(),
-                                  startDate: new Date(project.startDate).toISOString().split('T')[0],
+                                  unitId: project.unitId ? project.unitId.toString() : '',
+                                  startDate: project.startDate ? new Date(project.startDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+                                  budget: project.budget ? project.budget.toString() : '',
+                                  area: project.area || 0,
                                   images: Array.isArray(project.gallery) ? project.gallery : (typeof project.gallery === 'string' ? JSON.parse(project.gallery) : []),
+                                  summary: project.summary || '',
+                                  tags: project.tags || '',
+                                  content: project.content || '',
+                                  isFeatured: project.isFeatured || false,
+                                  technicalInfo: Array.isArray(project.technicalInfo) ? project.technicalInfo : (typeof project.technicalInfo === 'string' && project.technicalInfo ? JSON.parse(project.technicalInfo) : []),
                                 });
                                 setErrors({});
                                 setIsDrawerOpen(true);
@@ -520,13 +551,13 @@ export default function ProjectsPage() {
         {/* Pagination Header (Matches Demo) */}
         {totalPages > 0 && (
           <div className="px-5 py-3 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between bg-gray-50/50 dark:bg-[#1a1b23]">
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              Hiển thị <span className="font-medium text-gray-900 dark:text-white">{page * itemsPerPage + 1} - {Math.min((page + 1) * itemsPerPage, filteredData.length)}</span> trong <span className="font-medium text-gray-900 dark:text-white">{filteredData.length}</span>
+            <div className="text-sm text-gray-500 dark:text-gray-200">
+              Hiển thị <span className="font-medium text-gray-900 dark:!text-white">{page * itemsPerPage + 1} - {Math.min((page + 1) * itemsPerPage, filteredData.length)}</span> trong <span className="font-medium text-gray-900 dark:!text-white">{filteredData.length}</span>
             </div>
             <div className="flex items-center gap-1">
-              <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:bg-white dark:bg-[#14151a] disabled:opacity-50 transition-colors bg-white dark:bg-[#14151a]"><ChevronLeft className="w-4 h-4" /></button>
-              <div className="px-3 text-sm font-medium text-gray-700 dark:text-gray-300">{page + 1} / {totalPages}</div>
-              <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page === totalPages - 1} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:bg-white dark:bg-[#14151a] disabled:opacity-50 transition-colors bg-white dark:bg-[#14151a]"><ChevronRight className="w-4 h-4" /></button>
+              <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-200 hover:bg-white dark:bg-[#14151a] disabled:opacity-50 transition-colors bg-white dark:bg-[#14151a]"><ChevronLeft className="w-4 h-4" /></button>
+              <div className="px-3 text-sm font-medium text-gray-700 dark:text-gray-200">{page + 1} / {totalPages}</div>
+              <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page === totalPages - 1} className="p-1.5 rounded-[4px] border border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-200 hover:bg-white dark:bg-[#14151a] disabled:opacity-50 transition-colors bg-white dark:bg-[#14151a]"><ChevronRight className="w-4 h-4" /></button>
             </div>
           </div>
         )}
@@ -543,12 +574,12 @@ export default function ProjectsPage() {
                   <FolderKanban className="w-4 h-4 text-[#5865f2]" />
                 </div>
                 <div>
-                  <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
-                    {modalMode === 'add' ? 'Thêm Dự Án Mới' : 'Cập Nhật Dự Án'}
+                  <h2 className="text-base font-medium text-gray-900 dark:!text-white tracking-tight">
+                    {modalMode === 'add' ? 'Thêm Sản Phẩm Mới' : 'Cập Nhật Sản Phẩm'}
                   </h2>
                 </div>
               </div>
-              <button onClick={() => setIsDrawerOpen(false)} className="p-1.5 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 transition-colors cursor-pointer">
+              <button onClick={() => setIsDrawerOpen(false)} className="p-1.5 rounded-[4px] hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-800 text-gray-400 hover:text-gray-600 dark:text-gray-200 dark:hover:text-gray-300 transition-colors cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -560,21 +591,21 @@ export default function ProjectsPage() {
                 <div className="space-y-5">
                   <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
-                    Thông tin dự án
+                    Thông tin sản phẩm
                   </h3>
 
                   <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Tên Dự Án <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Tên Sản Phẩm <span className="text-red-500">*</span></label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FolderKanban className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
+                        <FolderKanban className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-200" />
                       </div>
-                      <input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); if (errors.name) setErrors({ ...errors, name: '' }); }} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="Nhập tên dự án..." />
+                      <input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); if (errors.name) setErrors({ ...errors, name: '' }); }} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-[4px] text-gray-900 dark:!text-white font-normal placeholder-gray-400 dark:placeholder-gray-600 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="Nhập tên sản phẩm..." />
                     </div>
                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                   </div>
                   <div className="space-y-1.5 relative z-40">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Đơn Vị Phụ Trách <span className="text-red-500">*</span></label>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Đơn Vị Cung Cấp <span className="text-red-500">*</span></label>
                     <div className={errors.unitId ? 'rounded-[4px] border border-red-500' : ''}>
                       <CustomDropdown className="w-full" options={unitOptions} value={formData.unitId} onChange={val => { setFormData({ ...formData, unitId: val }); if (errors.unitId) setErrors({ ...errors, unitId: '' }); }} />
                     </div>
@@ -583,7 +614,7 @@ export default function ProjectsPage() {
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-1.5 relative z-30">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Loại Công Trình</label>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Danh Mục Sản Phẩm</label>
                       <CustomDropdown className="w-full" options={PROJECT_TYPES} value={formData.projectType} onChange={val => setFormData({ ...formData, projectType: val })} onQuickAdd={async (newVal) => {
                         if (newVal) {
                           const prevVal = formData.projectType;
@@ -629,29 +660,84 @@ export default function ProjectsPage() {
                       }} emptyText="Chưa có Loại dự án" />
                     </div>
                     <div className="space-y-1.5 relative z-30">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng Thái</label>
-                      <CustomDropdown className="w-full" options={[{ value: 'IN_PROGRESS', label: 'Đang thi công', color: 'blue' }, { value: 'COMPLETED', label: 'Hoàn thành', color: 'green' }]} value={formData.status} onChange={val => setFormData({ ...formData, status: val as any })} />
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Trạng Thái</label>
+                      <CustomDropdown className="w-full" options={[{ value: 'IN_PROGRESS', label: 'Hoạt động', color: 'blue' }, { value: 'COMPLETED', label: 'Tạm khóa', color: 'gray' }]} value={formData.status} onChange={val => setFormData({ ...formData, status: val as any })} />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Ngân Sách</label>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Giá Sản Phẩm</label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Banknote className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
+                          <Banknote className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-200" />
                         </div>
-                        <input type="text" required value={formData.budget} onChange={e => setFormData({ ...formData, budget: e.target.value })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: 500 triệu..." />
+                        <input type="text" value={formData.budget} onChange={e => {
+                          const digits = e.target.value.replace(/\D/g, '');
+                          setFormData({ ...formData, budget: digits ? parseInt(digits).toLocaleString('vi-VN') : '' });
+                        }} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:!text-white font-normal placeholder-gray-400 dark:placeholder-gray-600 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: 15.000.000" />
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Diện Tích (m²)</label>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Giá Cũ (Tùy chọn, điền số để gạch ngang)</label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Maximize className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
+                          <Banknote className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-200" />
                         </div>
-                        <input type="number" required value={formData.area} onChange={e => setFormData({ ...formData, area: parseInt(e.target.value) || 0 })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" />
+                        <input type="text" value={formData.area ? formData.area.toLocaleString('vi-VN') : ''} onChange={e => {
+                          const digits = e.target.value.replace(/\D/g, '');
+                          setFormData({ ...formData, area: digits ? parseInt(digits) : 0 });
+                        }} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:!text-white font-normal placeholder-gray-400 dark:placeholder-gray-600 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="VD: 18.000.000" />
                       </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Mô Tả Ngắn</label>
+                    <textarea value={formData.summary} onChange={e => setFormData({ ...formData, summary: e.target.value })} rows={3} className="w-full p-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:!text-white font-normal placeholder-gray-400 dark:placeholder-gray-600 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Nhập mô tả ngắn về sản phẩm..."></textarea>
+                  </div>
+
+                  <div className="space-y-1.5 mt-4">
+                    <label className="flex items-center gap-2 cursor-pointer p-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] hover:bg-gray-100 dark:hover:bg-[#262930] transition-colors">
+                      <input type="checkbox" checked={formData.isFeatured} onChange={e => setFormData({ ...formData, isFeatured: e.target.checked })} className="w-4 h-4 text-[#5865f2] rounded border-gray-300 focus:ring-[#5865f2]" />
+                      <span className="text-sm font-medium text-gray-900 dark:!text-white">Đánh dấu là Sản phẩm nổi bật</span>
+                    </label>
+                  </div>
+
+                  <div className="space-y-1.5 mt-6">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Thông Tin Kỹ Thuật (Động)</label>
+                    <div className="space-y-3">
+                      {formData.technicalInfo.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-3">
+                          <input type="text" placeholder="Tên thông số (VD: Chất liệu)" value={item.key} onChange={e => {
+                            const newArr = [...formData.technicalInfo];
+                            newArr[idx].key = e.target.value;
+                            setFormData({ ...formData, technicalInfo: newArr });
+                          }} className="flex-1 p-2 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:!text-white font-normal placeholder-gray-400 dark:placeholder-gray-600" />
+                          <input type="text" placeholder="Giá trị (VD: Gỗ sồi)" value={item.value} onChange={e => {
+                            const newArr = [...formData.technicalInfo];
+                            newArr[idx].value = e.target.value;
+                            setFormData({ ...formData, technicalInfo: newArr });
+                          }} className="flex-[2] p-2 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:!text-white font-normal placeholder-gray-400 dark:placeholder-gray-600" />
+                          <button type="button" onClick={() => {
+                            const newArr = [...formData.technicalInfo];
+                            newArr.splice(idx, 1);
+                            setFormData({ ...formData, technicalInfo: newArr });
+                          }} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-[4px]">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                      <button type="button" onClick={() => setFormData({ ...formData, technicalInfo: [...formData.technicalInfo, { key: '', value: '' }] })} className="flex items-center gap-2 text-sm text-[#5865f2] hover:text-[#4752c4] font-medium">
+                        <Plus className="w-4 h-4" /> Thêm thông số
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5 mt-6">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Mô Tả Chi Tiết (Nội dung bài viết)</label>
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-[4px] bg-white dark:bg-[#1a1b23]">
+                      <TiptapEditor content={formData.content} onChange={val => setFormData({ ...formData, content: val })} />
                     </div>
                   </div>
                 </div>
@@ -662,7 +748,7 @@ export default function ProjectsPage() {
                 <div className="space-y-5">
                   <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
-                    Hình Ảnh Dự Án
+                    Hình Ảnh Sản Phẩm
                   </h3>
                   <div className="space-y-1.5">
                     <ImageUploader

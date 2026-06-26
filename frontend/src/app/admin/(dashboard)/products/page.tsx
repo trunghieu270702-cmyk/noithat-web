@@ -44,22 +44,25 @@ const PARTNER_CATEGORIES: Record<string, { value: string, label: string }[]> = {
   'Hạng mục phụ': [] // handled by free text input
 };
 
-export default function UnitsPage() {
+export default function ProductsPage() {
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
+  const [units, setUnits] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchUnitsAndCategories = async () => {
+  const fetchProductsAndCategories = async () => {
     try {
       setIsLoading(true);
-      const [resUnits, resCategories] = await Promise.all([
-        apiClient.get('/units'),
-        apiClient.get('/categories')
+      const [resProducts, resCategories, resUnits] = await Promise.all([
+        apiClient.get('/products'),
+        apiClient.get('/categories'),
+        apiClient.get('/units')
       ]);
-      setData(Array.isArray(resUnits.data) ? resUnits.data : []);
+      setData(Array.isArray(resProducts.data) ? resProducts.data : []);
       // Only keep Unit categories
       setCategories(Array.isArray(resCategories.data) ? resCategories.data.filter(c => c.type === 'Đơn vị') : []);
+      setUnits(Array.isArray(resUnits.data) ? resUnits.data.filter(u => u.projectType === 'Đối tác cung cấp' || u.projectType === 'Cả 2') : []);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     } finally {
@@ -68,7 +71,7 @@ export default function UnitsPage() {
   };
 
   useEffect(() => {
-    fetchUnitsAndCategories();
+    fetchProductsAndCategories();
   }, []);
   const [isFirstLoad, setIsFirstLoad] = useState(false);
   const [page, setPage] = useState(0);
@@ -95,27 +98,17 @@ export default function UnitsPage() {
 
   const [formData, setFormData] = useState({
     id: 0,
-    unitId: '',
+    productId: '',
     name: '',
     slug: '',
-    segment: 'trung-cap',
-    location: '',
-    projectType: 'Đối tác cung cấp',
-    style: 'Nội thất',
-    experience: 0,
+    unitId: null as number | null,
+    price: 0,
+    promotionalPrice: 0,
     status: 'ACTIVE',
-    phone: '',
-    email: '',
     shortDescription: '',
     description: '',
-    avatar: [] as string[],
-    profile: '',
-    fanpage: '',
-    services: [] as string[],
-    products: [] as string[],
+    images: [] as string[],
     categoryIds: [] as number[],
-    isVisible: true,
-    isPinned: false
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -126,7 +119,7 @@ export default function UnitsPage() {
   const filteredData = Array.isArray(data) ? data.filter(unit => {
     const matchesSearch = unit.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       unit.phone?.includes(searchQuery) ||
-      unit.unitId?.toLowerCase().includes(searchQuery.toLowerCase());
+      unit.productId?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesSegment = segmentFilter.length === 0 || segmentFilter.includes(unit.segment);
     const matchesStatus = statusFilter.length === 0 || statusFilter.includes(unit.status);
     return matchesSearch && matchesSegment && matchesStatus;
@@ -274,16 +267,16 @@ export default function UnitsPage() {
     try {
       if (modalMode === 'add') {
         const { id, ...createData } = formData;
-        if (!createData.unitId) createData.unitId = `UN${Math.floor(Math.random() * 1000)}`;
+        if (!createData.productId) createData.productId = `UN${Math.floor(Math.random() * 1000)}`;
         if (!createData.slug) createData.slug = createData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
-        await apiClient.post('/units', createData);
+        await apiClient.post('/products', createData);
       } else {
         const { id, ...updateData } = formData;
         if (!updateData.slug) updateData.slug = updateData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
-        await apiClient.patch(`/units/${id}`, updateData);
+        await apiClient.patch(`/products/${id}`, updateData);
       }
       setIsDrawerOpen(false);
-      fetchUnits();
+      fetchProductsAndCategories();
     } catch (error) {
       console.error('Failed to save unit:', error);
     }
@@ -292,8 +285,8 @@ export default function UnitsPage() {
   const handleDelete = async (id: number) => {
     if (!confirm('Bạn có chắc chắn muốn xóa đơn vị này?')) return;
     try {
-      await apiClient.delete(`/units/${id}`);
-      fetchUnits();
+      await apiClient.delete(`/products/${id}`);
+      fetchProductsAndCategories();
     } catch (error) {
       console.error('Failed to delete unit:', error);
     }
@@ -318,7 +311,7 @@ export default function UnitsPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => { setSearchQuery(e.target.value); setPage(0); }}
-                placeholder="Tìm Mã HĐ, Tên Đơn vị, SĐT..."
+                placeholder="Tìm Tên sản phẩm, Mã SP..."
                 className="pl-9 pr-4 py-2 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 rounded-[4px] text-sm focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 dark:focus:ring-[#5865f2]/30 focus:border-[#5865f2]/40 dark:focus:border-[#5865f2]/50 w-full text-gray-900 dark:text-gray-100 placeholder-gray-500 transition-all"
               />
             </div>
@@ -347,7 +340,7 @@ export default function UnitsPage() {
               onClick={() => {
                 setModalMode('add');
                 setFormData({
-                  id: 0, unitId: '', name: '', slug: '', segment: 'trung-cap', location: '', projectType: '', style: '', experience: 0, status: 'ACTIVE', phone: '', email: '', shortDescription: '', description: '', avatar: [], profile: '', fanpage: '', services: [], products: [], isVisible: true, isPinned: false
+                  id: 0, productId: '', name: '', slug: '', segment: 'trung-cap', location: '', projectType: '', style: '', experience: 0, status: 'ACTIVE', phone: '', email: '', shortDescription: '', description: '', avatar: [], profile: '', fanpage: '', services: [], products: [], images: [], isVisible: true, isPinned: false
                 });
                 setErrors({});
                 setActiveTab('basic');
@@ -356,7 +349,7 @@ export default function UnitsPage() {
               className="flex items-center gap-2 px-4 py-2 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              Tạo Đơn Vị
+              Tạo Sản Phẩm
             </button>
           </div>
         </div>
@@ -484,9 +477,9 @@ export default function UnitsPage() {
         <div className={`p-4 ${isSummaryCollapsed ? 'pb-4' : 'sm:p-5 sm:pb-5'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Đơn Vị</h3>
+              <h3 className=" font-medium text-gray-900 dark:text-white text-sm">Tổng Quan Sản Phẩm</h3>
               {!isSummaryCollapsed && (
-                <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} đơn vị trong bộ lọc</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">{summary.totalItems} sản phẩm trong bộ lọc</span>
               )}
             </div>
 
@@ -545,7 +538,7 @@ export default function UnitsPage() {
                 <div className="p-3.5 rounded-[4px] border border-red-100 dark:border-red-900/30 bg-red-50/50 dark:bg-[#1a1b23]/50">
                   <div className="flex items-center gap-2 mb-1.5">
                     <div className="w-2 h-2 bg-red-500 rounded-[4px]"></div>
-                    <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Ngừng Hợp Tác</span>
+                    <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Hết Hàng</span>
                   </div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-2xl font-medium text-red-600 dark:text-red-400">{summary.stoppedCount}</span>
@@ -574,19 +567,19 @@ export default function UnitsPage() {
                     >
                       {selectedIds.length === currentData.length && currentData.length > 0 && <Check className="w-3 h-3 text-white" />}
                     </div>
-                    <div className="flex items-center cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide" onClick={() => handleSort('unitId')}>
-                      Mã ĐV <SortIcon columnKey="unitId" />
+                    <div className="flex items-center cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide" onClick={() => handleSort('productId')}>
+                      Mã SP <SortIcon columnKey="productId" />
                     </div>
                   </div>
                 </th>
                 <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide min-w-[300px] max-w-[400px]" onClick={() => handleSort('name')}>
-                  <div className="flex items-center">Tên Đơn Vị <SortIcon columnKey="name" /></div>
-                </th>
-                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide" onClick={() => handleSort('segment')}>
-                  <div className="flex items-center">Phân Khúc / Thế Mạnh <SortIcon columnKey="segment" /></div>
+                  <div className="flex items-center">Tên Sản Phẩm <SortIcon columnKey="name" /></div>
                 </th>
                 <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide">
-                  <div className="flex items-center">Liên hệ</div>
+                  <div className="flex items-center">Đơn Vị & Danh Mục</div>
+                </th>
+                <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide" onClick={() => handleSort('price')}>
+                  <div className="flex items-center">Giá Bán <SortIcon columnKey="price" /></div>
                 </th>
                 <th className="px-5 py-3.5 font-medium text-gray-500 dark:text-gray-400 text-xs border-l border-gray-200 dark:border-gray-800 cursor-pointer hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-300 select-none uppercase tracking-wide" onClick={() => handleSort('status')}>
                   <div className="flex items-center">Trạng Thái <SortIcon columnKey="status" /></div>
@@ -614,12 +607,12 @@ export default function UnitsPage() {
                         <FolderOpen className="w-8 h-8 text-gray-400" />
                       </div>
                       <h3 className="text-base font-medium text-gray-900 dark:text-white mb-1">Không có dữ liệu</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có đơn vị đối tác nào. Hãy thêm đơn vị đầu tiên.</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Chưa có sản phẩm nào. Hãy thêm sản phẩm đầu tiên.</p>
                       <button
                         onClick={() => {
                           setModalMode('add');
                           setFormData({
-                            id: 0, unitId: '', name: '', slug: '', segment: 'trung-cap', location: '', projectType: '', style: '', experience: 0, status: 'ACTIVE', phone: '', email: '', shortDescription: '', description: '', avatar: [], profile: '', fanpage: '', services: [], products: [], isVisible: true, isPinned: false
+                            id: 0, productId: '', name: '', slug: '', segment: 'trung-cap', location: '', projectType: '', style: '', experience: 0, status: 'ACTIVE', phone: '', email: '', shortDescription: '', description: '', avatar: [], profile: '', fanpage: '', services: [], products: [], images: [], isVisible: true, isPinned: false
                           });
                           setErrors({});
                           setActiveTab('basic');
@@ -627,7 +620,7 @@ export default function UnitsPage() {
                         }}
                         className="flex items-center gap-2 px-5 py-2.5 bg-[#5865f2] hover:bg-[#4752c4] text-white rounded-[4px] text-sm font-medium transition-colors cursor-pointer"
                       >
-                        <Plus className="w-4 h-4" /> Thêm Đơn Vị Mới
+                        <Plus className="w-4 h-4" /> Thêm Sản Phẩm Mới
                       </button>
                     </div>
                   </td>
@@ -647,7 +640,7 @@ export default function UnitsPage() {
                           {selectedIds.includes(unit.id) && <Check className="w-3 h-3 text-white" />}
                         </div>
                         <span className="font-medium text-[#5865f2] hover:underline text-sm cursor-pointer">
-                          {unit.unitId}
+                          {unit.productId}
                         </span>
                       </div>
                     </td>
@@ -659,12 +652,11 @@ export default function UnitsPage() {
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
                       <div>
-                        <span className={`inline-block px-1.5 py-0.5 rounded-[4px] text-xs font-medium mb-1 ${unit.segment === 'cao-cap' ? 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 dark:bg-amber-900/20 dark:text-amber-400' :
-                          unit.segment === 'trung-cap' ? 'bg-blue-50 text-blue-700 dark:text-blue-400 dark:bg-blue-900/20 dark:text-blue-400' :
-                            'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 dark:bg-gray-800 dark:text-gray-300'
-                          }`}>
-                          {SEGMENT_MAP[unit.segment] || unit.segment}
-                        </span>
+                        {unit.unit && (
+                          <div className="flex items-center gap-1.5 mb-1 text-sm font-medium text-[#5865f2]">
+                            <Building2 className="w-3.5 h-3.5" /> {unit.unit.name}
+                          </div>
+                        )}
                         {unit.categories && unit.categories.length > 0 && (
                           <div className="flex flex-wrap gap-1 mt-1.5 max-w-[200px]">
                             {unit.categories.map((c: any) => (
@@ -675,9 +667,15 @@ export default function UnitsPage() {
                       </div>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
-                      <div className="flex flex-col gap-1 text-xs text-gray-600 dark:text-gray-300">
-                        <div className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-gray-400" /> {unit.phone || <span className="text-gray-400 italic">Không có thông tin</span>}</div>
-                        <div className="flex items-center gap-1.5"><MapPin className="w-3 h-3 text-gray-400" /> {unit.location}</div>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                          {unit.promotionalPrice > 0 ? unit.promotionalPrice.toLocaleString() : unit.price?.toLocaleString()} đ
+                        </span>
+                        {unit.promotionalPrice > 0 && unit.price > 0 && (
+                          <span className="text-xs text-gray-400 line-through">
+                            {unit.price.toLocaleString()} đ
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-5 py-3.5 border-l border-gray-200 dark:border-gray-800">
@@ -698,15 +696,12 @@ export default function UnitsPage() {
                                 setFormData({
                                   ...unit,
                                   slug: (unit as any).slug || '',
-                                  phone: (unit as any).phone || '',
-                                  email: (unit as any).email || '',
                                   shortDescription: (unit as any).shortDescription || '',
-                                  avatar: (unit as any).avatar ? (Array.isArray((unit as any).avatar) ? (unit as any).avatar : [(unit as any).avatar]) : [],
                                   description: (unit as any).description || '',
-                                  profile: (unit as any).profile || '',
-                                  fanpage: (unit as any).fanpage || '',
-                                  services: (unit as any).services || [],
-                                  products: (unit as any).products || [],
+                                  price: (unit as any).price || 0,
+                                  promotionalPrice: (unit as any).promotionalPrice || 0,
+                                  unitId: (unit as any).unitId || null,
+                                  images: (unit as any).images || [],
                                   categoryIds: (unit as any).categories?.map((c: any) => c.id) || []
                                 });
                                 setErrors({});
@@ -765,7 +760,7 @@ export default function UnitsPage() {
                 </div>
                 <div>
                   <h2 className="text-base font-medium text-gray-900 dark:text-white tracking-tight">
-                    {modalMode === 'add' ? 'Thêm Đơn Vị Đối Tác Mới' : 'Cập Nhật Đơn Vị'}
+                    {modalMode === 'add' ? 'Thêm Sản Phẩm Mới' : 'Cập Nhật Sản Phẩm'}
                   </h2>
                 </div>
               </div>
@@ -782,92 +777,38 @@ export default function UnitsPage() {
                 <div className="space-y-5">
                   <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
-                    Thông tin chung
+                    Thông tin cơ bản
                   </h3>
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Tên Đơn Vị <span className="text-red-500">*</span></label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Building2 className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); if (errors.name) setErrors({ ...errors, name: '' }) }} className={`pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Công ty Kiến trúc Xanh..." />
-                      </div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Tên Sản Phẩm <span className="text-red-500">*</span></label>
+                      <input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); if (errors.name) setErrors({ ...errors, name: '' }) }} className={`w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border ${errors.name ? 'border-red-500 focus:ring-red-500/20' : 'border-gray-200 dark:border-gray-700 focus:ring-[#5865f2]/20'} text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40`} placeholder="VD: Sofa Băng Da Bò..." />
                       {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Đường dẫn thân thiện (Slug)</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="text" value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="cong-ty-kien-truc-xanh" />
-                      </div>
+                      <input type="text" value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value })} className="w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="sofa-bang-da-bo" />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-5">
-                    <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Số điện thoại</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Phone className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="text" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="0901..." />
-                      </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="contact@email.com" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Mô tả ngắn</label>
-                    <textarea rows={2} value={formData.shortDescription} onChange={e => setFormData({ ...formData, shortDescription: e.target.value })} className="w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:text-white p-3 transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40 resize-none h-20" placeholder="Giới thiệu nhanh về đơn vị..." />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1">Ảnh Đại Diện/Logo Đơn Vị</label>
-                    <ImageUploader initialImages={formData.avatar} onUploadSuccess={(urls) => setFormData({ ...formData, avatar: urls })} onRemoveImage={(url) => setFormData({ ...formData, avatar: formData.avatar.filter(i => i !== url) })} maxFiles={1} />
-                  </div>
-                </div>
-
-                
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Link Hồ Sơ Năng Lực (Profile)</label>
-                    <div className="relative">
-                      <input type="text" value={formData.profile} onChange={e => setFormData({ ...formData, profile: e.target.value })} className="pl-3 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Nhập URL file PDF hoặc trang profile..." />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Link Fanpage Facebook</label>
-                    <div className="relative">
-                      <input type="text" value={formData.fanpage} onChange={e => setFormData({ ...formData, fanpage: e.target.value })} className="pl-3 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="https://facebook.com/..." />
-                    </div>
-                  </div>
-
-
-                <div className="h-px bg-gray-100 dark:bg-gray-800/60 -mx-6"></div>
-
-                {/* Section: Năng lực */}
-                <div className="space-y-5">
-                  <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#43b581]"></span>
-                    Năng lực & Thế mạnh
-                  </h3>
-
-                  <div className="grid grid-cols-2 gap-5">
-                    <div className="space-y-1.5 relative z-40">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Phân Khúc</label>
-                      <CustomDropdown className="w-full" options={Object.entries(SEGMENT_MAP).map(([v, l]) => ({ value: v, label: l }))} value={formData.segment} onChange={v => setFormData({ ...formData, segment: v })} />
+                    <div className="space-y-1.5 relative z-50">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Đơn vị chính</label>
+                      <CustomDropdown
+                        className="w-full"
+                        options={[{ value: '', label: '-- Không chọn --' }, ...units.map(u => ({ value: u.id.toString(), label: u.name }))]}
+                        value={formData.unitId ? formData.unitId.toString() : ''}
+                        onChange={val => {
+                          const unitId = val ? parseInt(val) : null;
+                          const unit = units.find(u => u.id === unitId);
+                          setFormData({
+                            ...formData,
+                            unitId,
+                            categoryIds: unit?.categories && unit.categories.length > 0 ? unit.categories.map((c: any) => c.id) : formData.categoryIds
+                          });
+                        }}
+                      />
                     </div>
                     <div className="space-y-1.5 relative z-40">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng Thái</label>
@@ -877,27 +818,20 @@ export default function UnitsPage() {
 
                   <div className="grid grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Khu Vực Hoạt Động</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <MapPin className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="text" value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" placeholder="Hà Nội, Miền Bắc..." />
-                      </div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Giá bán (VNĐ)</label>
+                      <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: parseInt(e.target.value) || 0 })} className="w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20" />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Số năm kinh nghiệm</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <Search className="h-4 w-4 text-gray-400 dark:text-gray-500 dark:text-gray-400" />
-                        </div>
-                        <input type="number" min="0" value={formData.experience} onChange={e => setFormData({ ...formData, experience: parseInt(e.target.value) || 0 })} className="pl-9 w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:bg-[#14151a] dark:hover:bg-[#1a1b23] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 focus:border-[#5865f2]/40" />
-                      </div>
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Giá khuyến mãi (VNĐ)</label>
+                      <input type="number" value={formData.promotionalPrice} onChange={e => setFormData({ ...formData, promotionalPrice: parseInt(e.target.value) || 0 })} className="w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20" />
                     </div>
                   </div>
 
                   <div className="space-y-1.5 relative z-30">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Danh mục</label>
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                      Danh mục
+                      <span className="text-xs text-gray-400 font-normal italic">(Sẽ tự động tick nếu bạn chọn Đơn vị chính ở trên)</span>
+                    </label>
                     <CustomMultiSelect 
                       className="w-full"
                       options={categoryOptions}
@@ -905,6 +839,16 @@ export default function UnitsPage() {
                       onChange={handleCategoryChange}
                       placeholder="Chọn danh mục..."
                     />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Mô tả ngắn</label>
+                    <textarea rows={2} value={formData.shortDescription} onChange={e => setFormData({ ...formData, shortDescription: e.target.value })} className="w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:text-white p-3 transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 resize-none h-20" placeholder="Mô tả nhanh gọn..." />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1">Thư viện ảnh Sản phẩm</label>
+                    <ImageUploader initialImages={formData.images} onUploadSuccess={(urls) => setFormData({ ...formData, images: [...formData.images, ...urls] })} onRemoveImage={(url) => setFormData({ ...formData, images: formData.images.filter(i => i !== url) })} maxFiles={10} />
                   </div>
                 </div>
 

@@ -7,12 +7,11 @@ import { ActionMenu } from '@/admin-components/ui/ActionMenu';
 import ConfirmModal from '@/admin-components/ui/ConfirmModal';
 import { toast } from 'sonner';
 
-const TYPES = ['Bài viết', 'Dự án', 'Đơn vị thiết kế'];
+const TYPES = ['Đơn vị', 'Bài viết'];
 
 const TYPE_COLOR_MAP: Record<string, string> = {
   'Bài viết': 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20',
-  'Dự án': 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20',
-  'Đơn vị thiết kế': 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20',
+  'Đơn vị': 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20',
 };
 
 const STATUS_MAP: Record<string, string> = {
@@ -62,7 +61,7 @@ export default function CategoriesPage() {
   const hasActiveFilter = activeFiltersCount > 0;
 
   const [formData, setFormData] = useState<any>({
-    id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE', isPinned: false
+    id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE', isPinned: false, parentId: null
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [confirmModal, setConfirmModal] = useState({
@@ -85,14 +84,41 @@ export default function CategoriesPage() {
     return 0;
   });
 
-  const totalPages = Math.ceil(sortedData.length / itemsPerPage) || 1;
-  const currentData = sortedData.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
+  const buildTree = (items: any[]) => {
+    const rootItems: any[] = [];
+    const lookup: any = {};
+    items.forEach(item => {
+      lookup[item.id] = { ...item, children: [] };
+    });
+    items.forEach(item => {
+      if (item.parentId && lookup[item.parentId]) {
+        lookup[item.parentId].children.push(lookup[item.id]);
+      } else {
+        rootItems.push(lookup[item.id]);
+      }
+    });
+    return rootItems;
+  };
+
+  const flattenTree = (nodes: any[], level = 0): any[] => {
+    let result: any[] = [];
+    nodes.forEach(node => {
+      result.push({ ...node, level });
+      if (node.children && node.children.length > 0) {
+        result = result.concat(flattenTree(node.children, level + 1));
+      }
+    });
+    return result;
+  };
+
+  const treeData = flattenTree(buildTree(sortedData));
+  const totalPages = Math.ceil(treeData.length / itemsPerPage) || 1;
+  const currentData = treeData.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
 
   const summary = {
     totalItems: filteredData.length,
     articleCount: filteredData.filter(d => d.type === 'Bài viết').length,
-    projectCount: filteredData.filter(d => d.type === 'Dự án').length,
-    filterCount: filteredData.filter(d => d.type === 'Đơn vị thiết kế').length
+    unitCount: filteredData.filter(d => d.type === 'Đơn vị').length
   };
 
   const toggleSelectAll = () => {
@@ -232,7 +258,7 @@ export default function CategoriesPage() {
             <button
               onClick={() => {
                 setModalMode('add');
-                setFormData({ id: '', name: '', slug: '', type: 'Bài viết', status: 'ACTIVE', isPinned: false });
+                setFormData({ id: '', name: '', slug: '', type: 'Đơn vị', status: 'ACTIVE', isPinned: false });
                 setErrors({});
                 setIsDrawerOpen(true);
               }}
@@ -302,7 +328,7 @@ export default function CategoriesPage() {
               <div className="flex-1 flex items-center justify-end px-6 gap-5">
                 <div className="flex items-center gap-3 text-sm font-medium">
                   <span className="text-blue-600 dark:text-blue-400">{summary.articleCount} Bài viết</span>
-                  <span className="text-emerald-600">{summary.projectCount} Dự án</span>
+                  <span className="text-amber-600">{summary.unitCount} Đơn vị</span>
                 </div>
               </div>
             )}
@@ -327,17 +353,11 @@ export default function CategoriesPage() {
                 </div>
                 <div className="text-2xl font-medium text-blue-700 dark:text-blue-400">{summary.articleCount}</div>
               </div>
-              <div className="p-3.5 rounded-[4px] border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/50 dark:bg-emerald-500/10">
+              <div className="p-3.5 rounded-[4px] border border-amber-100 dark:border-amber-900/30 bg-amber-50/50 dark:bg-amber-500/10">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <div className="w-2 h-2 bg-emerald-50 dark:bg-emerald-500/100 rounded-[4px]"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Dự án</span>
+                  <div className="w-2 h-2 bg-amber-500 rounded-[4px]"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Đơn vị</span>
                 </div>
-                <div className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">{summary.projectCount}</div>
-              </div>
-              <div className="p-3.5 rounded-[4px] border border-purple-100 dark:border-purple-900/30 bg-purple-50/50 dark:bg-purple-500/10">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div className="w-2 h-2 bg-purple-500 rounded-[4px]"></div><span className="text-xs font-medium text-gray-700 dark:text-gray-300">Bộ lọc Đơn vị</span>
-                </div>
-                <div className="text-2xl font-medium text-purple-700">{summary.filterCount}</div>
+                <div className="text-2xl font-medium text-amber-700 dark:text-amber-400">{summary.unitCount}</div>
               </div>
             </div>
           )}
@@ -420,10 +440,11 @@ export default function CategoriesPage() {
                         </div>
                         <div>
                           <div className="font-medium text-sm text-gray-900 dark:text-white flex items-center gap-2">
+                            {item.level > 0 && <div style={{ width: `${item.level * 20}px` }} className="inline-block border-l-2 border-b-2 border-gray-300 dark:border-gray-600 h-3 mb-1 shrink-0"></div>}
                             {item.name}
                             {item.isPinned && <Pin className="w-3.5 h-3.5 text-amber-500 fill-amber-500/20" />}
                           </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">/{item.slug}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5" style={{ paddingLeft: `${item.level * 20 + (item.level > 0 ? 8 : 0)}px` }}>/{item.slug}</div>
                         </div>
                       </div>
                     </td>
@@ -559,24 +580,31 @@ export default function CategoriesPage() {
                   <div className="space-y-5">
                     <div className="space-y-1.5 relative z-40">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Phân loại</label>
-                      <CustomDropdown className="w-full" options={[{ value: 'Bài viết', label: 'Bài viết' }, { value: 'Dự án', label: 'Dự án' }, { value: 'Bộ lọc Đơn vị', label: 'Bộ lọc Đơn vị' }]} value={formData.type} onChange={val => setFormData({ ...formData, type: val })} />
+                      <CustomDropdown className="w-full" options={TYPES.map(t => ({ value: t, label: t }))} value={formData.type} onChange={val => setFormData({ ...formData, type: val })} />
                     </div>
 
                     <div className="space-y-1.5 relative z-30">
                       <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Trạng thái</label>
                       <CustomDropdown className="w-full" options={[{ value: 'ACTIVE', label: 'Hoạt động', color: 'green' }, { value: 'HIDDEN', label: 'Ẩn' }]} value={formData.status} onChange={val => setFormData({ ...formData, status: val as any })} />
                     </div>
+
+                    <div className="space-y-1.5 relative z-20">
+                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Danh mục cha</label>
+                      <CustomDropdown className="w-full" options={[{ value: '', label: '-- Không có (Danh mục gốc) --' }, ...data.filter(c => c.type === formData.type && c.id !== formData.id).map(c => ({ value: c.id.toString(), label: c.name }))]} value={formData.parentId ? formData.parentId.toString() : ''} onChange={val => setFormData({ ...formData, parentId: val ? parseInt(val) : null })} />
+                    </div>
                   </div>
 
-                  <div className="space-y-1.5 flex flex-col justify-center mt-6">
-                    <label className="flex items-center gap-2 cursor-pointer group w-max">
-                      <div className={`w-10 h-5 rounded-full transition-colors relative ${formData.isPinned ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600'}`}>
-                        <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${formData.isPinned ? 'translate-x-5' : ''}`}></div>
-                      </div>
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 select-none">Ghim ra trang chủ Cẩm nang</span>
-                      <input type="checkbox" className="hidden" checked={formData.isPinned} onChange={e => setFormData({ ...formData, isPinned: e.target.checked })} />
-                    </label>
-                  </div>
+                  {formData.type === 'Bài viết' && (
+                    <div className="space-y-1.5 flex flex-col justify-center mt-6">
+                      <label className="flex items-center gap-2 cursor-pointer group w-max">
+                        <div className={`w-10 h-5 rounded-full transition-colors relative ${formData.isPinned ? 'bg-amber-500' : 'bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600'}`}>
+                          <div className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${formData.isPinned ? 'translate-x-5' : ''}`}></div>
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 select-none">Ghim ra trang chủ Cẩm nang</span>
+                        <input type="checkbox" className="hidden" checked={formData.isPinned} onChange={e => setFormData({ ...formData, isPinned: e.target.checked })} />
+                      </label>
+                    </div>
+                  )}
                 </div>
               </form>
             </div>

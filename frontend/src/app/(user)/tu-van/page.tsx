@@ -20,11 +20,11 @@ function FormSelect({ label, options, value, onChange }: { label: string, option
   const selectedLabel = options.find(o => o.value === value)?.label || options[0].label;
 
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className={`relative ${isOpen ? 'z-[60]' : 'z-10'}`}>
       <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">{label}</label>
       <div className="relative">
         <div
-          className={`w-full modern-section border ${isOpen ? 'border-[#ce9e51]' : 'border-gray-300 dark:border-white/20'} text-gray-900 dark:text-white p-3 rounded-[4px] cursor-pointer flex justify-between items-center transition-colors hover:border-white/40`}
+          className={`w-full modern-section border ${isOpen ? 'border-[#ce9e51]' : 'border-gray-300 dark:border-white/20'} text-gray-900 dark:text-white p-3 rounded-[4px] cursor-pointer flex justify-between items-center transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className="text-[15px]">{selectedLabel}</span>
@@ -32,8 +32,7 @@ function FormSelect({ label, options, value, onChange }: { label: string, option
         </div>
 
         {isOpen && (
-          <div className="overflow-hidden relative absolute z-50 w-full mt-2 modern-section shadow-sm dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[4px] shadow-sm py-2 animate-fadeInDown">
-      <SectionStarryMotif position="random-corner" />
+          <div className="overflow-hidden absolute z-50 w-full mt-2 modern-section shadow-lg dark:shadow-none border border-gray-200 dark:border-white/10 rounded-[4px] py-2 animate-fadeInDown">
             {options.map((opt) => (
               <div
                 key={opt.value}
@@ -138,8 +137,9 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
   };
 
   return (
-    <div className="pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white">
-      <div className="container mx-auto px-6 max-w-[1400px]">
+    <div className="relative pt-[120px] pb-20 modern-section min-h-screen text-gray-900 dark:text-white overflow-hidden">
+      <SectionStarryMotif position="random-corner" />
+      <div className="container mx-auto px-6 max-w-[1400px] relative z-10">
 
         {/* Header */}
         <div className="text-center mb-16">
@@ -168,15 +168,15 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">Họ và tên *</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-white/40" placeholder="Nhập họ tên của bạn" required />
+                  <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40" placeholder="Nhập họ tên của bạn" required />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">Số điện thoại *</label>
-                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-white/40" placeholder="Nhập số điện thoại" required />
+                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40" placeholder="Nhập số điện thoại" required />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">Email (Nếu có)</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-white/40" placeholder="Nhập email" />
+                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40" placeholder="Nhập email" />
                 </div>
                 <FormSelect
                   label="Khu vực công trình *"
@@ -215,7 +215,7 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
                 />
                 <div>
                   <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">Diện tích (m2) *</label>
-                  <input type="number" className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-white/40" placeholder="VD: 100" required />
+                  <input type="number" className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40" placeholder="VD: 100" required />
                 </div>
                 <FormSelect
                   label="Tình trạng hiện tại *"
@@ -243,7 +243,7 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
                 />
                 <div>
                   <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">Phong cách mong muốn</label>
-                  <input type="text" value={style} onChange={e => setStyle(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-white/40" placeholder="VD: Hiện đại, Tối giản, Indochine..." />
+                  <input type="text" value={style} onChange={e => setStyle(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40" placeholder="VD: Hiện đại, Tối giản, Indochine..." />
                 </div>
                 <FormSelect
                   label="Thời gian muốn triển khai"
@@ -297,7 +297,7 @@ export default function TuVanPage({ searchParams }: { searchParams: Promise<{ un
 
                 <div className="pt-4">
                   <label className="block text-sm text-gray-600 dark:text-white/70 mb-2">Ghi chú thêm</label>
-                  <textarea rows={4} value={notes} onChange={e => setNotes(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-white/40" placeholder="Hãy mô tả chi tiết hơn về mong muốn của bạn (ví dụ: cần làm phòng ngủ cho bé, cần thi công nhanh trong 1 tháng...)"></textarea>
+                  <textarea rows={4} value={notes} onChange={e => setNotes(e.target.value)} className="w-full modern-section border border-gray-300 dark:border-white/20 text-gray-900 dark:text-white p-3 rounded-[4px] focus:border-[#ce9e51] outline-none transition-colors hover:border-[#ce9e51]/50 dark:hover:border-white/40" placeholder="Hãy mô tả chi tiết hơn về mong muốn của bạn (ví dụ: cần làm phòng ngủ cho bé, cần thi công nhanh trong 1 tháng...)"></textarea>
                 </div>
               </div>
             </div>

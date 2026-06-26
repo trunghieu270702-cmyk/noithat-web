@@ -146,9 +146,10 @@ export function ImageUploader({ onUploadSuccess, onRemoveImage, maxFiles = 5, in
       <MediaPickerModal
         open={isMediaPickerOpen}
         onOpenChange={setIsMediaPickerOpen}
-        maxFiles={remainingFiles}
+        maxFiles={maxFiles}
+        initialSelectedUrls={previewUrls}
         onSelect={(urls) => {
-          setPreviewUrls((prev) => [...prev, ...urls]);
+          setPreviewUrls(urls);
           onUploadSuccess(urls);
         }}
       />

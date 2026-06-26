@@ -26,7 +26,7 @@ export default function TiptapEditor({ value, onChange }: { value: string, onCha
     },
     editorProps: {
       attributes: {
-        class: 'prose dark:prose-invert prose-sm sm:prose-base focus:outline-none min-h-[200px] p-4 bg-white dark:bg-[#0b0c10] border-t border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-100',
+        class: 'prose dark:prose-invert max-w-none w-full prose-sm sm:prose-base focus:outline-none min-h-[200px] p-4 bg-white dark:bg-[#1a1b23] border-t border-gray-200 dark:border-gray-800 text-gray-900 dark:!text-white font-normal',
       },
     },
   });
