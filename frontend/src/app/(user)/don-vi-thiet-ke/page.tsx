@@ -112,14 +112,18 @@ export default function DonViThietKePage() {
         const data = await res.json();
         
         const getAvatarUrl = (avatar: any) => {
-          if (Array.isArray(avatar) && avatar.length > 0) return avatar[0].url;
+          if (Array.isArray(avatar) && avatar.length > 0) {
+            return typeof avatar[0] === 'string' ? avatar[0] : avatar[0].url;
+          }
           if (typeof avatar === 'string') {
             try {
               const parsed = JSON.parse(avatar);
-              if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].url;
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                return typeof parsed[0] === 'string' ? parsed[0] : parsed[0].url;
+              }
             } catch(e) { return avatar; }
           }
-          return avatar?.url || null;
+          return avatar?.url || avatar || null;
         };
 
           if (Array.isArray(data)) {
@@ -164,7 +168,7 @@ export default function DonViThietKePage() {
       return [{ value: '', label: 'Tất cả lĩnh vực' }, ...styles.map(s => ({ value: s, label: s }))];
     }, [allUnits]);
   
-    const handleFilter = () => {
+    useEffect(() => {
       let result = [...allUnits];
       if (segment) result = result.filter(u => u.category === segment);
       if (projectType) result = result.filter(u => u.strengths === projectType);
@@ -177,7 +181,7 @@ export default function DonViThietKePage() {
         );
       }
       setFilteredUnits(result);
-    };
+    }, [segment, projectType, style, searchQuery, allUnits]);
 
   return (
     <div className="modern-section min-h-screen pt-[120px] pb-20 relative">
@@ -196,6 +200,19 @@ export default function DonViThietKePage() {
 
         {/* Filters Scaffold */}
         <div id="phan-khuc" className="card dark:bg-[#1c1c1c] shadow-sm dark:shadow-none p-6 rounded-[4px] mb-12 border border-[#ECE7DE] dark:border-white/10 flex flex-wrap gap-4 items-end relative z-[60]">
+          <div className="flex-1 min-w-[200px]">
+            <label className="block text-sm text-gray-400 dark:text-white/50 mb-2 font-medium">Tìm kiếm</label>
+            <div className="relative">
+              <input 
+                type="text" 
+                placeholder="Tên đơn vị, mô tả..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-white dark:bg-[#1c1c1c] border border-[#ECE7DE] dark:border-white/20 text-[#1F1F1F] dark:text-white p-3 rounded-[2px] focus:outline-none focus:border-[#C7A25C] transition-colors text-sm h-[46px]"
+              />
+              <svg className="absolute right-3 top-3.5 w-4 h-4 text-gray-400 dark:text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+          </div>
           <CustomSelect
             label="Phân khúc"
             value={segment}
@@ -208,31 +225,12 @@ export default function DonViThietKePage() {
             onChange={setProjectType}
             options={projectTypeOptions}
           />
-          <div className="flex-1 min-w-[200px]">
-            <label className="block text-sm text-gray-400 dark:text-white/50 mb-2 font-medium">Tìm kiếm</label>
-            <div className="relative">
-              <input 
-                type="text" 
-                placeholder="Tên đơn vị, mô tả..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleFilter()}
-                className="w-full bg-white dark:bg-[#1c1c1c] border border-[#ECE7DE] dark:border-white/20 text-[#1F1F1F] dark:text-white p-3 rounded-[2px] focus:outline-none focus:border-[#C7A25C] transition-colors text-sm h-[46px]"
-              />
-              <svg className="absolute right-3 top-3.5 w-4 h-4 text-gray-400 dark:text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </div>
-          </div>
           <CustomSelect
             label="Lĩnh vực hoạt động"
             value={style}
             onChange={setStyle}
             options={styleOptions}
           />
-          <div className="flex-1 min-w-[200px]">
-            <button onClick={handleFilter} className="w-full bg-[#C7A25C] hover:bg-[#1F1F1F] hover:text-white dark:hover:bg-white dark:hover:text-white text-white dark:text-white font-bold py-3 px-6 rounded-[2px] transition-colors uppercase tracking-wider text-sm h-[46px] mt-2">
-              Lọc kết quả
-            </button>
-          </div>
         </div>
 
         {/* Grid */}
