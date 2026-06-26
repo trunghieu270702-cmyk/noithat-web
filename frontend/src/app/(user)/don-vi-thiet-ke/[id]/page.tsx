@@ -18,14 +18,18 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           if (found) {
             
             const getAvatarUrl = (avatar: any) => {
-              if (Array.isArray(avatar) && avatar.length > 0) return avatar[0].url;
+              if (Array.isArray(avatar) && avatar.length > 0) {
+                return typeof avatar[0] === 'string' ? avatar[0] : avatar[0].url;
+              }
               if (typeof avatar === 'string') {
                 try {
                   const parsed = JSON.parse(avatar);
-                  if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].url;
+                  if (Array.isArray(parsed) && parsed.length > 0) {
+                    return typeof parsed[0] === 'string' ? parsed[0] : parsed[0].url;
+                  }
                 } catch(e) { return avatar; }
               }
-              return avatar?.url || null;
+              return avatar?.url || avatar || null;
             };
 
             const getCategoryDisplayName = (segment: string) => {
@@ -44,7 +48,7 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
               strengths: found.projectType || 'Chung cư, Nhà phố',
               style: found.style || 'Hiện đại',
               location: found.location || 'Toàn quốc',
-              experience: found.experience ? found.experience + ' năm' : '5 năm',
+              experience: found.experience > 0 ? found.experience + ' năm' : 'Chưa cập nhật',
               description: found.description || found.shortDescription || 'Chuyên thiết kế và thi công nội thất chuyên nghiệp.',
               profile: found.profile || null,
               fanpage: found.fanpage || null,
@@ -53,11 +57,8 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
                 'Tư vấn lắp đặt',
                 'Bảo hành chính hãng'
               ],
-              projects: (found.products && found.products.length > 0) ? found.products.map((p: string) => ({ name: p, type: 'Sản phẩm', area: '-', style: found.style || 'Hiện đại', time: '-' })) : [
-                { name: `Sản phẩm tiêu biểu của ${found.name}`, type: found.segment, area: '-', style: 'Hiện đại', time: 'Có sẵn' },
-                { name: 'Dự án đã triển khai', type: 'Dự án', area: '100m2', style: 'Sang trọng', time: '30 ngày' }
-              ],
-              advantages: found.projectType ? found.projectType.split(',') : ['Mạnh về tối ưu chi phí'],
+              projects: (found.products && found.products.length > 0) ? found.products.map((p: string) => ({ name: p, type: 'Sản phẩm', area: '-', style: found.style || 'Hiện đại', time: '-' })) : [],
+              advantages: found.projectType ? found.projectType.split(',') : [],
               workflow: [
                 'Tiếp nhận nhu cầu',
                 'Khảo sát hiện trạng',
@@ -130,7 +131,7 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
                 <div className="bg-white/50 dark:bg-[#1A1C21]/50 backdrop-blur-sm border border-[#ECE7DE] dark:border-white/10 px-5 py-3 rounded-[4px] flex items-center gap-3 shadow-sm">
                   <div className="w-8 h-8 rounded-full bg-[#C7A25C]/10 flex items-center justify-center text-[#C7A25C]"><i className="fa fa-star text-sm"></i></div>
                   <div>
-                    <div className="text-sm font-bold text-[#1F1F1F] dark:text-white leading-none">4.9/5</div>
+                    <div className="text-sm font-bold text-[#1F1F1F] dark:text-white leading-none">Chưa có đánh giá</div>
                     <div className="text-[#1F1F1F]/50 dark:text-white/50 text-[10px] uppercase tracking-widest mt-1">Đánh giá</div>
                   </div>
                 </div>
@@ -205,20 +206,24 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
             <span className="w-8 h-1 bg-[#C7A25C] inline-block"></span> Sản phẩm tiêu biểu
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {unit.projects.map((proj: any, i: number) => (
+            {unit.projects.length > 0 ? unit.projects.map((proj: any, i: number) => (
               <div key={i} className="card dark:bg-[#1c1c1c] rounded-[4px] overflow-hidden border border-[#ECE7DE] dark:border-white/5">
-                <div className="h-48 bg-gray-200 dark:bg-white/5 luxury-image-filter"></div>
+                <div className="h-48 bg-gray-200 dark:bg-white/5 luxury-image-filter flex items-center justify-center">
+                  <i className="fa fa-image text-gray-400 text-3xl"></i>
+                </div>
                 <div className="p-6">
                   <h3 className="font-heading text-xl font-bold mb-4">{proj.name}</h3>
                   <div className="space-y-2 text-sm text-[#1F1F1F]/70 dark:text-white/70">
                     <p><strong className="text-[#1F1F1F] dark:text-white">Loại công trình:</strong> {proj.type}</p>
-                    <p><strong className="text-[#1F1F1F] dark:text-white">Diện tích:</strong> {proj.area}</p>
                     <p><strong className="text-[#1F1F1F] dark:text-white">Phong cách:</strong> {proj.style}</p>
-                    <p><strong className="text-[#1F1F1F] dark:text-white">Thời gian hoàn thiện:</strong> {proj.time}</p>
                   </div>
                 </div>
               </div>
-            ))}
+            )) : (
+              <div className="col-span-2 text-center text-[#1F1F1F]/50 dark:text-white/50 py-12 border border-dashed border-[#ECE7DE] dark:border-white/10 rounded-[4px]">
+                Sản phẩm chưa được cấu hình
+              </div>
+            )}
           </div>
         </div>
 
@@ -227,11 +232,13 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           <div className="card dark:bg-[#1c1c1c] p-6 rounded-[4px] border border-[#ECE7DE] dark:border-white/5">
             <h3 className="font-heading text-lg font-bold mb-4 text-[#C7A25C]">Điểm mạnh</h3>
             <ul className="space-y-3">
-              {unit.advantages.map((adv: string, i: number) => (
+              {unit.advantages.length > 0 ? unit.advantages.map((adv: string, i: number) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
                   <i className="fa fa-star mt-1 text-[#1F1F1F]/30 dark:text-white/30"></i> {adv}
                 </li>
-              ))}
+              )) : (
+                <li className="text-sm text-[#1F1F1F]/50 dark:text-white/50 italic">Không có thông tin</li>
+              )}
             </ul>
           </div>
           <div className="card dark:bg-[#1c1c1c] p-6 rounded-[4px] border border-[#ECE7DE] dark:border-white/5">
@@ -259,8 +266,8 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           <h2 className="font-heading text-2xl md:text-3xl font-bold mb-4">Bạn muốn được tư vấn xem đơn vị này có phù hợp với công trình của mình không?</h2>
           <p className="text-[#1F1F1F]/70 dark:text-white/70 mb-8">Chúng tôi sẽ giúp bạn đánh giá và so sánh khách quan hoàn toàn miễn phí.</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href={`/tu-van?unit=${unit.id}`} className="bg-[#1F1F1F] hover:modern-section dark:hover:bg-white dark:hover:text-white text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
-              Nhận tư vấn đơn vị này
+            <Link href={`/tu-van?unit=${unit.id}`} className="bg-gradient-to-r from-[#C7A25C] to-[#E5C98A] hover:from-[#b5924f] hover:to-[#d4ba7b] text-white font-bold py-4 px-10 rounded-[2px] transition-all uppercase tracking-wider text-sm flex items-center gap-3 shadow-[0_10px_20px_rgba(199,162,92,0.25)] hover:shadow-[0_10px_25px_rgba(199,162,92,0.4)] hover:-translate-y-1">
+              Nhận tư vấn đơn vị này <i className="fa fa-arrow-right"></i>
             </Link>
             <Link href="/don-vi-thiet-ke" className="bg-transparent border border-[#ECE7DE] dark:border-white/30 hover:border-[#1F1F1F] dark:hover:border-white text-[#1F1F1F] dark:text-white font-bold py-3 px-8 rounded-[2px] transition-colors uppercase tracking-wider text-sm">
               So sánh với đơn vị khác
