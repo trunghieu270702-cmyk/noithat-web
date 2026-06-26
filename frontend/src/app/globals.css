@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Marcellus&family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@100..900&display=swap');
 @import "tailwindcss";
 @source "../";
 @variant dark (&:where(.dark, .dark *));
@@ -6,11 +6,11 @@
 @theme {
   --font-sans: "Roboto Slab", serif;
   --font-serif: "Roboto Slab", serif;
-  --font-mono: "Marcellus", serif;
-  --font-display: "Marcellus", serif;
+  --font-mono: "Times New Roman", Times, serif;
+  --font-display: "Times New Roman", Times, serif;
 
-  --font-label: "Marcellus", serif;
-  --font-heading: "Marcellus", serif;
+  --font-label: "Times New Roman", Times, serif;
+  --font-heading: "Times New Roman", Times, serif;
   --font-menu: "Roboto Slab", serif;
   --font-body: "Roboto Slab", serif;
 
