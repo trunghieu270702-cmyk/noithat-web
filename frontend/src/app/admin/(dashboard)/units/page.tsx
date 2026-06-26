@@ -283,7 +283,7 @@ export default function UnitsPage() {
         await apiClient.patch(`/units/${id}`, updateData);
       }
       setIsDrawerOpen(false);
-      fetchUnits();
+      fetchUnitsAndCategories();
     } catch (error) {
       console.error('Failed to save unit:', error);
     }
@@ -293,7 +293,7 @@ export default function UnitsPage() {
     if (!confirm('Bạn có chắc chắn muốn xóa đơn vị này?')) return;
     try {
       await apiClient.delete(`/units/${id}`);
-      fetchUnits();
+      fetchUnitsAndCategories();
     } catch (error) {
       console.error('Failed to delete unit:', error);
     }
