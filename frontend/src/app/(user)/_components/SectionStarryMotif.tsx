@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const CONSTELLATIONS = [
   // 1. Ursa Major (Big Dipper)
@@ -116,8 +117,11 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
   const [constellationIndex, setConstellationIndex] = useState(0);
   const [actualPosition, setActualPosition] = useState<'full' | 'top-left' | 'top-right'>('full');
   
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isInView, setIsInView] = useState(true); // Default true so first render is stable, observer will immediately fix it
+  const { ref: containerRef, inView: isInView } = useInView({
+    rootMargin: '600px 0px',
+    triggerOnce: false,
+    initialInView: true,
+  });
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -156,21 +160,8 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
-    // Custom IntersectionObserver for reliable DOM Culling
-    const observer = new IntersectionObserver(
-      (entries) => {
-        setIsInView(entries[0].isIntersecting);
-      },
-      { rootMargin: "600px 0px" } // Render slightly before scrolling into view
-    );
-    
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-    
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      observer.disconnect();
     };
   }, [mouseX, mouseY, variant, position]);
 
