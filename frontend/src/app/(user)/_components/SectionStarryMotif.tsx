@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CONSTELLATIONS = [
@@ -115,6 +115,9 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
   const [mounted, setMounted] = useState(false);
   const [constellationIndex, setConstellationIndex] = useState(0);
   const [actualPosition, setActualPosition] = useState<'full' | 'top-left' | 'top-right'>('full');
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(true); // Default true so first render is stable, observer will immediately fix it
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -152,14 +155,30 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    
+    // Custom IntersectionObserver for reliable DOM Culling
+    const observer = new IntersectionObserver(
+      (entries) => {
+        setIsInView(entries[0].isIntersecting);
+      },
+      { rootMargin: "600px 0px" } // Render slightly before scrolling into view
+    );
+    
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      observer.disconnect();
+    };
   }, [mouseX, mouseY, variant, position]);
 
   // Sinh random particles giống banner (BackgroundVisuals)
   const particles = useMemo(() => {
     if (!mounted) return [];
-    // Giảm mạnh số lượng hạt (từ 150/50 xuống 30/12) để triệt tiêu hoàn toàn lag mà vẫn giữ được hiệu ứng
-    const count = particleCount || (position === 'random-corner' ? 30 : 12);
+    // Khôi phục lại số lượng hạt lớn theo yêu cầu của người dùng
+    const count = particleCount || (position === 'random-corner' ? 150 : 50);
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
       tx: `${(Math.random() - 0.5) * 150}px`,
@@ -178,38 +197,41 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
 
   return (
     <motion.div
+      ref={containerRef}
       style={{ '--mx': smoothX, '--my': smoothY } as any}
       className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-100 dark:opacity-90 transition-opacity duration-1000 text-[#C7A25C] dark:text-[#D3AE3E] [--star-white:#ce9e51] dark:[--star-white:#ffffff]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-currentColor/10 dark:from-currentColor/15 via-transparent to-transparent opacity-100 dark:opacity-80"></div>
 
       {/* LAYER 1: Luxury Particles with High-Performance CSS Parallax */}
-      <div className="absolute inset-0 pointer-events-none">
-        {particles.map((p) => (
-          <div
-            key={p.id}
-            className="absolute"
-            style={{
-              left: p.left,
-              top: p.top,
-              opacity: p.opacity,
-              transform: `translate(calc(var(--mx) * ${p.parallaxZ}px), calc(var(--my) * ${p.parallaxZ}px))`
-            }}
-          >
+      {isInView && (
+        <div className="absolute inset-0 pointer-events-none">
+          {particles.map((p) => (
             <div
-              className="luxury-particle !relative !left-0 !top-0"
+              key={p.id}
+              className="absolute"
               style={{
-                width: `${p.size}px`,
-                height: `${p.size}px`,
-                '--tx': p.tx,
-                '--ty': p.ty,
-                '--duration': p.duration,
-                '--delay': p.delay,
-              } as React.CSSProperties}
-            />
-          </div>
-        ))}
-      </div>
+                left: p.left,
+                top: p.top,
+                opacity: p.opacity,
+                transform: `translate(calc(var(--mx) * ${p.parallaxZ}px), calc(var(--my) * ${p.parallaxZ}px))`
+              }}
+            >
+              <div
+                className="luxury-particle !relative !left-0 !top-0"
+                style={{
+                  width: `${p.size}px`,
+                  height: `${p.size}px`,
+                  '--tx': p.tx,
+                  '--ty': p.ty,
+                  '--duration': p.duration,
+                  '--delay': p.delay,
+                } as React.CSSProperties}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* LAYER 2: Enhanced Constellation Motif */}
       <div
