@@ -105,11 +105,11 @@ export default function UnitDetailPage({ params }: { params: Promise<{ id: strin
           
           <div className="flex flex-col md:flex-row gap-12 items-center md:items-start relative z-20">
             {/* Logo Glass Card */}
-            <div className="w-full md:w-1/3 max-w-[320px] aspect-square rounded-2xl border border-[#C7A25C]/20 flex items-center justify-center p-10 bg-white dark:bg-white shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.4)] group overflow-hidden relative">
+            <div className="w-full md:w-1/3 max-w-[320px] aspect-square rounded-2xl border border-[#C7A25C]/20 flex items-center justify-center p-10 bg-white/60 dark:bg-[#1A1C21]/60 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.4)] group overflow-hidden relative">
               {/* Subtle inner glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#C7A25C]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               {unit.avatarUrl ? (
-                <img src={unit.avatarUrl} alt={unit.name} className="w-full h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.05)] dark:drop-shadow-[0_10px_20px_rgba(255,255,255,0.05)] group-hover:scale-105 transition-transform duration-700 relative z-10" />
+                <img src={unit.avatarUrl} alt={unit.name} className="w-full h-full object-contain drop-shadow-[0_5px_15px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_0_25px_rgba(255,255,255,0.5)] group-hover:scale-105 transition-transform duration-700 relative z-10" />
               ) : (
                 <span className="text-7xl font-heading font-bold text-[#C7A25C] tracking-widest relative z-10">{unit.name.substring(0, 2).toUpperCase()}</span>
               )}

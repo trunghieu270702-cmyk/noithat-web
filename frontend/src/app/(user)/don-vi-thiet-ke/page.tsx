@@ -259,8 +259,8 @@ export default function DonViThietKePage() {
                 
                 {/* Avatar Display */}
                 {unit.avatarUrl ? (
-                  <div className="w-[180px] h-[120px] md:w-[220px] md:h-[140px] bg-white rounded-[4px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center p-4 relative z-20 group-hover:scale-105 transition-transform duration-500 border border-[#ECE7DE] dark:border-white/5">
-                    <img src={unit.avatarUrl} alt={unit.name} className="max-w-full max-h-full object-contain transition-transform duration-500" />
+                  <div className="w-[180px] h-[120px] md:w-[220px] md:h-[140px] bg-white/60 dark:bg-[#1c1c1c]/60 backdrop-blur-sm rounded-[4px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center p-4 relative z-20 group-hover:scale-105 transition-transform duration-500 border border-[#ECE7DE] dark:border-white/5">
+                    <img src={unit.avatarUrl} alt={unit.name} className="max-w-full max-h-full object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-transform duration-500" />
                   </div>
                 ) : (
                   <div className="w-[180px] h-[120px] md:w-[220px] md:h-[140px] bg-gradient-to-br from-[#1F1F1F] to-[#333] dark:from-[#2a2a2a] dark:to-[#1a1a1a] rounded-[4px] shadow-lg flex items-center justify-center p-6 relative z-20 group-hover:scale-105 transition-transform duration-500 border border-[#ECE7DE]/20 dark:border-white/10">
