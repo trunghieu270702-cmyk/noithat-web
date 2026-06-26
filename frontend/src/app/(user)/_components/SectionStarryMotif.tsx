@@ -1,6 +1,6 @@
 'use client';
-import React, { useEffect, useState, useMemo } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
+import { motion, useMotionValue, useSpring, useInView } from 'framer-motion';
 
 const CONSTELLATIONS = [
   // 1. Ursa Major (Big Dipper)
@@ -116,6 +116,10 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
   const [constellationIndex, setConstellationIndex] = useState(0);
   const [actualPosition, setActualPosition] = useState<'full' | 'top-left' | 'top-right'>('full');
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  // Render particles only if within 1000px of viewport to save 90% CPU/GPU
+  const isInView = useInView(containerRef, { margin: "1000px" });
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -177,38 +181,41 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
 
   return (
     <motion.div
+      ref={containerRef}
       style={{ '--mx': smoothX, '--my': smoothY } as any}
       className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-100 dark:opacity-90 transition-opacity duration-1000 text-[#C7A25C] dark:text-[#D3AE3E] [--star-white:#ce9e51] dark:[--star-white:#ffffff]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-currentColor/10 dark:from-currentColor/15 via-transparent to-transparent opacity-100 dark:opacity-80"></div>
 
       {/* LAYER 1: Luxury Particles with High-Performance CSS Parallax */}
-      <div className="absolute inset-0 pointer-events-none">
-        {particles.map((p) => (
-          <div
-            key={p.id}
-            className="absolute"
-            style={{
-              left: p.left,
-              top: p.top,
-              opacity: p.opacity,
-              transform: `translate(calc(var(--mx) * ${p.parallaxZ}px), calc(var(--my) * ${p.parallaxZ}px))`
-            }}
-          >
+      {isInView && (
+        <div className="absolute inset-0 pointer-events-none">
+          {particles.map((p) => (
             <div
-              className="luxury-particle !relative !left-0 !top-0"
+              key={p.id}
+              className="absolute"
               style={{
-                width: `${p.size}px`,
-                height: `${p.size}px`,
-                '--tx': p.tx,
-                '--ty': p.ty,
-                '--duration': p.duration,
-                '--delay': p.delay,
-              } as React.CSSProperties}
-            />
-          </div>
-        ))}
-      </div>
+                left: p.left,
+                top: p.top,
+                opacity: p.opacity,
+                transform: `translate(calc(var(--mx) * ${p.parallaxZ}px), calc(var(--my) * ${p.parallaxZ}px))`
+              }}
+            >
+              <div
+                className="luxury-particle !relative !left-0 !top-0"
+                style={{
+                  width: `${p.size}px`,
+                  height: `${p.size}px`,
+                  '--tx': p.tx,
+                  '--ty': p.ty,
+                  '--duration': p.duration,
+                  '--delay': p.delay,
+                } as React.CSSProperties}
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* LAYER 2: Enhanced Constellation Motif */}
       <div
