@@ -137,14 +137,21 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
       setActualPosition(position);
     }
 
+    let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      mouseX.set(x);
-      mouseY.set(y);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 2;
+          const y = (e.clientY / window.innerHeight - 0.5) * 2;
+          mouseX.set(x);
+          mouseY.set(y);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY, variant, position]);
 
