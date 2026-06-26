@@ -737,7 +737,7 @@ export default function ProjectsPage() {
                   <div className="space-y-1.5 mt-6">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-200">Mô Tả Chi Tiết (Nội dung bài viết)</label>
                     <div className="border border-gray-200 dark:border-gray-700 rounded-[4px] bg-white dark:bg-[#1a1b23]">
-                      <TiptapEditor content={formData.content} onChange={val => setFormData({ ...formData, content: val })} />
+                      <TiptapEditor value={formData.content} onChange={val => setFormData({ ...formData, content: val })} />
                     </div>
                   </div>
                 </div>
