@@ -7,7 +7,7 @@ import { ActionMenu } from '@/admin-components/ui/ActionMenu';
 import ConfirmModal from '@/admin-components/ui/ConfirmModal';
 import { toast } from 'sonner';
 
-const TYPES = ['Đơn vị', 'Bài viết'];
+const TYPES = ['Đơn vị', 'Bài viết', 'Lĩnh vực công trình'];
 
 const TYPE_COLOR_MAP: Record<string, string> = {
   'Bài viết': 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20',

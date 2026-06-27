@@ -140,7 +140,8 @@ export default function DonViThietKePage() {
               description: u.shortDescription || u.description || 'Đơn vị thiết kế thi công nội thất chuyên nghiệp.',
               avatarUrl: getAvatarUrl(u.avatar),
               fanpage: u.fanpage || null,
-              services: u.services || []
+              services: u.services || [],
+              categories: u.categories || []
             }));
             setAllUnits(mappedUnits);
             setFilteredUnits(mappedUnits);
@@ -165,15 +166,27 @@ export default function DonViThietKePage() {
       return [{ value: '', label: 'Tất cả hạng mục' }, ...types.map(t => ({ value: t, label: t }))];
     }, [allUnits]);
 
-    const styleOptions = useMemo(() => {
-      return [{ value: '', label: 'Tất cả lĩnh vực' }];
-    }, [allUnits]);
+    const [styleOptions, setStyleOptions] = useState<{value: string, label: string}[]>([{ value: '', label: 'Tất cả lĩnh vực' }]);
+
+    useEffect(() => {
+      const fetchCategories = async () => {
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/categories`);
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            const linhVuc = data.filter((c: any) => c.type === 'Lĩnh vực công trình');
+            setStyleOptions([{ value: '', label: 'Tất cả lĩnh vực' }, ...linhVuc.map((c: any) => ({ value: c.name, label: c.name }))]);
+          }
+        } catch(e) {}
+      };
+      fetchCategories();
+    }, []);
   
     useEffect(() => {
       let result = [...allUnits];
       if (segment) result = result.filter(u => u.category === segment);
       if (projectType) result = result.filter(u => u.strengths === projectType);
-      if (style) result = result.filter(u => u.style === style);
+      if (style) result = result.filter(u => u.categories && u.categories.some((c: any) => c.name === style));
       if (searchQuery) {
         const lowerQ = searchQuery.toLowerCase();
         result = result.filter(u => 
