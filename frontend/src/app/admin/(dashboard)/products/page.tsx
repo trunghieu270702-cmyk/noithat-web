@@ -61,7 +61,7 @@ export default function ProductsPage() {
       ]);
       setData(Array.isArray(resProducts.data) ? resProducts.data : []);
       // Only keep Unit categories
-      setCategories(Array.isArray(resCategories.data) ? resCategories.data.filter(c => c.type === 'Đơn vị') : []);
+      setCategories(Array.isArray(resCategories.data) ? resCategories.data.filter(c => c.type === 'Đơn vị' || c.type === 'Lĩnh vực công trình') : []);
       setUnits(Array.isArray(resUnits.data) ? resUnits.data.filter(u => u.projectType === 'Đối tác cung cấp' || u.projectType === 'Cả 2') : []);
     } catch (error) {
       console.error('Failed to fetch data:', error);

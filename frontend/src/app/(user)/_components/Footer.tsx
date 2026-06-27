@@ -6,25 +6,25 @@ import SectionStarryMotif from './SectionStarryMotif';
 const RECENT_POSTS = [
   {
     id: 1,
-    title: 'In Good Taste: Mark Finlay Architects and Interiors',
-    date: 'February 26, 2020',
+    title: 'Gu thẩm mỹ tinh tế: Kiến trúc & Nội thất',
+    date: '26 Tháng 02, 2024',
     img: '/images/blog/post-1.jpg',
     link: '#'
   },
   {
     id: 2,
-    title: 'Five Things You Should Know About Modern Furniture.',
-    date: 'August 28, 2019',
+    title: '5 điều bạn nên biết về nội thất hiện đại',
+    date: '28 Tháng 08, 2023',
     img: '/images/blog/post-2.jpg',
     link: '#'
   }
 ];
 
 const SERVICES = [
-  { name: 'Interior Design', link: '#' },
-  { name: 'Architecture Modeling', link: '#' },
-  { name: 'Rendering Buildings', link: '#' },
-  { name: 'Landscape works', link: '#' }
+  { name: 'Thiết kế Nội thất', link: '#' },
+  { name: 'Mô hình Kiến trúc', link: '#' },
+  { name: 'Kết xuất Công trình', link: '#' },
+  { name: 'Công trình Cảnh quan', link: '#' }
 ];
 
 const GALLERY = [
@@ -48,10 +48,10 @@ export default function Footer() {
           {/* Column 1: Let's Connect */}
           <ScrollReveal animation="fade-up" delay={100}>
             <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white mb-6 relative pb-4 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-[2px] after:bg-[#D3AE3E]">
-              Let's Connect
+              Liên hệ
             </h3>
             <p className="text-gray-600 dark:text-[#ccc] text-[15px] mb-6">
-              Luctus nec ullamcorper mattis:
+              Kết nối với hệ sinh thái:
             </p>
             <ul className="space-y-4 text-gray-500 dark:text-[#888] text-[14px]">
               <li className="flex items-start gap-3">
@@ -76,7 +76,7 @@ export default function Footer() {
           {/* Column 2: Recent Posts */}
           <ScrollReveal animation="fade-up" delay={200}>
             <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white mb-6 relative pb-4 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-[2px] after:bg-[#D3AE3E]">
-              Recent Posts
+              Bài viết mới nhất
             </h3>
             <div className="space-y-6">
               {RECENT_POSTS.map(post => (
@@ -100,7 +100,7 @@ export default function Footer() {
           {/* Column 3: Our Services */}
           <ScrollReveal animation="fade-up" delay={300}>
             <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white mb-6 relative pb-4 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-[2px] after:bg-[#D3AE3E]">
-              Our Services
+              Dịch vụ của chúng tôi
             </h3>
             <ul className="space-y-3">
               {SERVICES.map((srv, index) => (
@@ -117,7 +117,7 @@ export default function Footer() {
           {/* Column 4: Our Gallery */}
           <ScrollReveal animation="fade-up" delay={400}>
             <h3 className="font-heading text-xl font-bold text-gray-900 dark:text-white mb-6 relative pb-4 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-[2px] after:bg-[#D3AE3E]">
-              Our Gallery
+              Thư viện ảnh
             </h3>
             <div className="grid grid-cols-3 gap-2">
               {GALLERY.map((imgUrl, idx) => (
@@ -147,7 +147,7 @@ export default function Footer() {
               <p className="text-[#D3AE3E] text-xs font-bold tracking-widest uppercase">Một kết nối – Vạn giá trị</p>
             </div>
             <div className="text-[13px] text-gray-500 dark:text-[#888] hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer text-center md:text-right">
-              Terms of use | Privacy Environmental Policy
+              Điều khoản sử dụng | Chính sách bảo mật
             </div>
           </div>
         </ScrollReveal>
