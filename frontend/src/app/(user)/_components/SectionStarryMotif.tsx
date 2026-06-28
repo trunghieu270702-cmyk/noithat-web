@@ -165,11 +165,15 @@ export default function SectionStarryMotif({ variant, position = 'full', particl
     };
   }, [mouseX, mouseY, variant, position]);
 
-  // Sinh random particles giống banner (BackgroundVisuals)
+  // Sinh random particles
   const particles = useMemo(() => {
     if (!mounted) return [];
-    // Khôi phục lại số lượng hạt lớn theo yêu cầu của người dùng
-    const count = particleCount || (position === 'random-corner' ? 150 : 50);
+    
+    // Reduce particle count to 120 for desktop as requested, keep 50 for other positions
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const baseCount = isMobile ? 50 : 120;
+    
+    const count = particleCount || (position === 'random-corner' ? baseCount : 50);
     return Array.from({ length: count }).map((_, i) => ({
       id: i,
       tx: `${(Math.random() - 0.5) * 150}px`,

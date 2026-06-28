@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState } from 'react';
 import { Search, Filter, FileText, Plus, Edit, Trash2, X, CheckCircle2, ChevronLeft, ChevronRight, Image as ImageIcon, SearchCode, LayoutTemplate, Check, ArrowUpDown, ChevronDown, ChevronUp, User, Eye, Tag, Link, PenTool, RotateCcw, Loader2, FolderOpen } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -17,6 +18,7 @@ const STATUS_MAP: Record<string, string> = {
 };
 
 export default function ArticlesPage() {
+  const { confirm } = useConfirm();
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [CATEGORIES, setCategories] = useState<string[]>([]);
@@ -179,9 +181,28 @@ export default function ArticlesPage() {
     });
   };
 
+  const handleBulkDelete = async () => {
+    confirm({
+      title: 'Xác nhận xóa hàng loạt',
+      description: `Bạn có chắc chắn muốn xóa ${selectedIds.length} bài viết đã chọn?`,
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
+      await Promise.all(selectedIds.map(id => apiClient.delete(`/articles/${id}`)));
+      setSelectedIds([]);
+      fetchArticles();
+      toast.success('Đã xóa thành công!');
+    } catch (error) {
+      console.error('Failed to delete articles:', error);
+      toast.error('Lỗi khi xóa bài viết');
+    }
+      }
+    });
+  };
+
   const handleQuickPublish = async (article: any) => {
     try {
-      const newStatus = article.status === 'DRAFT' ? 'PUBLISHED' : 'DRAFT';
+      const newStatus = article.status === 'PUBLISHED' ? 'DRAFT' : 'PUBLISHED';
       await apiClient.patch(`/articles/${article.id}`, { status: newStatus });
       fetchArticles();
     } catch (error) {
@@ -226,7 +247,17 @@ export default function ArticlesPage() {
             </button>
           </div>
 
+          {/* Action Buttons Group */}
           <div className="flex items-center gap-2 justify-end">
+            {selectedIds.length > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                Xóa ({selectedIds.length})
+              </button>
+            )}
             <button
               onClick={() => {
                 setModalMode('add');

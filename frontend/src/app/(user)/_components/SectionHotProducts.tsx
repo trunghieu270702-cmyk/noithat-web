@@ -6,65 +6,6 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import QuoteModal from './QuoteModal';
 
-const HOT_PRODUCTS = [
-  {
-    id: 1,
-    name: "ModernLife™ Bồn cầu hai khối xả nước 3/4,5L chế độ xả kép (K-78799K-0)",
-    category: "Bồn cầu",
-    image: "/images/main/3.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 2,
-    name: "Veil™ Bồn cầu thông minh (K-5401KR-0)",
-    category: "Bồn cầu thông minh",
-    image: "/images/main/4.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 3,
-    name: "Veil™ Bồn cầu một khối 3/4.5L (K-1381T-S-0)",
-    category: "Bồn cầu",
-    image: "/images/main/6.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 4,
-    name: "Taut™ Single control lavatory faucet (K-74013T-4-CP)",
-    category: "Vòi lavabo",
-    image: "/images/main/7.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 5,
-    name: "Fluence™ Bộ sen cây 3 chiều (K-36410T-4-CP)",
-    category: "Sen tắm",
-    image: "/images/main/10.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 6,
-    name: "Reach™ Bồn tắm drop-in 1700 x 750 mm (K-72800X-0)",
-    category: "Bồn tắm",
-    image: "/images/main/12.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 7,
-    name: "Artifacts™ Single-handle bathroom sink faucet (K-72762T-9M-CP)",
-    category: "Vòi lavabo",
-    image: "/images/main/16.jpg",
-    price: "Liên hệ"
-  },
-  {
-    id: 8,
-    name: "Statement™ Ceiling-mount rainhead arm (K-26320T-RGD)",
-    category: "Phụ kiện sen tắm",
-    image: "/images/main/18.jpg",
-    price: "Liên hệ"
-  }
-];
-
 export default function SectionHotProducts() {
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: 'start', skipSnaps: false },
@@ -74,6 +15,33 @@ export default function SectionHotProducts() {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [selectedProductName, setSelectedProductName] = useState('');
   const [selectedProductImage, setSelectedProductImage] = useState('');
+  
+  const [products, setProducts] = useState<any[]>([]);
+
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1';
+        // Fetch real products, take 8
+        const res = await fetch(`${apiUrl}/products?take=8`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            setProducts(data.map((p: any) => ({
+              id: p.id,
+              name: p.name,
+              category: p.categories && p.categories.length > 0 ? p.categories[0].name : 'Sản phẩm',
+              image: p.images && p.images.length > 0 ? p.images[0] : '',
+              price: p.price || p.promotionalPrice || 'Liên hệ'
+            })));
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch hot products", err);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <section className="py-24 bg-transparent dark:bg-transparent modern-section relative overflow-hidden">
@@ -123,17 +91,23 @@ export default function SectionHotProducts() {
         {/* Embla Carousel */}
         <div className="overflow-hidden -mx-6 px-6" ref={emblaRef}>
           <div className="flex -ml-6">
-            {HOT_PRODUCTS.map((product) => (
+            {products.map((product) => (
               <div key={product.id} className="flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-[0_0_28%] xl:flex-[0_0_24%] pl-6">
                 <Link href={`/san-pham/${product.id}`} className="group block relative w-full overflow-hidden rounded-[2px] bg-gray-100 dark:bg-[#131313] luxury-glow">
                   {/* Image */}
                   <div className="relative w-full aspect-[3/4] overflow-hidden">
                     <div className="absolute inset-0 bg-black/5 dark:bg-transparent z-10 group-hover:bg-black/0 transition-colors duration-500"></div>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
+                    {product.image ? (
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 bg-gray-200 dark:bg-[#1f1f1f]">
+                         <svg className="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                      </div>
+                    )}
                     {/* Luxury Inner Border Accent */}
                     <div className="absolute inset-3 border border-[#D3AE3E]/30 z-20 pointer-events-none transition-all duration-500 group-hover:inset-4 group-hover:border-[#D3AE3E]/60 rounded-[2px]"></div>
 
@@ -148,7 +122,7 @@ export default function SectionHotProducts() {
                     {/* Content at Bottom */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 z-20">
                       <div className="w-8 h-[2px] bg-[#C7A25C] mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100" />
-                      <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-2 leading-snug drop-shadow-md">
+                      <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-2 leading-snug drop-shadow-md line-clamp-2">
                         {product.name}
                       </h3>
                       <div className="mt-4 pt-4 border-t border-white/20 relative z-20">

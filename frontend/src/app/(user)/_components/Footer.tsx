@@ -1,30 +1,16 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
 import SectionStarryMotif from './SectionStarryMotif';
-
-const RECENT_POSTS = [
-  {
-    id: 1,
-    title: 'Gu thẩm mỹ tinh tế: Kiến trúc & Nội thất',
-    date: '26 Tháng 02, 2024',
-    img: '/images/blog/post-1.jpg',
-    link: '#'
-  },
-  {
-    id: 2,
-    title: '5 điều bạn nên biết về nội thất hiện đại',
-    date: '28 Tháng 08, 2023',
-    img: '/images/blog/post-2.jpg',
-    link: '#'
-  }
-];
+import { format } from 'date-fns';
+import { vi } from 'date-fns/locale';
 
 const SERVICES = [
-  { name: 'Thiết kế Nội thất', link: '#' },
-  { name: 'Mô hình Kiến trúc', link: '#' },
-  { name: 'Kết xuất Công trình', link: '#' },
-  { name: 'Công trình Cảnh quan', link: '#' }
+  { name: 'Hệ Sinh Thái Đơn Vị', link: '/he-sinh-thai' },
+  { name: 'Dịch Vụ Giám Sát', link: '/giam-sat' },
+  { name: 'Quy Trình Làm Việc', link: '/quy-trinh' },
+  { name: 'Cẩm Nang Nội Thất', link: '/cam-nang' }
 ];
 
 const GALLERY = [
@@ -37,6 +23,45 @@ const GALLERY = [
 ];
 
 export default function Footer() {
+  const [recentPosts, setRecentPosts] = useState<any[]>([]);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(true);
+
+  useEffect(() => {
+    const fetchRecentPosts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1';
+        const res = await fetch(`${apiUrl}/articles`);
+        if (!res.ok) {
+          throw new Error('API error');
+        }
+
+        const text = await res.text();
+        if (!text || text.startsWith('<')) {
+          throw new Error('Invalid JSON response');
+        }
+
+        const data = JSON.parse(text);
+        if (Array.isArray(data)) {
+          const publishedPosts = data.filter((article: any) => article.status === 'PUBLISHED');
+          const mappedPosts = publishedPosts.slice(0, 2).map((article: any, index: number) => ({
+            id: article.id,
+            title: article.title,
+            date: format(new Date(article.createdAt), 'dd MMMM, yyyy', { locale: vi }),
+            img: article.thumbnail || `/images/blog/post-${(index % 2) + 1}.jpg`,
+            link: `/cam-nang/${article.slug || article.id}`
+          }));
+          setRecentPosts(mappedPosts);
+        }
+      } catch (error) {
+        console.error('Failed to fetch recent posts for footer', error);
+      } finally {
+        setIsLoadingPosts(false);
+      }
+    };
+
+    fetchRecentPosts();
+  }, []);
+
   return (
     <footer className="overflow-hidden bg-[#FAF8F2]/80 dark:bg-black/40 backdrop-blur-xl pt-24 pb-8 border-t border-[#D3AE3E]/10 dark:border-white/5 relative z-10 supports-[backdrop-filter]:bg-[#FAF8F2]/60 dark:supports-[backdrop-filter]:bg-[#0a0a0a]/40 shadow-[0_-8px_30px_rgba(211,174,62,0.03)] dark:shadow-[0_-8px_30px_rgba(0,0,0,0.4)]">
       <SectionStarryMotif />
@@ -79,21 +104,27 @@ export default function Footer() {
               Bài viết mới nhất
             </h3>
             <div className="space-y-6">
-              {RECENT_POSTS.map(post => (
-                <div key={post.id} className="flex gap-4 group cursor-pointer">
-                  <div className="w-20 h-20 shrink-0 overflow-hidden bg-gray-100 dark:bg-[#1a1a1a]">
-                    <img src={post.img} alt="Post Thumbnail" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              {isLoadingPosts ? (
+                <div className="text-gray-500 text-[13px]">Đang tải...</div>
+              ) : recentPosts.length > 0 ? (
+                recentPosts.map(post => (
+                  <div key={post.id} className="flex gap-4 group cursor-pointer">
+                    <div className="w-20 h-20 shrink-0 overflow-hidden bg-gray-100 dark:bg-[#1a1a1a]">
+                      <img src={post.img} alt="Post Thumbnail" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <div>
+                      <h4 className="text-[14px] font-bold text-gray-900 dark:text-white leading-snug mb-2 group-hover:text-[#D3AE3E] transition-colors line-clamp-2">
+                        <Link href={post.link}>{post.title}</Link>
+                      </h4>
+                      <p className="font-label text-gray-500 dark:text-[#888] text-[12px] uppercase tracking-wider">
+                        {post.date}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-[14px] font-bold text-gray-900 dark:text-white leading-snug mb-2 group-hover:text-[#D3AE3E] transition-colors line-clamp-2">
-                      <Link href={post.link}>{post.title}</Link>
-                    </h4>
-                    <p className="font-label text-gray-500 dark:text-[#888] text-[12px] uppercase tracking-wider">
-                      {post.date}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="text-gray-500 text-[13px]">Chưa có bài viết nào</div>
+              )}
             </div>
           </ScrollReveal>
 

@@ -16,11 +16,7 @@ export default function Blog() {
         const res = await fetch(`${apiUrl}/articles`);
         if (!res.ok) {
           console.error('API error status:', res.status, res.statusText);
-          const errorText = await res.text();
-          console.error('API error text:', errorText);
-          throw new Error('API error');
         }
-
         const text = await res.text();
         if (!text || text.startsWith('<')) {
           throw new Error('Invalid JSON response');
@@ -28,17 +24,18 @@ export default function Blog() {
 
         const data = JSON.parse(text);
         if (Array.isArray(data)) {
-          // Map backend data to UI format
-          const mappedPosts = data.slice(0, 2).map((article: any, index: number) => ({
+          // Filter out unpublished and unfeatured articles, then get the latest 2
+          const publishedFeaturedPosts = data.filter((article: any) => article.status === 'PUBLISHED' && article.isFeatured);
+          const mappedPosts = publishedFeaturedPosts.slice(0, 2).map((article: any, index: number) => ({
             id: article.id,
-            img: `/images/blog/post-${(index % 2) + 1}.jpg`, // Use placeholder images
+            img: article.thumbnail || `/images/blog/post-${(index % 2) + 1}.jpg`, // Use thumbnail or placeholder
             date: format(new Date(article.createdAt), 'MMMM dd, yyyy'),
             tags: [article.category],
             title: article.title,
             excerpt: article.content ? article.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : 'Nội dung bài viết đang được cập nhật...',
-            author: 'Chuyên gia HỆ SINH THÁI',
+            author: article.author || 'Chuyên gia HỆ SINH THÁI',
             categories: [article.category],
-            comments: `${article.views} Lượt xem`,
+            comments: `${article.views || 0} Lượt xem`,
             link: '#',
             imageLeft: index % 2 === 0
           }));

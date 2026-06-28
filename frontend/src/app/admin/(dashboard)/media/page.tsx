@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState, useEffect } from 'react';
 import { Search, Image as ImageIcon, UploadCloud, Trash2, Link as LinkIcon, CheckCircle2, Loader2 } from 'lucide-react';
 import { ImageUploader } from '@/admin-components/ui/image-uploader';
@@ -6,6 +7,7 @@ import apiClient from '@/admin-lib/apiClient';
 import { toast } from 'sonner';
 
 export default function MediaLibraryPage() {
+  const { confirm } = useConfirm();
   const [searchTerm, setSearchTerm] = useState('');
   const [mediaFiles, setMediaFiles] = useState<{ id: string, url: string, name: string, size: number, createdAt: string }[]>([]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -39,15 +41,20 @@ export default function MediaLibraryPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Bạn có chắc chắn muốn xóa file này khỏi hệ thống?')) {
-      try {
+    confirm({
+      title: 'Xác nhận',
+      description: 'Bạn có chắc chắn muốn xóa file này khỏi hệ thống?',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
         await apiClient.delete(`/media/${id}`);
         setMediaFiles(mediaFiles.filter(f => f.id !== id));
         toast.success('Xóa ảnh thành công');
       } catch (error) {
         toast.error('Lỗi khi xóa ảnh');
       }
-    }
+      }
+    })
   };
 
   const handleUploadSuccess = () => {

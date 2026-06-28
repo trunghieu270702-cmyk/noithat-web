@@ -250,9 +250,25 @@ model Product {
   price            Int?
   promotionalPrice Int?
   images           Json?
+  attributes       Json?
   shortDescription String?
   description      String?
   status           String    @default("ACTIVE")
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+}
+
+model PartnershipRequest {
+  id           Int      @id @default(autoincrement())
+  companyName  String
+  contactName  String
+  phone        String
+  email        String
+  location     String
+  experience   String
+  portfolioUrl String
+  notes        String?
+  status       String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

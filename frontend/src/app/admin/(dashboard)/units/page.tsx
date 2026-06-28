@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Plus, Filter, Edit, Trash2, Building2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, MapPin, Phone, Loader2, FolderOpen } from 'lucide-react';
@@ -25,13 +26,13 @@ const STATUS_MAP: Record<string, string> = {
 };
 
 const PARTNER_TYPES = [
-  { value: 'Đối tác cung cấp', label: 'Đối tác cung cấp' },
+  { value: 'Đối tác thiết kế', label: 'Đối tác thiết kế' },
   { value: 'Đối tác thi công', label: 'Đối tác thi công' },
   { value: 'Hạng mục phụ', label: 'Hạng mục phụ' }
 ];
 
 const PARTNER_CATEGORIES: Record<string, { value: string, label: string }[]> = {
-  'Đối tác cung cấp': [
+  'Đối tác thiết kế': [
     { value: 'Nội thất', label: 'Nội thất' },
     { value: 'Ngoại thất', label: 'Ngoại thất' },
     { value: 'Cả 2', label: 'Cả 2' }
@@ -45,6 +46,7 @@ const PARTNER_CATEGORIES: Record<string, { value: string, label: string }[]> = {
 };
 
 export default function UnitsPage() {
+  const { confirm } = useConfirm();
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -100,7 +102,7 @@ export default function UnitsPage() {
     slug: '',
     segment: 'trung-cap',
     location: '',
-    projectType: 'Đối tác cung cấp',
+    projectType: 'Đối tác thiết kế',
     style: 'Nội thất',
     experience: 0,
     status: 'ACTIVE',
@@ -290,13 +292,38 @@ export default function UnitsPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Bạn có chắc chắn muốn xóa đơn vị này?')) return;
-    try {
+    confirm({
+      title: 'Xác nhận xóa',
+      description: 'Bạn có chắc chắn muốn xóa đơn vị này?',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
       await apiClient.delete(`/units/${id}`);
       fetchUnitsAndCategories();
     } catch (error) {
       console.error('Failed to delete unit:', error);
     }
+      }
+    });
+  };
+
+  const handleBulkDelete = async () => {
+    confirm({
+      title: 'Xác nhận xóa hàng loạt',
+      description: `Bạn có chắc chắn muốn xóa ${selectedIds.length} đơn vị đã chọn?`,
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
+      await Promise.all(selectedIds.map(id => apiClient.delete(`/units/${id}`)));
+      setSelectedIds([]);
+      fetchUnitsAndCategories();
+      toast.success('Đã xóa thành công!');
+    } catch (error) {
+      console.error('Failed to delete units:', error);
+      toast.error('Lỗi khi xóa đơn vị');
+    }
+      }
+    });
   };
 
   const SortIcon = ({ columnKey }: { columnKey: string }) => {
@@ -343,6 +370,15 @@ export default function UnitsPage() {
 
           {/* Action Buttons Group */}
           <div className="flex items-center gap-2 justify-end">
+            {selectedIds.length > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                Xóa ({selectedIds.length})
+              </button>
+            )}
             <button
               onClick={() => {
                 setModalMode('add');

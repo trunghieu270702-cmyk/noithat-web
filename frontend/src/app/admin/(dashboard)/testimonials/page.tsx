@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState } from 'react';
 import { Search, Star, Plus, Edit, Trash2, X, CheckCircle2, ChevronLeft, ChevronRight, Image as ImageIcon, Check, Filter, ChevronDown, ChevronUp, User, FolderKanban, RotateCcw } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
@@ -13,6 +14,7 @@ const STATUS_MAP: Record<string, string> = {
 };
 
 export default function TestimonialsPage() {
+  const { confirm } = useConfirm();
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -131,14 +133,39 @@ export default function TestimonialsPage() {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('Bạn có chắc chắn muốn xóa đánh giá này?')) return;
-    try {
+    const handleBulkDelete = async () => {
+    confirm({
+      title: 'Xác nhận xóa hàng loạt',
+      description: `Bạn có chắc chắn muốn xóa ${selectedIds.length} mục đã chọn?`,
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
+      await Promise.all(selectedIds.map(id => apiClient.delete(`/testimonials/${id}`)));
+      setSelectedIds([]);
+      fetchTestimonials();
+      toast.success('Đã xóa thành công!');
+    } catch (error) {
+      console.error('Failed to bulk delete:', error);
+      toast.error('Lỗi khi xóa');
+    }
+      }
+    });
+  };
+
+const handleDelete = async (id: number) => {
+    confirm({
+      title: 'Xác nhận xóa',
+      description: 'Bạn có chắc chắn muốn xóa đánh giá này?',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
       await apiClient.delete(`/testimonials/${id}`);
       fetchTestimonials();
     } catch (error) {
       console.error('Failed to delete testimonial:', error);
     }
+      }
+    });
   };
 
   const toggleFeatured = async (testimonial: any) => {
@@ -182,6 +209,15 @@ export default function TestimonialsPage() {
           </div>
 
           <div className="flex items-center gap-2 justify-end">
+            {selectedIds.length > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                Xóa ({selectedIds.length})
+              </button>
+            )}
             <button
               onClick={() => {
                 setModalMode('add');

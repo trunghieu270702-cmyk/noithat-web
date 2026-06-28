@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState } from 'react';
 import { Search, FileSearch, Plus, Edit, Trash2, X, Check, CheckCircle2, ChevronLeft, ChevronRight, BarChart2 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
@@ -8,6 +9,7 @@ import CustomDropdown from '@/admin-components/ui/CustomDropdown';
 import { toast } from 'sonner';
 
 export default function SeoPages() {
+  const { confirm } = useConfirm();
   const [pages, setPages] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -120,8 +122,12 @@ export default function SeoPages() {
   };
 
   const handleDelete = async (id: string | number) => {
-    if (confirm('Bạn có chắc chắn muốn xóa trang SEO này?')) {
-      try {
+    confirm({
+      title: 'Xác nhận',
+      description: 'Bạn có chắc chắn muốn xóa trang SEO này?',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
         await apiClient.delete(`/seopages/${id}`);
         if (currentData.length === 1 && currentPage > 1) {
           setCurrentPage(currentPage - 1);
@@ -130,7 +136,8 @@ export default function SeoPages() {
       } catch (error) {
         console.error('Failed to delete SEO page:', error);
       }
-    }
+      }
+    })
   };
 
   const handleQuickPublish = async (page: any) => {

@@ -39,7 +39,7 @@ export default function FloatingContact() {
 
       {/* Zalo Button */}
       <Link
-        href="https://zalo.me/0999999999"
+        href="https://zalo.me/0965743949"
         target="_blank"
         rel="noopener noreferrer"
         className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 btn-glow-motion relative group overflow-hidden"
@@ -53,7 +53,7 @@ export default function FloatingContact() {
 
       {/* Messenger Button */}
       <Link
-        href="https://m.me/yourpage"
+        href="https://m.me/61591340093069"
         target="_blank"
         rel="noopener noreferrer"
         className="w-[52px] h-[52px] bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 btn-glow-motion relative group overflow-hidden"

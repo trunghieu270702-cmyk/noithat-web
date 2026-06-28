@@ -10,14 +10,18 @@ export default function SectionPartners() {
   const [isLoading, setIsLoading] = useState(true);
 
   const getAvatarUrl = (avatar: any) => {
-    if (Array.isArray(avatar) && avatar.length > 0) return avatar[0].url;
+    if (Array.isArray(avatar) && avatar.length > 0) {
+      return typeof avatar[0] === 'string' ? avatar[0] : avatar[0].url;
+    }
     if (typeof avatar === 'string') {
       try {
         const parsed = JSON.parse(avatar);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].url;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return typeof parsed[0] === 'string' ? parsed[0] : parsed[0].url;
+        }
       } catch (e) { return avatar; }
     }
-    return avatar?.url || null;
+    return avatar?.url || avatar || null;
   };
 
   useEffect(() => {
@@ -26,8 +30,11 @@ export default function SectionPartners() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/units`);
         const data = await res.json();
         if (Array.isArray(data)) {
+          const filtered = data.filter((u: any) => 
+            u.projectType && (u.projectType.toLowerCase().includes('thi công') || u.projectType.toLowerCase().includes('thiết kế'))
+          );
           // Lấy 6 đơn vị đầu tiên để hiển thị trang chủ
-          setPartners(data.slice(0, 6));
+          setPartners(filtered.slice(0, 6));
         }
       } catch (error) {
         console.error('Failed to fetch partners:', error);
@@ -58,7 +65,7 @@ export default function SectionPartners() {
             <Link href={`/don-vi-thiet-ke/${partner.id}`} key={partner.id} className="flex flex-col items-center justify-center p-6 card dark:bg-[#1a1a1a] dark:hover:bg-white/10 border border-[#ECE7DE] dark:border-white/20 hover:border-[#C7A25C]/50 transition-all duration-300 group cursor-pointer hover:-translate-y-1 hover:shadow-lg luxury-glow rounded-[4px]">
               <div className="w-20 h-20 mb-4 text-gray-400 dark:text-white/40 group-hover:text-[#C7A25C] transition-all rounded-full overflow-hidden border border-[#ECE7DE] dark:border-white/10 flex items-center justify-center bg-white shadow-sm p-2 shadow-[0_5px_15px_rgba(0,0,0,0.05)] dark:shadow-[0_5px_15px_rgba(0,0,0,0.3)]">
                 {getAvatarUrl(partner.avatar) ? (
-                  <img src={getAvatarUrl(partner.avatar)} alt={partner.name} className="w-full h-full object-contain" />
+                  <img src={getAvatarUrl(partner.avatar)} alt={partner.name} className="w-full h-full object-contain filter drop-shadow-[0_0_2px_rgba(150,150,150,0.8)] dark:drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]" />
                 ) : (
                   <span className="text-xl font-heading font-bold text-[#D3AE3E]">{partner.name.substring(0, 2).toUpperCase()}</span>
                 )}

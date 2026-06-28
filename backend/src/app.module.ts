@@ -20,6 +20,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { MediaModule } from './media/media.module';
 import { OperationsModule } from './operations/operations.module';
 import { ProductsModule } from './products/products.module';
+import { PartnershipRequestsModule } from './partnership-requests/partnership-requests.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { ProductsModule } from './products/products.module';
     MediaModule,
     OperationsModule,
     ProductsModule,
+    PartnershipRequestsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

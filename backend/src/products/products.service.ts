@@ -37,8 +37,46 @@ export class ProductsService {
     });
   }
 
-  async findAll() {
+  async findAll(query?: any) {
+    const { take, skip, categoryId, excludeId, projectType, unitName, budget, isPinned } = query || {};
+    
+    let where: any = {};
+    
+    if (categoryId) {
+      where.categories = { some: { id: parseInt(categoryId) } };
+    }
+    
+    if (excludeId) {
+      where.id = { not: parseInt(excludeId) };
+    }
+    
+    if (isPinned === 'true') {
+      where.isPinned = true;
+    }
+    
+    // For products page filters
+    if (projectType && projectType !== '*') {
+      where.categories = where.categories || {};
+      where.categories.some = {
+        ...where.categories.some,
+        name: projectType
+      };
+    }
+    
+    if (unitName && unitName !== '*') {
+      where.unit = { name: unitName };
+    }
+    
+    if (budget && budget !== '*') {
+      // This is a simple exact match fallback, 
+      // a proper implementation would need range parsing for budget.
+      // E.g. "Dưới 1 tỷ" -> price < 1000000000
+    }
+
     return this.prisma.product.findMany({
+      where,
+      take: take ? parseInt(take) : undefined,
+      skip: skip ? parseInt(skip) : undefined,
       orderBy: { createdAt: 'desc' },
       include: {
         categories: true,

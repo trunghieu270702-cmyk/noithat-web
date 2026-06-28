@@ -13,18 +13,17 @@ const CATEGORIES = [
   { name: 'Biệt thự', img: '/images/main/villa2.jpg', size: 'aspect-square' },
   { name: 'Penthouse', img: '/images/main/pen3.jpg', size: 'md:col-span-2 aspect-[2/1] md:aspect-auto' },
   { name: 'Văn phòng', img: '/images/main/office.jpg', size: 'aspect-square' },
-  { name: 'Showroom', img: '/images/main/spa2.jpg', size: 'aspect-square' },
+  { name: 'Showroom', img: '/images/main/26.jpg', size: 'aspect-square' },
   { name: 'Cửa hàng bán lẻ', img: '/images/main/store.jpg', size: 'aspect-square' },
   { name: 'Spa, salon, phòng khám', img: '/images/main/spa1.jpg', size: 'md:col-span-2 aspect-[2/1] md:aspect-auto' },
   { name: 'Nhà hàng, quán cafe', img: '/images/main/cafe.jpg', size: 'aspect-square' },
-  { name: 'Công trình nghỉ dưỡng nhỏ', img: '/images/main/rancho-cp-weber-arquitectos_25.jpg', size: 'md:col-span-2 aspect-[2/1] md:aspect-auto' },
-  { name: 'Khách sạn', img: '/images/main/sofa.jpg', size: 'aspect-square' }
+  { name: 'Công trình nghỉ dưỡng nhỏ', img: '/images/main/banner-d3.jpg', size: 'md:col-span-2 aspect-[2/1] md:aspect-auto' },
+  { name: 'Khách sạn', img: '/images/main/banner-l4.jpg', size: 'aspect-square' }
 ];
 
 export default function Section7Categories() {
   return (
     <section id="Categories" className="relative py-32 bg-transparent dark:bg-transparent modern-section overflow-hidden border-t border-[#ECE7DE] dark:border-white/20">
-      <SectionStarryMotif />
       {/* Grid Pattern Background */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"

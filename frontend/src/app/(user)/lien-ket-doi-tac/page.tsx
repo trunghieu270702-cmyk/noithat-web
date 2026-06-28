@@ -23,18 +23,18 @@ export default function PartnerRegistrationPage() {
     setIsSubmitting(true);
 
     try {
-      // Use existing lead API but mark source as Partner Registration
       const payload = {
-        customerName: formData.contactName + ' (' + formData.companyName + ')',
+        companyName: formData.companyName,
+        contactName: formData.contactName,
         phone: formData.phone,
         email: formData.email,
         location: formData.location,
-        notes: `ĐĂNG KÝ ĐỐI TÁC:\nKinh nghiệm: ${formData.experience}\nPortfolio: ${formData.portfolioUrl}\nGhi chú: ${formData.notes}`,
-        status: 'NEW',
-        source: 'Đăng ký đối tác'
+        experience: formData.experience,
+        portfolioUrl: formData.portfolioUrl,
+        notes: formData.notes
       };
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/leads`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3001/api/v1'}/partnership-requests`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

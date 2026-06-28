@@ -108,7 +108,7 @@ export default function ArticleDetail() {
   const tagsList = article.tags ? article.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
 
   return (
-    <div className="relative pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
+    <div className="relative overflow-hidden pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-24 modern-section min-h-screen">
       {/* Ambient Light Blobs for WOW Effect */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-[#D3AE3E]/15 blur-[120px]" />
@@ -116,7 +116,7 @@ export default function ArticleDetail() {
         <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[40%] rounded-full bg-[#D3AE3E]/10 blur-[150px]" />
       </div>
 
-      <SectionStarryMotif position="random-corner" />
+      <SectionStarryMotif position="full" particleCount={150} />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6">
 
@@ -175,7 +175,14 @@ export default function ArticleDetail() {
         <article
           className="prose prose-lg dark:prose-invert max-w-none text-gray-600 dark:text-[#bbb] 
                      prose-headings:font-heading prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white 
-                     prose-a:text-[#D3AE3E] prose-img:rounded-[4px] prose-img:shadow-sm"
+                     prose-a:text-[#D3AE3E] prose-a:no-underline hover:prose-a:underline
+                     prose-img:rounded-[4px] prose-img:shadow-sm
+                     prose-li:marker:text-[#D3AE3E] prose-ul:list-disc prose-ol:list-decimal
+                     prose-blockquote:border-l-[#D3AE3E] prose-blockquote:bg-[#FAF8F2] dark:prose-blockquote:bg-[#1a1a1a] prose-blockquote:py-3 prose-blockquote:px-6 prose-blockquote:rounded-r-[4px] prose-blockquote:text-gray-800 dark:prose-blockquote:text-gray-300 prose-blockquote:font-medium prose-blockquote:shadow-sm
+                     prose-table:border-collapse prose-table:w-full prose-table:rounded-[4px] prose-table:overflow-hidden prose-table:shadow-sm
+                     prose-th:bg-[#FAF8F2] dark:prose-th:bg-[#1a1a1a] prose-th:text-gray-900 dark:prose-th:text-[#D3AE3E] prose-th:font-bold prose-th:p-4 prose-th:text-left prose-th:border-b-2 prose-th:border-[#D3AE3E]/30
+                     prose-td:p-4 prose-td:border-b prose-td:border-[#D3AE3E]/10 prose-td:text-gray-700 dark:prose-td:text-gray-300
+                     prose-tr:transition-colors hover:prose-tr:bg-[#FAF8F2]/50 dark:hover:prose-tr:bg-white/5"
           dangerouslySetInnerHTML={{ __html: article.content || '<p>Nội dung đang được cập nhật...</p>' }}
         />
 

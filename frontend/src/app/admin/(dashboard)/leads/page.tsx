@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState } from 'react';
 import { Search, Filter, MessageSquare, CheckCircle2, Plus, Edit, Trash2, X, ChevronLeft, ChevronRight, Phone, MapPin, Calendar, User, FileText, ArrowRightCircle, Check, ArrowUpDown, ChevronDown, ChevronUp, Activity, Tags, RotateCcw, Eye, Link2 } from 'lucide-react';
 import apiClient from '@/admin-lib/apiClient';
@@ -22,6 +23,7 @@ const CLASS_MAP: Record<string, string> = {
 };
 
 export default function LeadsPage() {
+  const { confirm } = useConfirm();
   const [data, setData] = useState<any[]>([]);
   const [units, setUnits] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -166,14 +168,39 @@ export default function LeadsPage() {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm('Bạn có chắc chắn muốn xóa yêu cầu này?')) return;
-    try {
+    const handleBulkDelete = async () => {
+    confirm({
+      title: 'Xác nhận xóa hàng loạt',
+      description: `Bạn có chắc chắn muốn xóa ${selectedIds.length} mục đã chọn?`,
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
+      await Promise.all(selectedIds.map(id => apiClient.delete(`/leads/${id}`)));
+      setSelectedIds([]);
+      fetchLeads();
+      toast.success('Đã xóa thành công!');
+    } catch (error) {
+      console.error('Failed to bulk delete:', error);
+      toast.error('Lỗi khi xóa');
+    }
+      }
+    });
+  };
+
+const handleDelete = async (id: number) => {
+    confirm({
+      title: 'Xác nhận xóa',
+      description: 'Bạn có chắc chắn muốn xóa yêu cầu này?',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
       await apiClient.delete(`/leads/${id}`);
       fetchLeads();
     } catch (error) {
       console.error('Failed to delete lead:', error);
     }
+      }
+    });
   };
 
   return (
@@ -208,6 +235,15 @@ export default function LeadsPage() {
           </div>
 
           <div className="flex items-center gap-2 justify-end">
+            {selectedIds.length > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                Xóa ({selectedIds.length})
+              </button>
+            )}
             <button
               onClick={() => {
                 setModalMode('add');

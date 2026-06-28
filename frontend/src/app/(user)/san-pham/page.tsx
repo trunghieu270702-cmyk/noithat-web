@@ -120,7 +120,7 @@ export default function SanPhamPage() {
         if (activeFilters.unit !== '*') params.append('unitName', activeFilters.unit);
         if (activeFilters.price !== '*') params.append('budget', activeFilters.price);
 
-        const res = await fetch(`${apiUrl}/projects?${params.toString()}`);
+        const res = await fetch(`${apiUrl}/products?${params.toString()}`, { cache: 'no-store' });
         if (!res.ok) throw new Error('API error');
 
         const data = await res.json();
@@ -129,13 +129,13 @@ export default function SanPhamPage() {
           const fetchedProducts = data.map((p: any) => {
             return {
               id: p.id,
-              title: p.name,
-              img: '', // Removed image as requested
-              categories: [p.projectType || 'Khác'],
-              price: p.budget || 'Liên hệ',
+              title: p.name || p.title,
+              img: p.images && p.images.length > 0 ? p.images[0] : '', 
+              categories: p.categories ? p.categories.map((c:any) => c.name) : ['Khác'],
+              price: p.price || p.promotionalPrice || 'Liên hệ',
               link: `/san-pham/${p.id}`,
-              unitName: p.unitName || 'ArcViet',
-              unitLogo: '/images/logo-main.png'
+              unitName: p.unit?.name || 'ArcViet',
+              unitLogo: p.unit?.avatar ? (Array.isArray(p.unit.avatar) ? p.unit.avatar[0] : p.unit.avatar) : '/images/logo-main.png'
             };
           });
 
@@ -275,10 +275,13 @@ export default function SanPhamPage() {
               {products.map((item, index) => (
                 <Link href={item.link} key={`${item.id}-${index}`} className="group flex flex-col bg-white dark:bg-[#131313] border border-[#ECE7DE] dark:border-white/5 rounded-[2px] overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-500 luxury-glow relative">
                   <div className="aspect-[4/3] relative overflow-hidden bg-gray-50 dark:bg-white/5">
-                    {/* Placeholder no-image */}
-                    <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-600">
-                       <svg className="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    </div>
+                    {item.img ? (
+                      <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-300 dark:text-gray-600">
+                         <svg className="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                      </div>
+                    )}
                     
                     <div className="absolute top-4 left-4 bg-[#D3AE3E] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 shadow-md z-20">Mới nhất</div>
                     
@@ -298,7 +301,7 @@ export default function SanPhamPage() {
                           e.preventDefault();
                           e.stopPropagation();
                           setSelectedProductName(item.title);
-                          setSelectedProductImage('');
+                          setSelectedProductImage(item.img);
                           setIsQuoteModalOpen(true);
                         }}
                         className="flex items-center justify-center gap-2 w-full bg-[#FAF8F2] dark:bg-[#131313] border border-[#E5C98A]/50 dark:border-[#C7A25C]/30 text-[#C7A25C] font-bold uppercase tracking-wider text-[11px] py-3 rounded-[2px] group-hover:bg-[#C7A25C] group-hover:text-white group-hover:border-[#C7A25C] hover:bg-[#C7A25C] hover:text-white hover:border-[#C7A25C] transition-all duration-300"

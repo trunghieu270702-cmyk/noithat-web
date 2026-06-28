@@ -1,4 +1,5 @@
 "use client";
+import { useConfirm } from '@/hooks/useConfirm';
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Plus, Filter, Edit, Trash2, Building2, X, ChevronLeft, ChevronRight, Check, ArrowUpDown, ChevronDown, ChevronUp, MapPin, Phone, Loader2, FolderOpen } from 'lucide-react';
@@ -25,13 +26,13 @@ const STATUS_MAP: Record<string, string> = {
 };
 
 const PARTNER_TYPES = [
-  { value: 'Đối tác cung cấp', label: 'Đối tác cung cấp' },
+  { value: 'Đối tác thiết kế', label: 'Đối tác thiết kế' },
   { value: 'Đối tác thi công', label: 'Đối tác thi công' },
   { value: 'Hạng mục phụ', label: 'Hạng mục phụ' }
 ];
 
 const PARTNER_CATEGORIES: Record<string, { value: string, label: string }[]> = {
-  'Đối tác cung cấp': [
+  'Đối tác thiết kế': [
     { value: 'Nội thất', label: 'Nội thất' },
     { value: 'Ngoại thất', label: 'Ngoại thất' },
     { value: 'Cả 2', label: 'Cả 2' }
@@ -45,6 +46,7 @@ const PARTNER_CATEGORIES: Record<string, { value: string, label: string }[]> = {
 };
 
 export default function ProductsPage() {
+  const { confirm } = useConfirm();
   const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
@@ -62,7 +64,7 @@ export default function ProductsPage() {
       setData(Array.isArray(resProducts.data) ? resProducts.data : []);
       // Only keep Unit categories
       setCategories(Array.isArray(resCategories.data) ? resCategories.data.filter(c => c.type === 'Đơn vị' || c.type === 'Lĩnh vực công trình') : []);
-      setUnits(Array.isArray(resUnits.data) ? resUnits.data.filter(u => u.projectType === 'Đối tác cung cấp' || u.projectType === 'Cả 2') : []);
+      setUnits(Array.isArray(resUnits.data) ? resUnits.data.filter(u => u.projectType === 'Đối tác thiết kế' || u.projectType === 'Cả 2') : []);
     } catch (error) {
       console.error('Failed to fetch data:', error);
     } finally {
@@ -109,6 +111,7 @@ export default function ProductsPage() {
     description: '',
     images: [] as string[],
     categoryIds: [] as number[],
+    attributes: [] as { name: string, value: string }[],
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -270,26 +273,54 @@ export default function ProductsPage() {
         if (!createData.productId) createData.productId = `UN${Math.floor(Math.random() * 1000)}`;
         if (!createData.slug) createData.slug = createData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.post('/products', createData);
+        toast.success('Thêm sản phẩm thành công!');
       } else {
         const { id, ...updateData } = formData;
         if (!updateData.slug) updateData.slug = updateData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Math.floor(Math.random() * 10000);
         await apiClient.patch(`/products/${id}`, updateData);
+        toast.success('Lưu thay đổi thành công!');
       }
       setIsDrawerOpen(false);
       fetchProductsAndCategories();
     } catch (error) {
       console.error('Failed to save unit:', error);
+      toast.error('Lỗi khi lưu sản phẩm');
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Bạn có chắc chắn muốn xóa đơn vị này?')) return;
-    try {
+    confirm({
+      title: 'Xác nhận xóa',
+      description: 'Bạn có chắc chắn muốn xóa đơn vị này?',
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
       await apiClient.delete(`/products/${id}`);
       fetchProductsAndCategories();
     } catch (error) {
       console.error('Failed to delete unit:', error);
     }
+      }
+    });
+  };
+
+  const handleBulkDelete = async () => {
+    confirm({
+      title: 'Xác nhận xóa hàng loạt',
+      description: `Bạn có chắc chắn muốn xóa ${selectedIds.length} sản phẩm đã chọn?`,
+      variant: 'danger',
+      onConfirm: async () => {
+        try {
+      await Promise.all(selectedIds.map(id => apiClient.delete(`/products/${id}`)));
+      setSelectedIds([]);
+      fetchProductsAndCategories();
+      toast.success('Đã xóa thành công!');
+    } catch (error) {
+      console.error('Failed to delete products:', error);
+      toast.error('Lỗi khi xóa sản phẩm');
+    }
+      }
+    });
   };
 
   const SortIcon = ({ columnKey }: { columnKey: string }) => {
@@ -336,11 +367,20 @@ export default function ProductsPage() {
 
           {/* Action Buttons Group */}
           <div className="flex items-center gap-2 justify-end">
+            {selectedIds.length > 0 && (
+              <button
+                onClick={handleBulkDelete}
+                className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-[4px] text-sm font-medium transition-colors border-0 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                Xóa ({selectedIds.length})
+              </button>
+            )}
             <button
               onClick={() => {
                 setModalMode('add');
                 setFormData({
-                  id: 0, productId: '', name: '', slug: '', unitId: null, price: 0, promotionalPrice: 0, status: 'ACTIVE', shortDescription: '', description: '', images: [], categoryIds: []
+                  id: 0, productId: '', name: '', slug: '', unitId: null, price: 0, promotionalPrice: 0, status: 'ACTIVE', shortDescription: '', description: '', images: [], categoryIds: [], attributes: []
                 });
                 setErrors({});
                 setActiveTab('basic');
@@ -612,7 +652,7 @@ export default function ProductsPage() {
                         onClick={() => {
                           setModalMode('add');
                           setFormData({
-                            id: 0, productId: '', name: '', slug: '', unitId: null, price: 0, promotionalPrice: 0, status: 'ACTIVE', shortDescription: '', description: '', images: [], categoryIds: []
+                            id: 0, productId: '', name: '', slug: '', unitId: null, price: 0, promotionalPrice: 0, status: 'ACTIVE', shortDescription: '', description: '', images: [], categoryIds: [], attributes: []
                           });
                           setErrors({});
                           setActiveTab('basic');
@@ -702,7 +742,8 @@ export default function ProductsPage() {
                                   promotionalPrice: (unit as any).promotionalPrice || 0,
                                   unitId: (unit as any).unitId || null,
                                   images: (unit as any).images || [],
-                                  categoryIds: (unit as any).categories?.map((c: any) => c.id) || []
+                                  categoryIds: (unit as any).categories?.map((c: any) => c.id) || [],
+                                  attributes: Array.isArray((unit as any).attributes) ? (unit as any).attributes : []
                                 });
                                 setErrors({});
                                 setActiveTab('basic');
@@ -841,12 +882,71 @@ export default function ProductsPage() {
                     />
                   </div>
 
-                  <div className="space-y-1.5">
+                  <div className="space-y-5 pt-6 border-t border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-xs font-medium text-[#5865f2] dark:text-[#5865f2] uppercase tracking-wider flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#5865f2]"></span>
+                        Thông số kỹ thuật
+                      </h3>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, attributes: [...(formData.attributes || []), { name: '', value: '' }] })}
+                        className="text-xs text-[#5865f2] font-medium hover:underline flex items-center gap-1"
+                      >
+                        <Plus className="w-3 h-3" /> Thêm thuộc tính
+                      </button>
+                    </div>
+                    
+                    {formData.attributes && formData.attributes.length > 0 ? (
+                      <div className="space-y-3">
+                        {formData.attributes.map((attr, index) => (
+                          <div key={index} className="flex items-start gap-3">
+                            <input
+                              type="text"
+                              value={attr.name}
+                              onChange={(e) => {
+                                const newAttr = [...formData.attributes];
+                                newAttr[index].name = e.target.value;
+                                setFormData({ ...formData, attributes: newAttr });
+                              }}
+                              className="w-1/3 px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40"
+                              placeholder="Tên (VD: Màu sắc)"
+                            />
+                            <input
+                              type="text"
+                              value={attr.value}
+                              onChange={(e) => {
+                                const newAttr = [...formData.attributes];
+                                newAttr[index].value = e.target.value;
+                                setFormData({ ...formData, attributes: newAttr });
+                              }}
+                              className="w-full px-3 bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm h-10 rounded-[4px] text-gray-900 dark:text-white transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:border-[#5865f2]/40"
+                              placeholder="Giá trị (VD: Nâu đen)"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const newAttr = formData.attributes.filter((_, i) => i !== index);
+                                setFormData({ ...formData, attributes: newAttr });
+                              }}
+                              className="p-2.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-[4px] transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-sm text-gray-500 dark:text-gray-400 italic">Chưa có thuộc tính nào. Bấm "Thêm thuộc tính" để tạo các thông số kỹ thuật cho sản phẩm.</div>
+                    )}
+                  </div>
+
+                  <div className="space-y-1.5 pt-6 border-t border-gray-100 dark:border-gray-800">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Mô tả ngắn</label>
                     <textarea rows={2} value={formData.shortDescription} onChange={e => setFormData({ ...formData, shortDescription: e.target.value })} className="w-full bg-gray-50/50 dark:bg-[#1a1b23] border border-gray-200 dark:border-gray-700 text-sm rounded-[4px] text-gray-900 dark:text-white p-3 transition-all hover:bg-white dark:hover:bg-[#262930] focus:outline-none focus:ring-[3px] focus:ring-[#5865f2]/20 resize-none h-20" placeholder="Mô tả nhanh gọn..." />
                   </div>
 
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 pt-6 border-t border-gray-100 dark:border-gray-800">
                     <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block mb-1">Thư viện ảnh Sản phẩm</label>
                     <ImageUploader initialImages={formData.images} onUploadSuccess={(urls) => setFormData({ ...formData, images: [...formData.images, ...urls] })} onRemoveImage={(url) => setFormData({ ...formData, images: formData.images.filter(i => i !== url) })} maxFiles={10} />
                   </div>

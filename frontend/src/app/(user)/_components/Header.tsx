@@ -27,21 +27,21 @@ export default function Header() {
             <svg className="w-4 h-4 text-[#D3AE3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
             </svg>
-            <span className="text-[13px] font-medium text-gray-500 dark:text-[#888]">support@noithat.com</span>
+            <span className="text-[13px] font-medium text-gray-500 dark:text-[#888]">arcvietlivingnexus@gmail.com</span>
           </div>
           {/* Phone */}
           <div className="flex items-center gap-3">
             <svg className="w-4 h-4 text-[#D3AE3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
             </svg>
-            <span className="text-[13px] font-medium text-gray-500 dark:text-[#888]">009462 2238, 2248</span>
+            <span className="text-[13px] font-medium text-gray-500 dark:text-[#888]">096 574 39 49</span>
           </div>
           {/* Clock */}
           <div className="flex items-center gap-3">
             <svg className="w-4 h-4 text-[#D3AE3E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <span className="text-[13px] font-medium text-gray-500 dark:text-[#888]">Opening time: Mon-Fri 9:00 AM - 18:00 PM</span>
+            <span className="text-[13px] font-medium text-gray-500 dark:text-[#888]">Thời gian làm việc: T2-T6 9:00 - 18:00</span>
           </div>
         </div>
       </div>
@@ -73,10 +73,10 @@ export default function Header() {
             <Link href="/" className={`font-menu text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>Trang chủ</Link>
 
             <div className="relative group cursor-pointer">
-              <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/he-sinh-thai') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
+              <Link href="/he-sinh-thai" className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/he-sinh-thai') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
                 Hệ sinh thái
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </span>
+              </Link>
               {/* Dropdown Menu */}
               <div className="absolute top-full left-0 mt-6 w-64 bg-white dark:bg-[#131313] border-t-2 border-[#D3AE3E] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
                 <Link href="/he-sinh-thai#gioi-thieu" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Giới thiệu hệ sinh thái</Link>
@@ -89,10 +89,10 @@ export default function Header() {
             </div>
 
             <div className="relative group cursor-pointer">
-              <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/san-pham') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
+              <Link href="/san-pham" className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/san-pham') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
                 Đối tác/Hạng mục
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </span>
+              </Link>
               {/* Dropdown Menu */}
               <div className="absolute top-full left-0 mt-6 w-56 bg-white dark:bg-[#131313] border-t-2 border-[#D3AE3E] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
                 <Link href="/san-pham" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Tất cả sản phẩm</Link>
@@ -103,10 +103,10 @@ export default function Header() {
             </div>
 
             <div className="relative group cursor-pointer">
-              <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/dich-vu') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
+              <Link href="/dich-vu" className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/dich-vu') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
                 Dịch vụ
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </span>
+              </Link>
               {/* Dropdown Menu */}
               <div className="absolute top-full left-0 mt-6 w-56 bg-white dark:bg-[#131313] border-t-2 border-[#D3AE3E] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
                 <Link href="/lien-ket-doi-tac" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Liên kết đối tác</Link>
@@ -115,15 +115,16 @@ export default function Header() {
             </div>
 
             <div className="relative group cursor-pointer">
-              <span className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/cam-nang') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
+              <Link href="/cam-nang" className={`font-menu flex items-center gap-1 text-[13px] font-semibold uppercase tracking-widest transition-colors ${isActive('/cam-nang') ? 'text-[#D3AE3E]' : 'text-gray-900 dark:text-white hover:text-[#D3AE3E]'}`}>
                 Cẩm nang
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-              </span>
+              </Link>
               {/* Dropdown Menu */}
               <div className="absolute top-full left-0 mt-6 w-56 bg-white dark:bg-[#131313] border-t-2 border-[#D3AE3E] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 flex flex-col py-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)]">
-                <Link href="/cam-nang?category=kien-thuc" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Kiến thức nội thất</Link>
-                <Link href="/cam-nang?category=kinh-nghiem" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Kinh nghiệm thi công</Link>
-                <Link href="/cam-nang?category=du-an" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Dự án thực tế</Link>
+                <Link href="/cam-nang" className="font-menu px-5 py-2.5 text-[12px] text-gray-900 dark:text-white font-bold hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Toàn bộ bài viết</Link>
+                <Link href="/cam-nang/danh-muc/kinh-nghiem-xay-nha" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Kinh nghiệm xây nhà</Link>
+                <Link href="/cam-nang/danh-muc/thiet-ke-noi-that" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Thiết kế nội thất</Link>
+                <Link href="/cam-nang/danh-muc/bao-gia-chi-phi" className="font-menu px-5 py-2.5 text-[12px] text-gray-600 dark:text-[#ccc] hover:text-[#D3AE3E] hover:bg-gray-50 dark:hover:bg-white/5 uppercase tracking-wide transition-colors">Báo giá & chi phí</Link>
               </div>
             </div>
           </div>

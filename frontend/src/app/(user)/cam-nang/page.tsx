@@ -58,9 +58,16 @@ export default function CamNangPage() {
     articles: publishedArticles.filter(a => a.category === cat.name).slice(0, 4)
   }));
 
-  // 3. Latest Articles Feed (excluding Hero)
+  // 3. Latest Articles Feed (excluding Hero if we have enough articles)
   const heroIds = new Set([heroArticle?.id, ...subHeroArticles.map(a => a?.id)]);
-  const allLatestArticles = publishedArticles.filter(a => !heroIds.has(a.id));
+  let allLatestArticles = publishedArticles.filter(a => !heroIds.has(a.id));
+  
+  // Fallback: If filtering leaves us with no articles, just show all published articles 
+  // so the list doesn't look empty when there are only a few articles in total.
+  if (allLatestArticles.length === 0 && publishedArticles.length > 0) {
+    allLatestArticles = publishedArticles;
+  }
+
   const latestArticles = allLatestArticles.slice(0, displayCount);
   const hasMore = displayCount < allLatestArticles.length;
 
@@ -282,6 +289,17 @@ export default function CamNangPage() {
                   <h3 className="font-heading text-lg font-bold text-gray-900 dark:text-white uppercase tracking-wider m-0">Chuyên mục</h3>
                 </div>
                 <ul className="space-y-0">
+                  <li className="group border-b border-gray-100 dark:border-white/5">
+                    <Link href="/cam-nang" className="flex items-center justify-between py-3.5 px-2 text-gray-600 dark:text-gray-400 hover:text-[#ce9e51] dark:hover:text-[#ce9e51] hover:bg-gray-50 dark:hover:bg-white/5 transition-all duration-300 rounded-[2px]">
+                      <span className="flex items-center gap-3 font-medium transition-transform duration-300 group-hover:translate-x-1">
+                        <i className="fa fa-angle-right text-[12px] text-[#ce9e51]/50 group-hover:text-[#ce9e51]"></i>
+                        Toàn bộ bài viết
+                      </span>
+                      <span className="flex items-center justify-center min-w-[28px] h-[28px] rounded-full bg-gray-100 dark:bg-[#222] text-xs font-bold text-gray-500 dark:text-gray-400 group-hover:bg-[#ce9e51] group-hover:text-white transition-colors">
+                        {publishedArticles.length}
+                      </span>
+                    </Link>
+                  </li>
                   {categories.filter(c => c.type === 'Bài viết').map((cat, idx, arr) => {
                     const count = publishedArticles.filter(a => a.category === cat.name).length;
                     return (

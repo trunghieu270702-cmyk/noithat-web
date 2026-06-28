@@ -220,13 +220,10 @@ export default function HeroSlider() {
       {/* ── Social Icons ── */}
       <div className="hidden lg:flex absolute left-8 top-1/2 -translate-y-1/2 z-[35] flex-col items-center gap-5">
         <div className="w-[1px] h-[60px] bg-gradient-to-b from-transparent to-white/30 mb-2"></div>
-        <a href="#" className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 text-white hover:text-[#D3AE3E] hover:border-[#D3AE3E] bg-white/5 backdrop-blur-sm transition-all duration-500 hover:scale-110">
+        <a href="https://www.facebook.com/profile.php?id=61591340093069" target="_blank" rel="noreferrer" className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 text-white hover:text-[#D3AE3E] hover:border-[#D3AE3E] bg-white/5 backdrop-blur-sm transition-all duration-500 hover:scale-110">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
         </a>
-        <a href="#" className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 text-white hover:text-[#D3AE3E] hover:border-[#D3AE3E] bg-white/5 backdrop-blur-sm transition-all duration-500 hover:scale-110">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>
-        </a>
-        <a href="#" className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 text-white hover:text-[#D3AE3E] hover:border-[#D3AE3E] bg-white/5 backdrop-blur-sm transition-all duration-500 hover:scale-110">
+        <a href="mailto:arcvietlivingnexus@gmail.com" className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 text-white hover:text-[#D3AE3E] hover:border-[#D3AE3E] bg-white/5 backdrop-blur-sm transition-all duration-500 hover:scale-110">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
         </a>
         <div className="w-[1px] h-[60px] bg-gradient-to-t from-transparent to-white/30 mt-2"></div>

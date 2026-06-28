@@ -14,7 +14,7 @@ export default function Footer() {
               Kết Nối Với Chúng Tôi
             </h3>
             <p className="text-gray-400 mb-6 text-sm">
-              Luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Luôn sẵn sàng hỗ trợ và đồng hành cùng bạn kiến tạo không gian sống mơ ước.
             </p>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm">
@@ -47,10 +47,10 @@ export default function Footer() {
                   <img src="/images/main/25.jpg" alt="Post" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                 </div>
                 <div>
-                  <Link href="#" className="text-sm text-gray-300 hover:text-[#D3AE3E] transition-colors line-clamp-2 leading-snug">
-                    In Good Taste: Mark Finlay Architects and Interiors
+                  <Link href="/cam-nang" className="text-sm text-gray-300 hover:text-[#D3AE3E] transition-colors line-clamp-2 leading-snug">
+                    Không Gian Sống Đẳng Cấp: Xu Hướng Thiết Kế Mới
                   </Link>
-                  <span className="text-xs text-gray-500 mt-1 block">February 26, 2020</span>
+                  <span className="text-xs text-gray-500 mt-1 block">26 Tháng 2, 2024</span>
                 </div>
               </div>
               <div className="flex gap-4 group">
@@ -58,10 +58,10 @@ export default function Footer() {
                   <img src="/images/main/26.jpg" alt="Post" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                 </div>
                 <div>
-                  <Link href="#" className="text-sm text-gray-300 hover:text-[#D3AE3E] transition-colors line-clamp-2 leading-snug">
-                    Five Things You Should Know About Modern Furniture.
+                  <Link href="/cam-nang" className="text-sm text-gray-300 hover:text-[#D3AE3E] transition-colors line-clamp-2 leading-snug">
+                    5 Điều Bạn Cần Biết Về Nội Thất Hiện Đại
                   </Link>
-                  <span className="text-xs text-gray-500 mt-1 block">August 28, 2019</span>
+                  <span className="text-xs text-gray-500 mt-1 block">28 Tháng 8, 2024</span>
                 </div>
               </div>
             </div>
@@ -74,27 +74,27 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="#" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
+                <Link href="/he-sinh-thai" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
                   <CheckCircle className="text-[#D3AE3E] w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  Thiết Kế Nội Thất
+                  Hệ Sinh Thái Đơn Vị
                 </Link>
               </li>
               <li>
-                <Link href="#" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
+                <Link href="/giam-sat" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
                   <CheckCircle className="text-[#D3AE3E] w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  Mô Hình Kiến Trúc
+                  Dịch Vụ Giám Sát
                 </Link>
               </li>
               <li>
-                <Link href="#" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
+                <Link href="/quy-trinh" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
                   <CheckCircle className="text-[#D3AE3E] w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  Render Công Trình
+                  Quy Trình Làm Việc
                 </Link>
               </li>
               <li>
-                <Link href="#" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
+                <Link href="/cam-nang" className="flex items-center gap-3 text-sm hover:text-[#D3AE3E] transition-colors group">
                   <CheckCircle className="text-[#D3AE3E] w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  Thiết Kế Cảnh Quan
+                  Cẩm Nang Nội Thất
                 </Link>
               </li>
             </ul>
